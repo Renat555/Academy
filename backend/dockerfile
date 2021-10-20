@@ -1,0 +1,6 @@
+FROM node:alpine
+WORKDIR /usr/server/backend
+COPY . /usr/server/backend
+RUN npm install
+RUN npm install -g nodemon
+CMD ["nodemon", "server.js"]
