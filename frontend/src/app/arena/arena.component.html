@@ -1,1 +1,14 @@
-<p>arena works!</p>
+<div class="background" (click)="setPoint($event)">
+  <app-health class="healthEnemy" data-way="obstacle"></app-health>
+  <div class="enemy" data-way="obstacle"></div>
+  <app-health class="healthUser" data-way="obstacle"></app-health>
+</div>
+<div
+  class="user right1"
+  #user
+  [@moving]="{
+    value: stateMoving,
+    params: { left1: left1, top1: top1, left2: left2, top2: top2, time: time }
+  }"
+  [@steps]="stateSteps"
+></div>
