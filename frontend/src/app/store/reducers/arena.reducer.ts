@@ -1,4 +1,4 @@
-import { createReducer, createSelector, on } from '@ngrx/store';
+import { Action, createReducer, createSelector, on } from '@ngrx/store';
 import * as ArenaActions from '../actions/arena.action';
 
 export interface State {
@@ -21,28 +21,19 @@ const initialState: State = {
 
 const arenaReducer = createReducer(
   initialState,
-  on(ArenaActions.changeUserHealth, state => ({...state, user: }))
+  on(ArenaActions.changeUserHealth, (state, health) => ({
+    ...state,
+    user: health,
+  })),
+  on(ArenaActions.changeEnemyHealth, (state, health) => ({
+    ...state,
+    enemy: health,
+  }))
 );
 
-// export function arenaReducer(
-//   state: State = initialState,
-//   action: HealthUnion
-// ): State {
-//   switch (action.type) {
-//     case healthAction.userHealth:
-//       return {
-//         ...state,
-//         user: action.payload,
-//       };
-//     case healthAction.enemyHealth:
-//       return {
-//         ...state,
-//         enemy: action.payload,
-//       };
-//     default:
-//       return state;
-//   }
-// }
+export function reducer(state: State | undefined, action: Action) {
+  return arenaReducer(state, action);
+}
 
 const userHealth = (state: State) => state.user;
 const enemyHealth = (state: State) => state.enemy;
