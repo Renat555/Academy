@@ -1,3 +1,4 @@
+import { changeUserHealth } from './../store/actions/arena.action';
 import { selectUserHealth } from './../store/reducers/arena.reducer';
 import { Component } from '@angular/core';
 import { select, Store } from '@ngrx/store';
@@ -8,12 +9,17 @@ import { select, Store } from '@ngrx/store';
   styleUrls: ['./health.component.less'],
 })
 export class HealthComponent {
-  constructor(private store: Store) {}
+  constructor(
+    private store: Store<{
+      health: number;
+    }>
+  ) {
+    this.store.select(selectUserHealth).subscribe((v) => {
+      console.log(v);
+    });
+  }
 
   getWidth() {
-    // this.store.pipe(select(selectUserHealth)).subscribe((health) => {
-    //   console.log(health);
-    // });
     return '100%';
   }
 }
