@@ -1,10 +1,10 @@
-// import { ActionReducerMap } from '@ngrx/store';
-// import * as Arena from './reducers/arena.reducer';
+import { ActionReducerMap } from '@ngrx/store';
+import * as Arena from './reducers/arena.reducer';
 
-// export interface State {
-//   arena: Arena.State;
-// }
+export interface State {
+  arena: Arena.ArenaState;
+}
 
-// export const reducers: ActionReducerMap<State> = {
-//   arena: Arena.arenaReducer,
-// };
+export const reducers: ActionReducerMap<State> = {
+  arena: Arena.reducer,
+};

@@ -1,16 +1,16 @@
 import { Action, createReducer, createSelector, on } from '@ngrx/store';
 import * as ArenaActions from '../actions/arena.action';
 
-export interface State {
-  user: {
-    health: number;
-  };
-  enemy: {
-    health: number;
-  };
+export interface UserState {
+  health: number
 }
 
-const initialState: State = {
+export interface ArenaState {
+  user: UserState;
+  enemy: UserState
+}
+
+const initialState: ArenaState = {
   user: {
     health: 100,
   },
@@ -31,12 +31,6 @@ const arenaReducer = createReducer(
   }))
 );
 
-export function reducer(state: State | undefined, action: Action) {
+export function reducer(state: ArenaState | undefined, action: Action) {
   return arenaReducer(state, action);
 }
-
-const userHealth = (state: State) => state.user;
-const enemyHealth = (state: State) => state.enemy;
-
-export const selectUserHealth = createSelector(userHealth, (state) => state);
-export const selectEnemyHealth = createSelector(enemyHealth, (state) => state);

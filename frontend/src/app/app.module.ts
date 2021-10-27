@@ -1,12 +1,13 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import * as fromArena from '../app/store/reducers/arena.reducer';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ArenaComponent } from './arena/arena.component';
 import { HealthComponent } from './health/health.component';
 import { StoreModule } from '@ngrx/store';
+import { reducers } from './store';
+
 
 @NgModule({
   declarations: [AppComponent, ArenaComponent, HealthComponent],
@@ -14,7 +15,7 @@ import { StoreModule } from '@ngrx/store';
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot({ arena: fromArena.reducer }),
+    StoreModule.forRoot(reducers),
   ],
   providers: [],
   bootstrap: [AppComponent],

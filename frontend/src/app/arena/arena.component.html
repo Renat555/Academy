@@ -1,7 +1,8 @@
+<div class="fireball" *ngIf="isFireVisible"></div>
 <div class="background" (click)="setPoint($event)">
-  <app-health class="healthEnemy" data-way="obstacle"></app-health>
-  <div class="enemy" data-way="obstacle"></div>
-  <app-health class="healthUser" data-way="obstacle"></app-health>
+  <app-health class="healthEnemy" data-way="obstacle" [health]='enemyHealth'></app-health>
+  <div class="enemy" data-way="obstacle" (click)="enemyDamage()"></div>
+  <app-health class="healthUser" data-way="obstacle" [health]='userHealth'></app-health>
 </div>
 <div
   class="user right1"

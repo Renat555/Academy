@@ -7,6 +7,10 @@ import {
   useAnimation,
 } from '@angular/animations';
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { changeEnemyHealth, changeUserHealth } from '../store/actions/arena.action';
+import { selectEnemyHealth, selectUserHealth } from '../store/selectors/arena.selector';
+import { AppState } from '../store/state/app.state';
 
 function calcDirection(
   userTop: number,
@@ -118,7 +122,32 @@ interface Coordinate {
   ],
 })
 export class ArenaComponent {
-  constructor() {}
+
+  changeHealthComponent() {
+    this.store.select(selectUserHealth).subscribe((health) => {
+      this.userHealth = health + '%';
+    });
+    this.store.select(selectEnemyHealth).subscribe((health) => {
+      this.enemyHealth = health + '%';
+    });
+  }
+
+  userDamage() {
+    this.store.dispatch(changeUserHealth({health: 90}));
+    this.changeHealthComponent();
+  }
+
+  enemyDamage() {  
+    this.store.dispatch(changeEnemyHealth({health: 90}));
+    this.changeHealthComponent();
+  }
+
+  constructor(private store: Store<AppState>) {}
+
+  userHealth: string = '100%';
+  enemyHealth: string = '100%';
+
+  isFireVisible: boolean = false;
 
   left1: number = 0;
   top1: number = 0;
