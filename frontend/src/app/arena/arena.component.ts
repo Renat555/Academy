@@ -18,6 +18,7 @@ function calcDirection(
   clickTop: number,
   clickLeft: number
 ): string {
+  
   if (clickTop <= userTop && clickLeft <= userLeft) {
     if (clickTop <= clickLeft) {
       return 'up';
@@ -36,26 +37,71 @@ function calcDirection(
     } else {
       return 'left';
     }
+  } else if (clickTop >= userTop && clickLeft >= userLeft) {
+      if (clickTop - userTop > clickLeft - userLeft) {
+        return 'down';
+      } else {
+        return 'right';
+      }
   } else {
-    if (clickLeft - userLeft < clickTop - userTop) {
-      return 'down';
-    } else {
-      return 'right';
-    }
+    return 'down';
   }
 }
 
-function calcTime(
+function calcDegree(userTop: number,
+  userLeft: number,
+  clickTop: number,
+  clickLeft: number) {
+  let degree: number = 0;
+
+  let userVector = [];
+
+  userVector[0] = clickLeft - userLeft;
+  userVector[1] = clickTop - userTop;
+
+  let vectorLength = Math.sqrt(userVector[0]**2 + userVector[1]**2);
+
+  let cosine = userVector[0]/vectorLength;
+
+  let arccosine = Math.acos(cosine);
+
+  degree = Math.round(arccosine/(Math.PI/180));
+  
+  if (userTop > clickTop) {
+    degree = 180 - degree;
+  } else {
+    degree = 180 + degree;
+  }
+  
+  return "rotate(" + degree + "deg)";
+}
+
+function calcTimeForUser(
   userLeft: number,
   userTop: number,
   clickLeft: number,
   clickTop: number
-) {
+): number {
   let pathLength = Math.sqrt(
     (userLeft - clickLeft) ** 2 + (userTop - clickTop) ** 2
   );
 
   let time = Math.floor((pathLength / 300) * 100) / 100;
+
+  return time;
+}
+
+function calcTimeForSpell(
+  spellLeft: number,
+  spellTop: number,
+  clickLeft: number,
+  clickTop: number
+) {
+  let pathLength = Math.sqrt(
+    (spellLeft - clickLeft) ** 2 + (spellTop - clickTop) ** 2
+  );
+
+  let time = Math.floor((pathLength / 700) * 100) / 100;
 
   return time;
 }
@@ -119,6 +165,15 @@ interface Coordinate {
         style({ backgroundImage: 'url(../../assets/hero/c8.png)' })
       ),
     ]),
+    trigger('spell', [
+      state('first', style({left: '{{left3}}px', top: '{{top3}}px'}), {
+        params: { left3: 0, top3: 0 },
+      }),
+      state('second', style({ left: '{{left4}}px', top: '{{top4}}px' }), {
+        params: { left4: 0, top4: 0 },
+      }),
+      transition('first => second', animate('{{time2}}s')),
+    ])
   ],
 })
 export class ArenaComponent {
@@ -148,6 +203,7 @@ export class ArenaComponent {
   enemyHealth: string = '100%';
 
   isFireVisible: boolean = false;
+  isSpellComplete: boolean = true;
 
   left1: number = 0;
   top1: number = 0;
@@ -155,17 +211,66 @@ export class ArenaComponent {
   top2: number = 0;
   left3: number = 0;
   top3: number = 0;
+  left4: number = 0;
+  top4: number = 0;
 
   time: number = 1;
+  time2: number = 2;
 
   timerId: any;
 
+  degree: string = 'rotate(270deg)';
+
   stateMoving: string = '';
+  stateSpell: string = '';
   stateSteps: string = '';
 
-  isMoving: boolean = false;
-
   @ViewChild('user') user!: ElementRef;
+
+  castSpell(event: MouseEvent) {
+    if (event.button != 2) return;
+    event.preventDefault();
+
+    if (!this.isSpellComplete) return;
+
+    this.isSpellComplete = false;
+
+    let target = event.target as HTMLElement;
+
+    let user = this.user.nativeElement;
+    let coord = user.getBoundingClientRect();
+
+    this.left3 = coord.left;
+    this.top3 = coord.top;
+
+    this.stateSpell = 'first';
+
+    this.left4 = event.clientX;
+    this.top4 = event.clientY;  
+
+    this.time2 = calcTimeForSpell(this.top3, this.left3, this.top4, this.left4);
+
+    this.degree = calcDegree(this.top3, this.left3, this.top4, this.left4);
+    
+    let sound = new Audio('./../assets/audio/fire.mp3');
+    sound.play();
+    
+    setTimeout(() => {
+      this.stateSpell = 'second';
+    }, 0);
+
+    setTimeout(() => {
+      this.isFireVisible = false;
+      this.isSpellComplete = true;
+      clearTimeout(id2);
+    }, 500);
+
+    let id2 = setTimeout(() => {
+      this.isFireVisible = false;
+    }, this.time2*1000);
+    
+    this.isFireVisible = true;
+  }
 
   makeSteps(time: number, direction: string) {
     let toggle: boolean = true;
@@ -214,6 +319,8 @@ export class ArenaComponent {
   }
 
   setPoint(event: MouseEvent) {
+    if (event.button != 0) return;
+
     let target = event.target as HTMLElement;
 
     if (target.dataset.way == 'obstacle') {
@@ -231,7 +338,7 @@ export class ArenaComponent {
     this.left2 = event.clientX;
     this.top2 = event.clientY;
 
-    this.time = calcTime(this.left1, this.top1, this.left2, this.top2);
+    this.time = calcTimeForUser(this.left1, this.top1, this.left2, this.top2);
 
     setTimeout(() => {
       this.stateMoving = 'second';

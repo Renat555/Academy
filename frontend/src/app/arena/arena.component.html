@@ -1,5 +1,13 @@
-<div class="fireball" *ngIf="isFireVisible"></div>
-<div class="background" (click)="setPoint($event)">
+<div class="fireball" [ngStyle]="{'transform': degree}" *ngIf="isFireVisible" 
+[@spell]="{
+  value: stateSpell, 
+  params: { left3: left3, top3: top3, left4: left4, top4: top4, time2: time2}
+}"></div>
+<div class="energy"></div>
+<div class="energy"></div>
+<div class="energy"></div>
+<div class="energy"></div>
+<div class="background" (contextmenu)="castSpell($event)" (click)="setPoint($event)">
   <app-health class="healthEnemy" data-way="obstacle" [health]='enemyHealth'></app-health>
   <div class="enemy" data-way="obstacle" (click)="enemyDamage()"></div>
   <app-health class="healthUser" data-way="obstacle" [health]='userHealth'></app-health>

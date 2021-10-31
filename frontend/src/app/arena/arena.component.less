@@ -1,6 +1,6 @@
 .background {
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
   background-image: url(../../assets/grass.jpg);
   background-color: aqua;
 
@@ -11,8 +11,8 @@
 }
 
 .enemy {
-  height: 200px;
-  width: 200px;
+  height: 150px;
+  width: 150px;
   background-image: url(../../assets/enemy/812.gif);
   background-size: contain;
   align-self: center;
@@ -20,28 +20,39 @@
 
 .user {
   position: absolute;
-  height: 80px;
-  width: 80px;
+  height: 70px;
+  width: 70px;
   background-size: contain;
-  left: 0;
   top: 45%;
+  background-repeat: no-repeat;
 }
 
 .fireball {
   background-image: url(../../assets/hero/fire.gif);
-  background-size: contain;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  height: 70px;
+  width: 150px;
+}
+
+.energy {
+  width: 100px;
+  height: 100px;
+  background-image: url(../../assets/enemy/energy.gif);
+  background-size: cover;
   background-repeat: no-repeat;
   position: absolute;
 }
 
 .healthEnemy {
   width: 70%;
-  height: 50px;
+  height: 30px;
 }
 
 .healthUser {
   width: 30%;
-  height: 50px;
+  height: 30px;
   align-self: end;
 }
 
