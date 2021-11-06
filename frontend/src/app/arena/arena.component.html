@@ -1,16 +1,62 @@
-<div class="fireball" [ngStyle]="{'transform': degree}" *ngIf="isFireVisible" 
-[@spell]="{
-  value: stateSpell, 
-  params: { left3: left3, top3: top3, left4: left4, top4: top4, time2: time2}
-}"></div>
-<div class="energy"></div>
-<div class="energy"></div>
-<div class="energy"></div>
-<div class="energy"></div>
-<div class="background" (contextmenu)="castSpell($event)" (click)="setPoint($event)">
-  <app-health class="healthEnemy" data-way="obstacle" [health]='enemyHealth'></app-health>
-  <div class="enemy" data-way="obstacle" (click)="enemyDamage()"></div>
-  <app-health class="healthUser" data-way="obstacle" [health]='userHealth'></app-health>
+<div
+  class="fireball"
+  [ngStyle]="{ transform: degree }"
+  #fireball
+  *ngIf="isFireVisible"
+  [@spell]="{
+    value: stateSpell,
+    params: { left3: left3, top3: top3, left4: left4, top4: top4, time2: time2 }
+  }"
+></div>
+<div
+  class="energy"
+  #energy1
+  [@spellEnemyOne]="{
+    value: stateSpellEnemyOne,
+    params: { left5: left5, top5: top5, left6: left6, top6: top6, time3: time3 }
+  }"
+></div>
+<div
+  class="energy"
+  #energy2
+  [@spellEnemyTwo]="{
+    value: stateSpellEnemyTwo,
+    params: { left5: left5, top5: top5, left7: left7, top7: top7, time3: time3 }
+  }"
+></div>
+<div
+  class="energy"
+  #energy3
+  [@spellEnemyThree]="{
+    value: stateSpellEnemyThree,
+    params: { left5: left5, top5: top5, left8: left8, top8: top8, time3: time3 }
+  }"
+></div>
+<div
+  class="energy"
+  #energy4
+  [@spellEnemyFour]="{
+    value: stateSpellEnemyFour,
+    params: { left5: left5, top5: top5, left9: left9, top9: top9, time3: time3 }
+  }"
+></div>
+<div
+  class="background"
+  #background
+  (contextmenu)="castSpell($event)"
+  (click)="setPoint($event)"
+>
+  <app-health
+    class="healthEnemy"
+    data-way="obstacle"
+    [health]="enemyHealth"
+  ></app-health>
+  <div class="enemy" #enemy data-way="obstacle"></div>
+  <app-health
+    class="healthUser"
+    data-way="obstacle"
+    [health]="userHealth"
+  ></app-health>
 </div>
 <div
   class="user right1"
