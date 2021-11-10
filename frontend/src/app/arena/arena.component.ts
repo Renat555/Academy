@@ -7,16 +7,20 @@ import {
   useAnimation,
 } from '@angular/animations';
 import {
+  AfterContentInit,
+  AfterViewChecked,
+  AfterViewInit,
   Component,
   ElementRef,
   OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
-  changeEnemyHealth,
-  changeUserHealth,
+  decreaseEnemyHealth,
+  decreaseUserHealth,
 } from '../store/actions/arena.action';
 import {
   selectEnemyHealth,
@@ -225,9 +229,15 @@ interface Coordinate {
     ]),
   ],
 })
-export class ArenaComponent implements OnInit, OnDestroy {
-  ngOnInit() {
-    this.castEnemySpell();
+export class ArenaComponent implements OnDestroy, AfterViewInit {
+  constructor(private store: Store<AppState>, private router: Router) {}
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.castEnemeySpells();
+    }, 0);
+
+    this.castingEnemySpells();
     this.enemyDamageTracking();
     this.userDamageTrecking();
   }
@@ -263,7 +273,7 @@ export class ArenaComponent implements OnInit, OnDestroy {
           fireball.right > enemy.left &&
           fireball.right < enemy.right)
       ) {
-        this.enemyDamage(1);
+        this.enemyDamage(5);
       }
     }, 200);
   }
@@ -297,7 +307,7 @@ export class ArenaComponent implements OnInit, OnDestroy {
           energy1.right > user.left &&
           energy1.right < user.right)
       ) {
-        this.userDamage(1);
+        this.userDamage(5);
       }
 
       if (
@@ -318,7 +328,7 @@ export class ArenaComponent implements OnInit, OnDestroy {
           energy2.right > user.left &&
           energy2.right < user.right)
       ) {
-        this.userDamage(1);
+        this.userDamage(5);
       }
 
       if (
@@ -339,7 +349,7 @@ export class ArenaComponent implements OnInit, OnDestroy {
           energy3.right > user.left &&
           energy3.right < user.right)
       ) {
-        this.userDamage(1);
+        this.userDamage(5);
       }
 
       if (
@@ -360,83 +370,83 @@ export class ArenaComponent implements OnInit, OnDestroy {
           energy4.right > user.left &&
           energy4.right < user.right)
       ) {
-        this.userDamage(1);
+        this.userDamage(5);
       }
     }, 200);
   }
 
-  castEnemySpell() {
+  castEnemeySpells() {
+    this.stateSpellEnemyOne = 'first';
+    this.stateSpellEnemyTwo = 'first';
+    this.stateSpellEnemyThree = 'first';
+    this.stateSpellEnemyFour = 'first';
+
+    let enemy = this.enemy.nativeElement;
+    let enemyCoord = enemy.getBoundingClientRect();
+
+    let energy = this.energy1.nativeElement;
+    let energyCoord = energy.getBoundingClientRect();
+
+    let background = this.background.nativeElement;
+    let backgroundCoord = background.getBoundingClientRect();
+
+    let x =
+      Math.random() *
+        (backgroundCoord.top - (backgroundCoord.bottom - energyCoord.height)) +
+      (backgroundCoord.bottom - energyCoord.height);
+    let y =
+      Math.random() *
+        (backgroundCoord.left - (backgroundCoord.right - energyCoord.width)) +
+      (backgroundCoord.right - energyCoord.width);
+
+    this.left5 = enemyCoord.left + enemyCoord.width / 2 - energyCoord.width / 2;
+    this.top5 = enemyCoord.top + enemyCoord.height / 2 - energyCoord.height / 2;
+
+    this.left6 = backgroundCoord.left;
+    this.top6 = x;
+
+    this.left7 = y;
+    this.top7 = backgroundCoord.top;
+
+    this.left8 = backgroundCoord.right - energyCoord.width;
+    this.top8 = x;
+
+    this.left9 = y;
+    this.top9 = backgroundCoord.bottom - energyCoord.height;
+
+    setTimeout(() => {
+      this.stateSpellEnemyOne = 'second';
+      this.stateSpellEnemyTwo = 'second';
+      this.stateSpellEnemyThree = 'second';
+      this.stateSpellEnemyFour = 'second';
+    }, 0);
+  }
+
+  castingEnemySpells() {
     this.enemySpellsTimerId = setInterval(() => {
-      this.stateSpellEnemyOne = 'first';
-      this.stateSpellEnemyTwo = 'first';
-      this.stateSpellEnemyThree = 'first';
-      this.stateSpellEnemyFour = 'first';
-
-      let enemy = this.enemy.nativeElement;
-      let enemyCoord = enemy.getBoundingClientRect();
-
-      let energy = this.energy1.nativeElement;
-      let energyCoord = energy.getBoundingClientRect();
-
-      let background = this.background.nativeElement;
-      let backgroundCoord = background.getBoundingClientRect();
-
-      let x =
-        Math.random() *
-          (backgroundCoord.top -
-            (backgroundCoord.bottom - energyCoord.height)) +
-        (backgroundCoord.bottom - energyCoord.height);
-      let y =
-        Math.random() *
-          (backgroundCoord.left - (backgroundCoord.right - energyCoord.width)) +
-        (backgroundCoord.right - energyCoord.width);
-
-      this.left5 =
-        enemyCoord.left + enemyCoord.width / 2 - energyCoord.width / 2;
-      this.top5 =
-        enemyCoord.top + enemyCoord.height / 2 - energyCoord.height / 2;
-
-      this.left6 = backgroundCoord.left;
-      this.top6 = x;
-
-      this.left7 = y;
-      this.top7 = backgroundCoord.top;
-
-      this.left8 = backgroundCoord.right - energyCoord.width;
-      this.top8 = x;
-
-      this.left9 = y;
-      this.top9 = backgroundCoord.bottom - energyCoord.height;
-
-      setTimeout(() => {
-        this.stateSpellEnemyOne = 'second';
-        this.stateSpellEnemyTwo = 'second';
-        this.stateSpellEnemyThree = 'second';
-        this.stateSpellEnemyFour = 'second';
-      }, 0);
+      this.castEnemeySpells();
     }, 3000);
   }
 
-  changeHealthComponent() {
+  userDamage(damage: number) {
+    this.store.dispatch(decreaseUserHealth({ health: damage }));
+
     this.store.select(selectUserHealth).subscribe((health) => {
       this.userHealth = health + '%';
-    });
-    this.store.select(selectEnemyHealth).subscribe((health) => {
-      this.enemyHealth = health + '%';
-    });
-  }
 
-  userDamage(damage: number) {
-    this.store.dispatch(changeUserHealth({ health: damage }));
-    this.changeHealthComponent();
+      if (health <= 0) this.router.navigate(['loss']);
+    });
   }
 
   enemyDamage(damage: number) {
-    this.store.dispatch(changeEnemyHealth({ health: damage }));
-    this.changeHealthComponent();
-  }
+    this.store.dispatch(decreaseEnemyHealth({ health: damage }));
 
-  constructor(private store: Store<AppState>) {}
+    this.store.select(selectEnemyHealth).subscribe((health) => {
+      this.enemyHealth = health + '%';
+
+      if (health <= 0) this.router.navigate(['win']);
+    });
+  }
 
   enemySpellsTimerId: any;
   userDamageTrackingId: any;
@@ -447,6 +457,7 @@ export class ArenaComponent implements OnInit, OnDestroy {
 
   isFireVisible: boolean = false;
   isSpellComplete: boolean = true;
+  isAudioOn: boolean = false;
 
   left1: number = 0;
   top1: number = 0;
@@ -517,8 +528,7 @@ export class ArenaComponent implements OnInit, OnDestroy {
 
     this.degree = calcDegree(this.top3, this.left3, this.top4, this.left4);
 
-    let sound = new Audio('./../assets/audio/fire.mp3');
-    sound.play();
+    this.fireSound();
 
     setTimeout(() => {
       this.stateSpell = 'second';
@@ -535,6 +545,20 @@ export class ArenaComponent implements OnInit, OnDestroy {
     }, this.time2 * 1000);
 
     this.isFireVisible = true;
+  }
+
+  fireSound() {
+    if (!this.isAudioOn) return;
+    let sound = new Audio('./../assets/audio/fire.mp3');
+    sound.play();
+  }
+
+  toggleSound() {
+    if (this.isAudioOn) {
+      this.isAudioOn = false;
+    } else {
+      this.isAudioOn = true;
+    }
   }
 
   makeSteps(time: number, direction: string) {

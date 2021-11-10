@@ -7,10 +7,12 @@ import { ArenaComponent } from './arena/arena.component';
 import { HealthComponent } from './health/health.component';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './store';
+import { WinComponent } from './arena/win/win.component';
+import { LossComponent } from './arena/loss/loss.component';
 
 
 @NgModule({
-  declarations: [AppComponent, ArenaComponent, HealthComponent],
+  declarations: [AppComponent, ArenaComponent, HealthComponent, WinComponent, LossComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
