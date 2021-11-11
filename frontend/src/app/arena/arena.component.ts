@@ -21,6 +21,7 @@ import { Store } from '@ngrx/store';
 import {
   decreaseEnemyHealth,
   decreaseUserHealth,
+  resetHealth,
 } from '../store/actions/arena.action';
 import {
   selectEnemyHealth,
@@ -233,6 +234,8 @@ export class ArenaComponent implements OnDestroy, AfterViewInit {
   constructor(private store: Store<AppState>, private router: Router) {}
 
   ngAfterViewInit() {
+    this.store.dispatch(resetHealth());
+
     setTimeout(() => {
       this.castEnemeySpells();
     }, 0);
@@ -307,6 +310,7 @@ export class ArenaComponent implements OnDestroy, AfterViewInit {
           energy1.right > user.left &&
           energy1.right < user.right)
       ) {
+        this.dischargeSound();
         this.userDamage(5);
       }
 
@@ -328,6 +332,7 @@ export class ArenaComponent implements OnDestroy, AfterViewInit {
           energy2.right > user.left &&
           energy2.right < user.right)
       ) {
+        this.dischargeSound();
         this.userDamage(5);
       }
 
@@ -349,6 +354,7 @@ export class ArenaComponent implements OnDestroy, AfterViewInit {
           energy3.right > user.left &&
           energy3.right < user.right)
       ) {
+        this.dischargeSound();
         this.userDamage(5);
       }
 
@@ -370,6 +376,7 @@ export class ArenaComponent implements OnDestroy, AfterViewInit {
           energy4.right > user.left &&
           energy4.right < user.right)
       ) {
+        this.dischargeSound();
         this.userDamage(5);
       }
     }, 200);
@@ -457,7 +464,7 @@ export class ArenaComponent implements OnDestroy, AfterViewInit {
 
   isFireVisible: boolean = false;
   isSpellComplete: boolean = true;
-  isAudioOn: boolean = false;
+  isAudioOn: boolean = true;
 
   left1: number = 0;
   top1: number = 0;
@@ -553,6 +560,18 @@ export class ArenaComponent implements OnDestroy, AfterViewInit {
     sound.play();
   }
 
+  stepSound() {
+    if (!this.isAudioOn) return;
+    let sound = new Audio('./../assets/audio/step.mp3');
+    sound.play();
+  }
+
+  dischargeSound() {
+    if (!this.isAudioOn) return;
+    let sound = new Audio('./../assets/audio/discharge.mp3');
+    sound.play();
+  }
+
   toggleSound() {
     if (this.isAudioOn) {
       this.isAudioOn = false;
@@ -565,6 +584,8 @@ export class ArenaComponent implements OnDestroy, AfterViewInit {
     let toggle: boolean = true;
 
     let id = setInterval(() => {
+      this.stepSound();
+
       if (direction == 'up') {
         if (toggle) {
           this.stateSteps = 'backOne';

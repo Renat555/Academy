@@ -1,4 +1,8 @@
-<div class="sound"></div>
+<div
+  class="sound"
+  (click)="toggleSound()"
+  [ngClass]="{ soundon: isAudioOn, soundoff: !isAudioOn }"
+></div>
 <div
   class="fireball"
   [ngStyle]="{ transform: degree }"
