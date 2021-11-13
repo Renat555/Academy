@@ -9,10 +9,12 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from './store';
 import { WinComponent } from './arena/win/win.component';
 import { LossComponent } from './arena/loss/loss.component';
+import { HallComponent } from './hall/hall.component';
+import { HintComponent } from './common/hint/hint.component';
 
 
 @NgModule({
-  declarations: [AppComponent, ArenaComponent, HealthComponent, WinComponent, LossComponent],
+  declarations: [AppComponent, ArenaComponent, HealthComponent, WinComponent, LossComponent, HallComponent, HintComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

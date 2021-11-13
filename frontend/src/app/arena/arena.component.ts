@@ -237,6 +237,7 @@ export class ArenaComponent implements OnDestroy, AfterViewInit {
     this.store.dispatch(resetHealth());
 
     setTimeout(() => {
+      this.setUser();
       this.castEnemeySpells();
     }, 0);
 
@@ -249,6 +250,15 @@ export class ArenaComponent implements OnDestroy, AfterViewInit {
     clearInterval(this.enemySpellsTimerId);
     clearInterval(this.enemyDamageTrackingId);
     clearInterval(this.userDamageTrackingId);
+  }
+
+  setUser() {
+    let background = this.background.nativeElement.getBoundingClientRect();
+    let user = this.user.nativeElement.getBoundingClientRect();
+
+    let top = background.top + 500;
+
+    this.userTop = top + 'px';
   }
 
   enemyDamageTracking() {
@@ -458,6 +468,7 @@ export class ArenaComponent implements OnDestroy, AfterViewInit {
   enemySpellsTimerId: any;
   userDamageTrackingId: any;
   enemyDamageTrackingId: any;
+  timerId: any;
 
   userHealth: string = '100%';
   enemyHealth: string = '100%';
@@ -465,6 +476,8 @@ export class ArenaComponent implements OnDestroy, AfterViewInit {
   isFireVisible: boolean = false;
   isSpellComplete: boolean = true;
   isAudioOn: boolean = true;
+
+  userTop: string = '';
 
   left1: number = 0;
   top1: number = 0;
@@ -488,8 +501,6 @@ export class ArenaComponent implements OnDestroy, AfterViewInit {
   time: number = 1;
   time2: number = 2;
   time3: number = 3;
-
-  timerId: any;
 
   degree: string = 'rotate(270deg)';
 
@@ -637,16 +648,15 @@ export class ArenaComponent implements OnDestroy, AfterViewInit {
       return;
     }
 
-    let user = this.user.nativeElement;
-    let coord = user.getBoundingClientRect();
+    let user = this.user.nativeElement.getBoundingClientRect();
 
-    this.left1 = coord.left;
-    this.top1 = coord.top;
+    this.left1 = user.left;
+    this.top1 = user.top;
 
     this.stateMoving = 'first';
 
-    this.left2 = event.clientX;
-    this.top2 = event.clientY;
+    this.left2 = event.clientX - user.width / 2;
+    this.top2 = event.clientY - user.height / 2;
 
     this.time = calcTimeForUser(this.left1, this.top1, this.left2, this.top2);
 
@@ -663,5 +673,9 @@ export class ArenaComponent implements OnDestroy, AfterViewInit {
 
     clearInterval(this.timerId);
     this.timerId = this.makeSteps(this.time, direction);
+  }
+
+  goToHall() {
+    this.router.navigate(['']);
   }
 }

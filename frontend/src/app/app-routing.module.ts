@@ -3,10 +3,11 @@ import { Router, RouterModule, Routes } from '@angular/router';
 import { ArenaComponent } from './arena/arena.component';
 import { LossComponent } from './arena/loss/loss.component';
 import { WinComponent } from './arena/win/win.component';
+import { HallComponent } from './hall/hall.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'arena',
     component: ArenaComponent,
   },
   {
@@ -17,6 +18,10 @@ const routes: Routes = [
     path: 'loss',
     component: LossComponent,
   },
+  {
+    path: '',
+    component: HallComponent,
+  }
 ];
 
 @NgModule({
