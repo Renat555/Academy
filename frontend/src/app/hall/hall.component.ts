@@ -9,6 +9,7 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -273,6 +274,7 @@ export class HallComponent implements AfterViewInit {
 
       let user = this.user.nativeElement.getBoundingClientRect();
       let portal = this.portal.nativeElement.getBoundingClientRect();
+      let stand = this.stand.nativeElement.getBoundingClientRect();
 
       if (
         (user.bottom > portal.top &&
@@ -294,6 +296,27 @@ export class HallComponent implements AfterViewInit {
       ) {
         this.router.navigate(['arena']);
       }
+
+      if (
+        (user.bottom > stand.top &&
+          user.bottom < stand.bottom &&
+          user.right > stand.left &&
+          user.right < stand.right) ||
+        (user.bottom > stand.top &&
+          user.bottom < stand.bottom &&
+          user.left > stand.left &&
+          user.left < stand.right) ||
+        (user.top > stand.top &&
+          user.top < stand.bottom &&
+          user.left > stand.left &&
+          user.left < stand.right) ||
+        (user.top > stand.top &&
+          user.top < stand.bottom &&
+          user.right > stand.left &&
+          user.right < stand.right)
+      ) {
+        this.router.navigate(['intuition']);
+      }
     }, 1000);
   }
 
@@ -306,7 +329,7 @@ export class HallComponent implements AfterViewInit {
       return;
     }
 
-    if (target.dataset.goal === 'portal') {
+    if (target.dataset.goal === 'portal' || target.dataset.goal === 'stand') {
       this.userLocationTracking();
     } else {
       clearInterval(this.userLocationTrackingId);

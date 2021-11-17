@@ -5,6 +5,7 @@
     class="intuitionStand"
     #stand
     (click)="setPoint($event)"
+    data-goal="stand"
     [ngStyle]="{ top: standTop, left: standLeft }"
     (mouseover)="showHintStand()"
     (mouseout)="hideHintStand()"

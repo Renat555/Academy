@@ -11,10 +11,11 @@ import { WinComponent } from './arena/win/win.component';
 import { LossComponent } from './arena/loss/loss.component';
 import { HallComponent } from './hall/hall.component';
 import { HintComponent } from './common/hint/hint.component';
+import { IntuitionComponent } from './intuition/intuition.component';
 
 
 @NgModule({
-  declarations: [AppComponent, ArenaComponent, HealthComponent, WinComponent, LossComponent, HallComponent, HintComponent],
+  declarations: [AppComponent, ArenaComponent, HealthComponent, WinComponent, LossComponent, HallComponent, HintComponent, IntuitionComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,

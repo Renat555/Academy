@@ -1,0 +1,36 @@
+<div class="exit" (click)="goToHall()"></div>
+<div class="background">
+  <div class="boxMain">
+    <div class="mainPicture">
+      <div
+        [ngClass]="{
+          triangle: isTriangle,
+          triangle2: isTriangle2,
+          square: isSquare,
+          square2: isSquare2,
+          hexagon: isHexagon,
+          hexagon2: isHexagon2
+        }"
+        #picture
+      ></div>
+    </div>
+  </div>
+  <div class="box box1" (click)="showPicture()">
+    <div class="picture"><div class="triangle"></div></div>
+  </div>
+  <div class="box box2" (click)="showPicture()">
+    <div class="picture"><div class="triangle2"></div></div>
+  </div>
+  <div class="box box3" (click)="showPicture()">
+    <div class="picture"><div class="square"></div></div>
+  </div>
+  <div class="box box4" (click)="showPicture()">
+    <div class="picture"><div class="square2"></div></div>
+  </div>
+  <div class="box box5" (click)="showPicture()">
+    <div class="picture"><div class="hexagon"></div></div>
+  </div>
+  <div class="box box6" (click)="showPicture()">
+    <div class="picture"><div class="hexagon2"></div></div>
+  </div>
+</div>
