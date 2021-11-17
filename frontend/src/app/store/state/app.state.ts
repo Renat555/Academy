@@ -1,5 +1,7 @@
-import { ArenaState } from "../reducers/arena.reducer";
+import { ArenaState } from '../reducers/arena.reducer';
+import { IntuitionState } from '../reducers/intuition.reducer';
 
 export interface AppState {
-    arena: ArenaState
+  arena: ArenaState;
+  intuition: IntuitionState;
 }
