@@ -215,7 +215,6 @@ export class HallComponent implements AfterViewInit {
   }
 
   stepSound() {
-    //if (!this.isAudioOn) return;
     let sound = new Audio('./../assets/audio/step.mp3');
     sound.play();
   }
@@ -268,34 +267,12 @@ export class HallComponent implements AfterViewInit {
     return id;
   }
 
-  userLocationTracking() {
+  teleportToIntuition() {
     this.userLocationTrackingId = setInterval(() => {
       if (!this.user) return;
 
       let user = this.user.nativeElement.getBoundingClientRect();
-      let portal = this.portal.nativeElement.getBoundingClientRect();
       let stand = this.stand.nativeElement.getBoundingClientRect();
-
-      if (
-        (user.bottom > portal.top &&
-          user.bottom < portal.bottom &&
-          user.right > portal.left &&
-          user.right < portal.right) ||
-        (user.bottom > portal.top &&
-          user.bottom < portal.bottom &&
-          user.left > portal.left &&
-          user.left < portal.right) ||
-        (user.top > portal.top &&
-          user.top < portal.bottom &&
-          user.left > portal.left &&
-          user.left < portal.right) ||
-        (user.top > portal.top &&
-          user.top < portal.bottom &&
-          user.right > portal.left &&
-          user.right < portal.right)
-      ) {
-        this.router.navigate(['arena']);
-      }
 
       if (
         (user.bottom > stand.top &&
@@ -315,7 +292,37 @@ export class HallComponent implements AfterViewInit {
           user.right > stand.left &&
           user.right < stand.right)
       ) {
-        this.router.navigate(['intuition']);
+        this.router.navigate(['intuition/intuitionMenu']);
+      }
+    }, 1000);
+  }
+
+  teleportToArena() {
+    this.userLocationTrackingId = setInterval(() => {
+      if (!this.user) return;
+
+      let user = this.user.nativeElement.getBoundingClientRect();
+      let portal = this.portal.nativeElement.getBoundingClientRect();
+
+      if (
+        (user.bottom > portal.top &&
+          user.bottom < portal.bottom &&
+          user.right > portal.left &&
+          user.right < portal.right) ||
+        (user.bottom > portal.top &&
+          user.bottom < portal.bottom &&
+          user.left > portal.left &&
+          user.left < portal.right) ||
+        (user.top > portal.top &&
+          user.top < portal.bottom &&
+          user.left > portal.left &&
+          user.left < portal.right) ||
+        (user.top > portal.top &&
+          user.top < portal.bottom &&
+          user.right > portal.left &&
+          user.right < portal.right)
+      ) {
+        this.router.navigate(['arena/game']);
       }
     }, 1000);
   }
@@ -329,8 +336,10 @@ export class HallComponent implements AfterViewInit {
       return;
     }
 
-    if (target.dataset.goal === 'portal' || target.dataset.goal === 'stand') {
-      this.userLocationTracking();
+    if (target.dataset.goal === 'portal') {
+      this.teleportToArena();
+    } else if (target.dataset.goal === 'stand') {
+      this.teleportToIntuition();
     } else {
       clearInterval(this.userLocationTrackingId);
     }

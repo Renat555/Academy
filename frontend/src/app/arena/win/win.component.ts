@@ -13,6 +13,6 @@ export class WinComponent {
 
   newGame() {
     this.store.dispatch(resetHealth());
-    this.router.navigate(['']);
+    this.router.navigate(['arena/game']);
   }
 }

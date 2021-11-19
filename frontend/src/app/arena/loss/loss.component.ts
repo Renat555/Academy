@@ -13,6 +13,6 @@ export class LossComponent {
 
   newGame() {
     this.store.dispatch(resetHealth());
-    this.router.navigate(['']);
+    this.router.navigate(['arena/game']);
   }
 }
