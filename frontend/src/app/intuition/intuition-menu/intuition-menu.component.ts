@@ -15,6 +15,10 @@ export class IntuitionMenuComponent implements OnInit {
     this.router.navigate(['intuition/intuitionFigures']);
   }
 
+  goToBlackWhite() {
+    this.router.navigate(['intuition/intuitionBlackWhite']);
+  }
+
   goToHall() {
     this.router.navigate(['']);
   }

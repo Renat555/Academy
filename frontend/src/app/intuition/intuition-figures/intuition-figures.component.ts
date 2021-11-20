@@ -5,25 +5,21 @@ import { selectAnswers } from '../../store/selectors/intuition.selector';
 import { AppState } from '../../store/state/app.state';
 
 @Component({
-  selector: 'app-intuition',
-  templateUrl: './intuitionFigures.component.html',
-  styleUrls: ['./intuitionFigures.component.less'],
+  selector: 'app-intuition-figures',
+  templateUrl: './intuition-figures.component.html',
+  styleUrls: ['./intuition-figures.component.less'],
 })
 export class IntuitionFiguresComponent implements OnInit {
   constructor(private router: Router, private store: Store<AppState>) {}
 
   ngOnInit() {
     this.pictureIndex = this.randomIndex();
-    this.store.select(selectAnswers).subscribe((answers) => {
-      console.log(answers);
-    });
+    this.store.select(selectAnswers).subscribe((answers) => {});
   }
 
   randomIndex() {
     return Math.floor(Math.random() * (7 - 1) + 1);
   }
-
-  @ViewChild('picture') picture!: ElementRef;
 
   isTriangle: boolean = false;
   isTriangle2: boolean = false;
@@ -41,10 +37,8 @@ export class IntuitionFiguresComponent implements OnInit {
 
   percentRightAnswers = 0;
 
-  percent = '0%';
+  percent = '0.0%';
   ratio = this.rightAnswers + '/' + this.wrongAnswers;
-
-  checkAnswer() {}
 
   changeScale(event: MouseEvent) {
     let target = event.currentTarget;
@@ -69,7 +63,7 @@ export class IntuitionFiguresComponent implements OnInit {
     let percentAll = this.rightAnswers + this.wrongAnswers;
     this.percentRightAnswers = (this.rightAnswers * 100) / percentAll;
 
-    this.percent = Math.round(this.percentRightAnswers) + '%';
+    this.percent = this.percentRightAnswers.toFixed(1) + '%';
     this.ratio = this.rightAnswers + '/' + this.wrongAnswers;
   }
 
@@ -116,7 +110,6 @@ export class IntuitionFiguresComponent implements OnInit {
   }
 
   clickSound() {
-    //if (!this.isAudioOn) return;
     let sound = new Audio('./../assets/audio/click.mp3');
     sound.play();
   }

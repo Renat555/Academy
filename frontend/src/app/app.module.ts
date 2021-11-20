@@ -11,11 +11,12 @@ import { WinComponent } from './arena/win/win.component';
 import { LossComponent } from './arena/loss/loss.component';
 import { HallComponent } from './hall/hall.component';
 import { HintComponent } from './common/hint/hint.component';
-import { IntuitionFiguresComponent } from './intuition/intuitionFigures/intuitionFigures.component';
+import { IntuitionFiguresComponent } from './intuition/intuition-figures/intuition-figures.component';
 import { ScaleComponent } from './common/scale/scale.component';
 import { ArenaComponent } from './arena/arena.component';
 import { IntuitionComponent } from './intuition/intuition.component';
 import { IntuitionMenuComponent } from './intuition/intuition-menu/intuition-menu.component';
+import { IntuitionBlackWhiteComponent } from './intuition/intuition-black-white/intuition-black-white.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { IntuitionMenuComponent } from './intuition/intuition-menu/intuition-men
     IntuitionFiguresComponent,
     ScaleComponent,
     IntuitionMenuComponent,
+    IntuitionBlackWhiteComponent,
   ],
   imports: [
     BrowserModule,

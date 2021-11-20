@@ -7,7 +7,8 @@ import { WinComponent } from './arena/win/win.component';
 import { HallComponent } from './hall/hall.component';
 import { IntuitionMenuComponent } from './intuition/intuition-menu/intuition-menu.component';
 import { IntuitionComponent } from './intuition/intuition.component';
-import { IntuitionFiguresComponent } from './intuition/intuitionFigures/intuitionFigures.component';
+import { IntuitionFiguresComponent } from './intuition/intuition-figures/intuition-figures.component';
+import { IntuitionBlackWhiteComponent } from './intuition/intuition-black-white/intuition-black-white.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,10 @@ const routes: Routes = [
       {
         path: 'intuitionFigures',
         component: IntuitionFiguresComponent,
+      },
+      {
+        path: 'intuitionBlackWhite',
+        component: IntuitionBlackWhiteComponent,
       },
     ],
   },
