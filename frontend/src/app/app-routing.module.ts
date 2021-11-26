@@ -4,32 +4,37 @@ import { ArenaComponent } from './arena/arena.component';
 import { GameComponent } from './arena/game/game.component';
 import { LossComponent } from './arena/loss/loss.component';
 import { WinComponent } from './arena/win/win.component';
-import { HallComponent } from './hall/hall.component';
+import { MenuComponent } from './menu/menu.component';
 import { IntuitionMenuComponent } from './intuition/intuition-menu/intuition-menu.component';
 import { IntuitionComponent } from './intuition/intuition.component';
 import { IntuitionFiguresComponent } from './intuition/intuition-figures/intuition-figures.component';
 import { IntuitionBlackWhiteComponent } from './intuition/intuition-black-white/intuition-black-white.component';
+import { ColorsComponent } from './intuition/colors/colors.component';
 
 const routes: Routes = [
   {
     path: '',
-    component: HallComponent,
+    component: MenuComponent,
   },
   {
     path: 'intuition',
     component: IntuitionComponent,
     children: [
       {
-        path: 'intuitionMenu',
+        path: 'menu',
         component: IntuitionMenuComponent,
       },
       {
-        path: 'intuitionFigures',
+        path: 'figures',
         component: IntuitionFiguresComponent,
       },
       {
-        path: 'intuitionBlackWhite',
+        path: 'blackWhite',
         component: IntuitionBlackWhiteComponent,
+      },
+      {
+        path: 'colors',
+        component: ColorsComponent,
       },
     ],
   },
@@ -53,7 +58,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    component: HallComponent,
+    component: MenuComponent,
   },
 ];
 

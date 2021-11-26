@@ -1,0 +1,32 @@
+<div
+  class="sound"
+  (click)="toggleSound()"
+  [ngClass]="{ soundon: isAudioOn, soundoff: !isAudioOn }"
+></div>
+<div class="exit" (click)="goToMenu()"></div>
+<div class="background">
+  <div
+    class="boxMain"
+    [ngClass]="{
+      red: isRed,
+      orange: isOrange,
+      yellow: isYellow,
+      green: isGreen,
+      indigo: isIndigo,
+      blue: isBlue,
+      violet: isViolet
+    }"
+  ></div>
+  <div class="box box1" (click)="showColor($event)" data-color="red"></div>
+  <div class="box box2" (click)="showColor($event)" data-color="orange"></div>
+  <div class="box box3" (click)="showColor($event)" data-color="yellow"></div>
+  <div class="box box4" (click)="showColor($event)" data-color="green"></div>
+  <div class="box box5" (click)="showColor($event)" data-color="indigo"></div>
+  <div class="box box6" (click)="showColor($event)" data-color="blue"></div>
+  <div class="box box7" (click)="showColor($event)" data-color="violet"></div>
+  <div class="percent">{{ percent }}</div>
+  <div class="ratio">{{ ratio }}</div>
+  <div class="scale">
+    <app-scale [percentRightAnswers]="percentRightAnswers"></app-scale>
+  </div>
+</div>

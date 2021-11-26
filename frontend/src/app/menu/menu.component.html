@@ -1,0 +1,16 @@
+<div
+  class="sound"
+  (click)="toggleSound()"
+  [ngClass]="{ soundon: isAudioOn, soundoff: !isAudioOn }"
+></div>
+<div class="background" #background>
+  <div class="box1 box" (click)="goToIntuition()">
+    <div class="text">РАБОТА С ИНТУИЦИЕЙ</div>
+  </div>
+  <div class="box2 box" (click)="goToArena()">
+    <div class="text">СРАЖЕНИЕ НА АРЕНЕ</div>
+  </div>
+  <div class="box3 box" (click)="goToDuels()">
+    <div class="text">ДУЭЛИ</div>
+  </div>
+</div>

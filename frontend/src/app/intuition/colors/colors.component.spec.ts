@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HallComponent } from './hall.component';
+import { ColorsComponent } from './colors.component';
 
-describe('HallComponent', () => {
-  let component: HallComponent;
-  let fixture: ComponentFixture<HallComponent>;
+describe('ColorsComponent', () => {
+  let component: ColorsComponent;
+  let fixture: ComponentFixture<ColorsComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ HallComponent ]
+      declarations: [ ColorsComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(HallComponent);
+    fixture = TestBed.createComponent(ColorsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

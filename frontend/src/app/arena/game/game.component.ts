@@ -4,30 +4,21 @@ import {
   style,
   transition,
   trigger,
-  useAnimation,
 } from '@angular/animations';
 import {
-  AfterContentInit,
-  AfterViewChecked,
   AfterViewInit,
   Component,
   ElementRef,
+  OnChanges,
   OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
+import { selectSoundSwitch } from '../../store/selectors/sound.selector';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import {
-  decreaseEnemyHealth,
-  decreaseUserHealth,
-  resetHealth,
-} from '../../store/actions/arena.action';
-import {
-  selectEnemyHealth,
-  selectUserHealth,
-} from '../../store/selectors/arena.selector';
 import { AppState } from '../../store/state/app.state';
+import { soundOff, soundOn } from 'src/app/store/actions/sound.action';
 
 function calcDirection(
   userTop: number,
@@ -230,8 +221,14 @@ interface Coordinate {
     ]),
   ],
 })
-export class GameComponent implements OnDestroy, AfterViewInit {
+export class GameComponent implements OnDestroy, AfterViewInit, OnInit {
   constructor(private store: Store<AppState>, private router: Router) {}
+
+  ngOnInit() {
+    this.store.select(selectSoundSwitch).subscribe((state) => {
+      this.isAudioOn = state;
+    });
+  }
 
   ngAfterViewInit() {
     setTimeout(() => {
@@ -467,9 +464,10 @@ export class GameComponent implements OnDestroy, AfterViewInit {
   enemyHealth = 100;
   enemyHealthPercent = '100%';
 
+  isAudioOn: boolean = true;
+
   isFireVisible: boolean = false;
   isSpellComplete: boolean = true;
-  isAudioOn: boolean = true;
 
   userTop: string = '';
 
@@ -561,27 +559,27 @@ export class GameComponent implements OnDestroy, AfterViewInit {
 
   fireSound() {
     if (!this.isAudioOn) return;
-    let sound = new Audio('./../assets/audio/fire.mp3');
+    let sound = new Audio('./assets/audio/fire.mp3');
     sound.play();
   }
 
   stepSound() {
     if (!this.isAudioOn) return;
-    let sound = new Audio('./../assets/audio/step.mp3');
+    let sound = new Audio('./assets/audio/step.mp3');
     sound.play();
   }
 
   dischargeSound() {
     if (!this.isAudioOn) return;
-    let sound = new Audio('./../assets/audio/discharge.mp3');
+    let sound = new Audio('./assets/audio/discharge.mp3');
     sound.play();
   }
 
   toggleSound() {
     if (this.isAudioOn) {
-      this.isAudioOn = false;
+      this.store.dispatch(soundOff());
     } else {
-      this.isAudioOn = true;
+      this.store.dispatch(soundOn());
     }
   }
 

@@ -1,3 +1,8 @@
+<div
+  class="sound"
+  (click)="toggleSound()"
+  [ngClass]="{ soundon: isAudioOn, soundoff: !isAudioOn }"
+></div>
 <div class="exit" (click)="goToMenu()"></div>
 <div class="background">
   <div

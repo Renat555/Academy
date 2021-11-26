@@ -6,11 +6,11 @@ import { selectSoundSwitch } from 'src/app/store/selectors/sound.selector';
 import { AppState } from 'src/app/store/state/app.state';
 
 @Component({
-  selector: 'app-intuition-black-white',
-  templateUrl: './intuition-black-white.component.html',
-  styleUrls: ['./intuition-black-white.component.less'],
+  selector: 'app-colors',
+  templateUrl: './colors.component.html',
+  styleUrls: ['./colors.component.less'],
 })
-export class IntuitionBlackWhiteComponent implements OnInit {
+export class ColorsComponent implements OnInit {
   constructor(private router: Router, private store: Store<AppState>) {}
 
   ngOnInit(): void {
@@ -22,15 +22,20 @@ export class IntuitionBlackWhiteComponent implements OnInit {
   }
 
   randomIndex() {
-    return Math.floor(Math.random() * (3 - 1) + 1);
+    return Math.floor(Math.random() * (8 - 1) + 1);
   }
 
   isAudioOn: boolean = true;
 
   colorIndex = 0;
 
-  isBlack = false;
-  isWhite = false;
+  isRed = false;
+  isOrange = false;
+  isYellow = false;
+  isGreen = false;
+  isIndigo = false;
+  isBlue = false;
+  isViolet = false;
 
   showColorId: any;
 
@@ -49,8 +54,13 @@ export class IntuitionBlackWhiteComponent implements OnInit {
       let color = (target as HTMLElement).dataset.color;
 
       if (
-        (color === 'black' && this.colorIndex === 1) ||
-        (color === 'white' && this.colorIndex === 2)
+        (color === 'red' && this.colorIndex === 1) ||
+        (color === 'orange' && this.colorIndex === 2) ||
+        (color === 'yellow' && this.colorIndex === 3) ||
+        (color === 'green' && this.colorIndex === 4) ||
+        (color === 'indigo' && this.colorIndex === 5) ||
+        (color === 'blue' && this.colorIndex === 6) ||
+        (color === 'violet' && this.colorIndex === 7)
       ) {
         this.rightAnswers++;
       } else {
@@ -74,9 +84,19 @@ export class IntuitionBlackWhiteComponent implements OnInit {
     this.changeScale(event);
 
     if (this.colorIndex === 1) {
-      this.isBlack = true;
+      this.isRed = true;
     } else if (this.colorIndex === 2) {
-      this.isWhite = true;
+      this.isOrange = true;
+    } else if (this.colorIndex === 3) {
+      this.isYellow = true;
+    } else if (this.colorIndex === 4) {
+      this.isGreen = true;
+    } else if (this.colorIndex === 5) {
+      this.isIndigo = true;
+    } else if (this.colorIndex === 6) {
+      this.isBlue = true;
+    } else if (this.colorIndex === 7) {
+      this.isViolet = true;
     }
 
     this.colorIndex = this.randomIndex();
@@ -91,8 +111,13 @@ export class IntuitionBlackWhiteComponent implements OnInit {
   }
 
   hideColors() {
-    this.isBlack = false;
-    this.isWhite = false;
+    this.isRed = false;
+    this.isOrange = false;
+    this.isYellow = false;
+    this.isGreen = false;
+    this.isIndigo = false;
+    this.isBlue = false;
+    this.isViolet = false;
   }
 
   toggleSound() {

@@ -9,7 +9,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from './store';
 import { WinComponent } from './arena/win/win.component';
 import { LossComponent } from './arena/loss/loss.component';
-import { HallComponent } from './hall/hall.component';
+import { MenuComponent } from './menu/menu.component';
 import { HintComponent } from './common/hint/hint.component';
 import { IntuitionFiguresComponent } from './intuition/intuition-figures/intuition-figures.component';
 import { ScaleComponent } from './common/scale/scale.component';
@@ -17,6 +17,7 @@ import { ArenaComponent } from './arena/arena.component';
 import { IntuitionComponent } from './intuition/intuition.component';
 import { IntuitionMenuComponent } from './intuition/intuition-menu/intuition-menu.component';
 import { IntuitionBlackWhiteComponent } from './intuition/intuition-black-white/intuition-black-white.component';
+import { ColorsComponent } from './intuition/colors/colors.component';
 
 @NgModule({
   declarations: [
@@ -26,13 +27,14 @@ import { IntuitionBlackWhiteComponent } from './intuition/intuition-black-white/
     HealthComponent,
     WinComponent,
     LossComponent,
-    HallComponent,
+    MenuComponent,
     HintComponent,
     IntuitionComponent,
     IntuitionFiguresComponent,
     ScaleComponent,
     IntuitionMenuComponent,
     IntuitionBlackWhiteComponent,
+    ColorsComponent,
   ],
   imports: [
     BrowserModule,

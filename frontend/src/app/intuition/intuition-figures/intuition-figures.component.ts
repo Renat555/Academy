@@ -1,7 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { selectAnswers } from '../../store/selectors/intuition.selector';
+import { soundOff, soundOn } from 'src/app/store/actions/sound.action';
+import { selectSoundSwitch } from 'src/app/store/selectors/sound.selector';
 import { AppState } from '../../store/state/app.state';
 
 @Component({
@@ -13,8 +14,11 @@ export class IntuitionFiguresComponent implements OnInit {
   constructor(private router: Router, private store: Store<AppState>) {}
 
   ngOnInit() {
+    this.store.select(selectSoundSwitch).subscribe((state) => {
+      this.isAudioOn = state;
+    });
+
     this.pictureIndex = this.randomIndex();
-    this.store.select(selectAnswers).subscribe((answers) => {});
   }
 
   randomIndex() {
@@ -27,6 +31,8 @@ export class IntuitionFiguresComponent implements OnInit {
   isSquare2: boolean = false;
   isHexagon: boolean = false;
   isHexagon2: boolean = false;
+
+  isAudioOn: boolean = true;
 
   pictureIndex: number = 0;
 
@@ -97,7 +103,7 @@ export class IntuitionFiguresComponent implements OnInit {
   }
 
   goToMenu() {
-    this.router.navigate(['intuition/intuitionMenu']);
+    this.router.navigate(['intuition/menu']);
   }
 
   hidePictures() {
@@ -109,7 +115,16 @@ export class IntuitionFiguresComponent implements OnInit {
     this.isHexagon2 = false;
   }
 
+  toggleSound() {
+    if (this.isAudioOn) {
+      this.store.dispatch(soundOff());
+    } else {
+      this.store.dispatch(soundOn());
+    }
+  }
+
   clickSound() {
+    if (!this.isAudioOn) return;
     let sound = new Audio('./../assets/audio/click.mp3');
     sound.play();
   }
