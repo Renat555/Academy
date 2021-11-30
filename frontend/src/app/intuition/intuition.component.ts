@@ -1,15 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-intuition',
   templateUrl: './intuition.component.html',
-  styleUrls: ['./intuition.component.less']
+  styleUrls: ['./intuition.component.less'],
 })
-export class IntuitionComponent implements OnInit {
-
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
-}
+export class IntuitionComponent {}

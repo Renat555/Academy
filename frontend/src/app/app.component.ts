@@ -1,10 +1,16 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { HttpService } from './http.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.less']
+  styleUrls: ['./app.component.less'],
+  providers: [HttpService],
 })
-export class AppComponent {
-  preventDafoult(event: MouseEvent) {}
+export class AppComponent implements OnInit {
+  constructor(private httpService: HttpService) {}
+
+  ngOnInit() {
+    this.httpService.sendCount().subscribe((data) => {});
+  }
 }

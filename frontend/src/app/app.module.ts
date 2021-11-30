@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { GameComponent } from './arena/game/game.component';
 import { HealthComponent } from './common/health/health.component';
 import { StoreModule } from '@ngrx/store';
+import { HttpClientModule } from '@angular/common/http';
 import { reducers } from './store';
 import { WinComponent } from './arena/win/win.component';
 import { LossComponent } from './arena/loss/loss.component';
@@ -41,6 +42,7 @@ import { ColorsComponent } from './intuition/colors/colors.component';
     AppRoutingModule,
     BrowserAnimationsModule,
     StoreModule.forRoot(reducers),
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
