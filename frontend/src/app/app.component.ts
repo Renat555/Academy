@@ -11,6 +11,8 @@ export class AppComponent implements OnInit {
   constructor(private httpService: HttpService) {}
 
   ngOnInit() {
-    this.httpService.sendCount().subscribe((data) => {});
+    this.httpService.sendCount().subscribe((data) => {
+      console.log(data);
+    });
   }
 }

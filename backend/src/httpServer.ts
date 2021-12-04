@@ -18,22 +18,19 @@ const postgresClient = new Client({
 });
 postgresClient.connect();
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-app.use(
-  session({
-    store: new redisStorage({
-      host: "127.0.0.1",
-      port: 6379,
-      client: redisClient,
-    }),
-    secret: "dfgert235",
-    saveUninitialized: true,
-    cookie: { maxAge: 1000 * 60 * 60 * 24 },
-    resave: false,
-  })
-);
+// app.use(
+//   session({
+//     store: new redisStorage({
+//       host: "127.0.0.1",
+//       port: 6379,
+//       client: redisClient,
+//     }),
+//     secret: "dfgert235",
+//     saveUninitialized: true,
+//     cookie: { maxAge: 1000 * 60 * 60 * 24 },
+//     resave: false,
+//   })
+// );
 
 app.use(function (req: Request, res: Response, next: NextFunction) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -44,8 +41,12 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
   next();
 });
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
 app.get("/count", (req: Request, res: Response) => {
   count(postgresClient);
+  res.send(JSON.stringify("user is counted"));
 });
 
 app.listen(3000);
