@@ -48,9 +48,4 @@ export async function count(postgresClient: any) {
         }
       }
     });
-
-  // postgresClient.query("DROP TABLE count", (err: any, res: any) => {
-  //   console.log(1);
-  //   console.log(err);
-  // });
 }
