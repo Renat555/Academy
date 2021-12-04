@@ -4,18 +4,21 @@ import session from "express-session";
 import connectRedis from "connect-redis";
 import * as redis from "redis";
 import { count } from "./intuition/count";
+import { dev, prod } from "./config";
 
 const redisClient = redis.createClient();
 const redisStorage = connectRedis(session);
 const app = express();
 
-const postgresClient = new Client({
-  user: "renat",
-  host: "localhost",
-  database: "academy",
-  password: "pgp4h",
-  port: 5432,
-});
+let psqlSettings;
+
+if (process.env.NODE_ENV == "dev") {
+  psqlSettings = dev.psql;
+} else {
+  psqlSettings = prod.psql;
+}
+
+const postgresClient = new Client(psqlSettings);
 postgresClient.connect();
 
 // app.use(
