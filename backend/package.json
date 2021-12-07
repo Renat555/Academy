@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "cross-env NODE_ENV=dev ts-node-dev --respawn ./src/httpServer.ts",
-    "prod": "NODE_ENV=prod node ./build/httpServer.js"
+    "prod": "NODE_ENV=prod pm2 start ./build/httpServer.js"
   },
   "dependencies": {
     "connect-redis": "^6.0.0",

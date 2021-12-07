@@ -33,6 +33,7 @@ export class MenuComponent implements OnInit {
 
   goToDuels() {
     this.clickSound();
+    this.router.navigate(['duels/createHero']);
   }
 
   clickSound() {

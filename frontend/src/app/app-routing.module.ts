@@ -10,6 +10,9 @@ import { IntuitionComponent } from './intuition/intuition.component';
 import { IntuitionFiguresComponent } from './intuition/intuition-figures/intuition-figures.component';
 import { IntuitionBlackWhiteComponent } from './intuition/intuition-black-white/intuition-black-white.component';
 import { ColorsComponent } from './intuition/colors/colors.component';
+import { DuelsComponent } from './duels/duels.component';
+import { CreateHeroComponent } from './duels/create-hero/create-hero.component';
+import { HelpComponent } from './duels/help/help.component';
 
 const routes: Routes = [
   {
@@ -53,6 +56,24 @@ const routes: Routes = [
       {
         path: 'loss',
         component: LossComponent,
+      },
+    ],
+  },
+  {
+    path: 'duels',
+    component: DuelsComponent,
+    children: [
+      {
+        path: 'createHero',
+        component: CreateHeroComponent,
+      },
+      {
+        path: 'game',
+        component: GameComponent,
+      },
+      {
+        path: 'help',
+        component: HelpComponent,
       },
     ],
   },

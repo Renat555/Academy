@@ -19,6 +19,9 @@ import { IntuitionComponent } from './intuition/intuition.component';
 import { IntuitionMenuComponent } from './intuition/intuition-menu/intuition-menu.component';
 import { IntuitionBlackWhiteComponent } from './intuition/intuition-black-white/intuition-black-white.component';
 import { ColorsComponent } from './intuition/colors/colors.component';
+import { DuelsComponent } from './duels/duels.component';
+import { HelpComponent } from './duels/help/help.component';
+import { CreateHeroComponent } from './duels/create-hero/create-hero.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +39,9 @@ import { ColorsComponent } from './intuition/colors/colors.component';
     IntuitionMenuComponent,
     IntuitionBlackWhiteComponent,
     ColorsComponent,
+    DuelsComponent,
+    HelpComponent,
+    CreateHeroComponent,
   ],
   imports: [
     BrowserModule,
