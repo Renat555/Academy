@@ -22,6 +22,7 @@ import { ColorsComponent } from './intuition/colors/colors.component';
 import { DuelsComponent } from './duels/duels.component';
 import { HelpComponent } from './duels/help/help.component';
 import { CreateHeroComponent } from './duels/create-hero/create-hero.component';
+import { PlayingCardsComponent } from './intuition/playing-cards/playing-cards.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import { CreateHeroComponent } from './duels/create-hero/create-hero.component';
     DuelsComponent,
     HelpComponent,
     CreateHeroComponent,
+    PlayingCardsComponent,
   ],
   imports: [
     BrowserModule,

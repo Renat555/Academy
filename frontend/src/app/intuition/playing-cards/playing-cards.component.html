@@ -1,0 +1,81 @@
+<div
+  class="sound"
+  (click)="toggleSound()"
+  [ngClass]="{ soundon: isAudioOn, soundoff: !isAudioOn }"
+></div>
+<div class="exit" (click)="goToMenu()"></div>
+<div class="background">
+  <div
+    class="mainPicture"
+    [ngClass]="{
+      cardBack: isCardBack,
+      twoOfClubs: isTwoOfClubs,
+      twoOfDiamonds: isTwoOfDiamonds,
+      twoOfHearts: isTwoOfHearts,
+      twoOfSpades: isTwoOfSpades,
+      threeOfClubs: isThreeOfClubs,
+      threeOfDiamonds: isThreeOfDiamonds,
+      threeOfHearts: isThreeOfHearts,
+      threeOfSpades: isThreeOfSpades,
+      fourOfClubs: isFourOfClubs,
+      fourOfDiamonds: isFourOfDiamonds,
+      fourOfHearts: isFourOfHearts,
+      fourOfSpades: isFourOfSpades,
+      fiveOfClubs: isFiveOfClubs,
+      fiveOfDiamonds: isFiveOfDiamonds,
+      fiveOfHearts: isFiveOfHearts,
+      fiveOfSpades: isFiveOfSpades,
+      sixOfClubs: isSixOfClubs,
+      sixOfDiamonds: isSixOfDiamonds,
+      sixOfHearts: isSixOfHearts,
+      sixOfSpades: isSixOfSpades,
+      sevenOfClubs: isSevenOfClubs,
+      sevenOfDiamonds: isSevenOfDiamonds,
+      sevenOfHearts: isSevenOfHearts,
+      sevenOfSpades: isSevenOfSpades,
+      eightOfClubs: isEightOfClubs,
+      eightOfDiamonds: isEightOfDiamonds,
+      eightOfHearts: isEightOfHearts,
+      eightOfSpades: isEightOfSpades,
+      nineOfClubs: isNineOfClubs,
+      nineOfDiamonds: isNineOfDiamonds,
+      nineOfHearts: isNineOfHearts,
+      nineOfSpades: isNineOfSpades,
+      tenOfClubs: isTenOfClubs,
+      tenOfDiamonds: isTenOfDiamonds,
+      tenOfHearts: isTenOfHearts,
+      tenOfSpades: isTenOfSpades,
+      jackOfClubs: isJackOfClubs,
+      jackOfDiamonds: isJackOfDiamonds,
+      jackOfHearts: isJackOfHearts,
+      jackOfSpades: isJackOfSpades,
+      queenOfClubs: isQueenOfClubs,
+      queenOfDiamonds: isQueenOfDiamonds,
+      queenOfHearts: isQueenOfHearts,
+      queenOfSpades: isQueenOfSpades,
+      kingOfClubs: isKingOfClubs,
+      kingOfDiamonds: isKingOfDiamonds,
+      kingOfHearts: isKingOfHearts,
+      kingOfSpades: isKingOfSpades,
+      aceOfClubs: isAceOfClubs,
+      aceOfDiamonds: isAceOfDiamonds,
+      aceOfHearts: isAceOfHearts,
+      aceOfSpades: isAceOfSpades
+    }"
+  ></div>
+  <div
+    class="card twoOfClubs"
+    data-card="twoOfClubs"
+    (click)="showPicture($event)"
+  ></div>
+  <div
+    class="card twoOfDiamonds"
+    data-card="twoOfDiamonds"
+    (click)="showPicture($event)"
+  ></div>
+  <div class="percent">{{ percent }}</div>
+  <div class="ratio">{{ ratio }}</div>
+  <div class="scale">
+    <app-scale [percentRightAnswers]="percentRightAnswers"></app-scale>
+  </div>
+</div>

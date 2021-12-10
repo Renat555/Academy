@@ -13,6 +13,7 @@ import { ColorsComponent } from './intuition/colors/colors.component';
 import { DuelsComponent } from './duels/duels.component';
 import { CreateHeroComponent } from './duels/create-hero/create-hero.component';
 import { HelpComponent } from './duels/help/help.component';
+import { PlayingCardsComponent } from './intuition/playing-cards/playing-cards.component';
 
 const routes: Routes = [
   {
@@ -38,6 +39,10 @@ const routes: Routes = [
       {
         path: 'colors',
         component: ColorsComponent,
+      },
+      {
+        path: 'playingCards',
+        component: PlayingCardsComponent,
       },
     ],
   },

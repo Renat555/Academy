@@ -40,6 +40,11 @@ export class IntuitionMenuComponent implements OnInit {
     this.router.navigate(['intuition/colors']);
   }
 
+  goToPlayingCards() {
+    this.clickSound();
+    this.router.navigate(['intuition/playingCards']);
+  }
+
   toggleSound() {
     if (this.isAudioOn) {
       this.store.dispatch(soundOff());
