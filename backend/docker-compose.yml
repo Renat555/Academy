@@ -1,0 +1,16 @@
+version: "3.7"
+services:
+  postgres:
+    image: postgres:14.1
+    environment:
+      POSTGRES_DB: "academy"
+      POSTGRES_USER: "renat"
+      POSTGRES_PASSWORD: "pgp4h"
+    ports:
+      - "5432:5432"
+  redis:
+    image: "redis:latest"
+    ports:
+      - 6379:6379
+    environment:
+      - ALLOW_EMPTY_PASSWORD=yes

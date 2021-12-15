@@ -88,10 +88,7 @@ export class PlayingCardsComponent implements OnInit {
   rightAnswers = 0;
   wrongAnswers = 0;
 
-  percentRightAnswers = 0;
-
-  percent = '0.0%';
-  ratio = this.rightAnswers + '/' + this.wrongAnswers;
+  percentHint = 'Среднестатистический показатель \xa01.9%';
 
   changeScale(event: MouseEvent) {
     let target = event.currentTarget;
@@ -157,13 +154,8 @@ export class PlayingCardsComponent implements OnInit {
       } else {
         this.wrongAnswers++;
       }
+      
     }
-
-    let percentAll = this.rightAnswers + this.wrongAnswers;
-    this.percentRightAnswers = (this.rightAnswers * 100) / percentAll;
-
-    this.percent = this.percentRightAnswers.toFixed(1) + '%';
-    this.ratio = this.rightAnswers + '/' + this.wrongAnswers;
   }
 
   showPicture(event: MouseEvent) {
@@ -174,6 +166,7 @@ export class PlayingCardsComponent implements OnInit {
 
     this.changeScale(event);
 
+    this.isCardBack = false;
     if (this.cardIndex === 1) {
       this.isTwoOfClubs = true;
     } else if (this.cardIndex === 2) {
@@ -256,27 +249,27 @@ export class PlayingCardsComponent implements OnInit {
       this.isJackOfSpades = true;
     } else if (this.cardIndex === 41) {
       this.isQueenOfClubs = true;
-    } else if (this.cardIndex === 32) {
+    } else if (this.cardIndex === 42) {
       this.isQueenOfDiamonds = true;
-    } else if (this.cardIndex === 33) {
+    } else if (this.cardIndex === 43) {
       this.isQueenOfHearts = true;
-    } else if (this.cardIndex === 34) {
+    } else if (this.cardIndex === 44) {
       this.isQueenOfSpades = true;
-    } else if (this.cardIndex === 35) {
+    } else if (this.cardIndex === 45) {
       this.isKingOfClubs = true;
-    } else if (this.cardIndex === 36) {
+    } else if (this.cardIndex === 46) {
       this.isKingOfDiamonds = true;
-    } else if (this.cardIndex === 37) {
+    } else if (this.cardIndex === 47) {
       this.isKingOfHearts = true;
-    } else if (this.cardIndex === 38) {
+    } else if (this.cardIndex === 48) {
       this.isKingOfSpades = true;
-    } else if (this.cardIndex === 39) {
+    } else if (this.cardIndex === 49) {
       this.isAceOfClubs = true;
-    } else if (this.cardIndex === 40) {
+    } else if (this.cardIndex === 50) {
       this.isAceOfDiamonds = true;
-    } else if (this.cardIndex === 41) {
+    } else if (this.cardIndex === 51) {
       this.isAceOfHearts = true;
-    } else if (this.cardIndex === 41) {
+    } else if (this.cardIndex === 52) {
       this.isAceOfSpades = true;
     }
 
@@ -344,6 +337,7 @@ export class PlayingCardsComponent implements OnInit {
     this.isAceOfDiamonds = false;
     this.isAceOfHearts = false;
     this.isAceOfSpades = false;
+    this.isCardBack = true;
   }
 
   toggleSound() {

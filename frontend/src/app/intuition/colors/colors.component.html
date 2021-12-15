@@ -24,9 +24,7 @@
   <div class="box box5" (click)="showColor($event)" data-color="indigo"></div>
   <div class="box box6" (click)="showColor($event)" data-color="blue"></div>
   <div class="box box7" (click)="showColor($event)" data-color="violet"></div>
-  <div class="percent">{{ percent }}</div>
-  <div class="ratio">{{ ratio }}</div>
-  <div class="scale">
-    <app-scale [percentRightAnswers]="percentRightAnswers"></app-scale>
-  </div>
+  <div class="bottom">
+    <app-intuition-bottom [rightAnswers]="rightAnswers" [wrongAnswers]="wrongAnswers" [percentHint]="percentHint"></app-intuition-bottom>
+</div>
 </div>

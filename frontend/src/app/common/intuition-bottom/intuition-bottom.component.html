@@ -1,0 +1,11 @@
+<div class="ratioHint" *ngIf="isRatioHintVisible">
+    <app-hint [text]="ratioHint"></app-hint>
+</div>
+<div class="percentHint" *ngIf="isPercentHintVisible"><app-hint [text]="percentHint"></app-hint></div>
+<div class="bottom">
+    <div class="ratio" (mouseenter)="showRatioHint()" (mouseleave)="hideRatioHint()">{{ratio}}</div>
+    <div class="scale">
+        <app-scale [percentRightAnswers]="percentRightAnswers"></app-scale>
+    </div>
+    <div class="percent" (mouseenter)="showPercentHint()" (mouseleave)="hidePercentHint()">{{percent}}</div>
+</div>

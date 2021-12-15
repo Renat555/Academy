@@ -42,10 +42,7 @@ export class ColorsComponent implements OnInit {
   rightAnswers = 0;
   wrongAnswers = 0;
 
-  percentRightAnswers = 0;
-
-  percent = '0.0%';
-  ratio = this.rightAnswers + '/' + this.wrongAnswers;
+  percentHint = 'Среднестатистический показатель 14.3%';
 
   changeScale(event: MouseEvent) {
     let target = event.currentTarget;
@@ -67,12 +64,6 @@ export class ColorsComponent implements OnInit {
         this.wrongAnswers++;
       }
     }
-
-    let percentAll = this.rightAnswers + this.wrongAnswers;
-    this.percentRightAnswers = (this.rightAnswers * 100) / percentAll;
-
-    this.percent = this.percentRightAnswers.toFixed(1) + '%';
-    this.ratio = this.rightAnswers + '/' + this.wrongAnswers;
   }
 
   showColor(event: MouseEvent) {

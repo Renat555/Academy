@@ -37,9 +37,7 @@
   <div class="box box6" (click)="showPicture($event)" data-picture="hexagon2">
     <div class="picture"><div class="hexagon2"></div></div>
   </div>
-  <div class="percent">{{ percent }}</div>
-  <div class="ratio">{{ ratio }}</div>
-  <div class="scale">
-    <app-scale [percentRightAnswers]="percentRightAnswers"></app-scale>
-  </div>
+  <div class="bottom">
+    <app-intuition-bottom [rightAnswers]="rightAnswers" [wrongAnswers]="wrongAnswers" [percentHint]="percentHint"></app-intuition-bottom>
+</div>
 </div>
