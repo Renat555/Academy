@@ -21,13 +21,13 @@ const initialState: ArenaState = {
 
 const arenaReducer = createReducer(
   initialState,
-  on(ArenaActions.decreaseUserHealth, (state, health) => ({
+  on(ArenaActions.decreaseUserHealth, (state, { health }) => ({
     ...state,
-    user: { health: state.user.health - health.health },
+    user: { health: state.user.health - health },
   })),
-  on(ArenaActions.decreaseEnemyHealth, (state, health) => ({
+  on(ArenaActions.decreaseEnemyHealth, (state, { health }) => ({
     ...state,
-    enemy: { health: state.enemy.health - health.health },
+    enemy: { health: state.enemy.health - health },
   })),
   on(ArenaActions.resetHealth, (state) => ({
     ...state,

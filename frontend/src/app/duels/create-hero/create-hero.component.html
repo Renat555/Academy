@@ -11,72 +11,147 @@
     <h2>Выберите три стихии</h2>
   </div>
   <div class="elements">
-    <div class="container elementOne">
+    <div
+      class="container elementOne"
+      [ngClass]="{ selected: isElementOneSelected }"
+      data-element="fire"
+      (click)="selectElement($event)"
+    >
       <div class="picture fire"></div>
       <div class="title">Огонь</div>
     </div>
-    <div class="container elementTwo">
+    <div
+      class="container elementTwo"
+      [ngClass]="{ selected: isElementTwoSelected }"
+      data-element="water"
+      (click)="selectElement($event)"
+    >
       <div class="picture water"></div>
       <div class="title">Вода</div>
     </div>
-    <div class="container elementThree">
+    <div
+      class="container elementThree"
+      [ngClass]="{ selected: isElementThreeSelected }"
+      data-element="earth"
+      (click)="selectElement($event)"
+    >
       <div class="picture earth"></div>
       <div class="title">Земля</div>
     </div>
-    <div class="container elementFour">
+    <div
+      class="container elementFour"
+      [ngClass]="{ selected: isElementFourSelected }"
+      data-element="air"
+      (click)="selectElement($event)"
+    >
       <div class="picture air"></div>
       <div class="title">Воздух</div>
     </div>
-    <div class="container elementFive">
+    <div
+      class="container elementFive"
+      [ngClass]="{ selected: isElementFiveSelected }"
+      data-element="life"
+      (click)="selectElement($event)"
+    >
       <div class="picture life"></div>
       <div class="title">Жизнь</div>
     </div>
-    <div class="container elementSix">
+    <div
+      class="container elementSix"
+      [ngClass]="{ selected: isElementSixSelected }"
+      data-element="death"
+      (click)="selectElement($event)"
+    >
       <div class="picture death"></div>
       <div class="title">Смерть</div>
     </div>
   </div>
   <div class="center"><h2>Выберите пять форм</h2></div>
   <div class="forms">
-    <div class="container formOne">
+    <div
+      class="container formOne"
+      [ngClass]="{ selected: isFormOneSelected }"
+      data-form="spear"
+      (click)="selectForm($event)"
+    >
       <div class="picture spear"></div>
       <div class="title">Копье</div>
     </div>
-    <div class="container formTwo">
+    <div
+      class="container formTwo"
+      [ngClass]="{ selected: isFormTwoSelected }"
+      data-form="shield"
+      (click)="selectForm($event)"
+    >
       <div class="picture shield"></div>
       <div class="title">Щит</div>
     </div>
-    <div class="container formThree">
+    <div
+      class="container formThree"
+      [ngClass]="{ selected: isFormThreeSelected }"
+      data-form="crown"
+      (click)="selectForm($event)"
+    >
       <div class="picture crown"></div>
       <div class="title">Корона</div>
     </div>
-    <div class="container formFour">
+    <div
+      class="container formFour"
+      [ngClass]="{ selected: isFormFourSelected }"
+      data-form="source"
+      (click)="selectForm($event)"
+    >
       <div class="picture source"></div>
       <div class="title">Источник</div>
     </div>
-    <div class="container formFive">
+    <div
+      class="container formFive"
+      [ngClass]="{ selected: isFormFiveSelected }"
+      data-form="sphere"
+      (click)="selectForm($event)"
+    >
       <div class="picture sphere"></div>
       <div class="title">Сфера</div>
     </div>
-    <div class="container formSix">
+    <div
+      class="container formSix"
+      [ngClass]="{ selected: isFormSixSelected }"
+      data-form="stamp"
+      (click)="selectForm($event)"
+    >
       <div class="picture stamp"></div>
       <div class="title">Печать</div>
     </div>
-    <div class="container formSeven">
+    <div
+      class="container formSeven"
+      [ngClass]="{ selected: isFormSevenSelected }"
+      data-form="key"
+      (click)="selectForm($event)"
+    >
       <div class="picture key"></div>
       <div class="title">Ключ</div>
     </div>
-    <div class="container formEight">
+    <div
+      class="container formEight"
+      [ngClass]="{ selected: isFormEightSelected }"
+      data-form="flow"
+      (click)="selectForm($event)"
+    >
       <div class="picture flow"></div>
       <div class="title">Поток</div>
     </div>
-    <div class="container formNine">
+    <div
+      class="container formNine"
+      [ngClass]="{ selected: isFormNineSelected }"
+      data-form="power"
+      (click)="selectForm($event)"
+    >
       <div class="picture power"></div>
       <div class="title">Власть</div>
     </div>
   </div>
   <div class="buttons">
-    <div class="yellowButton buttonOne">
+    <div class="yellowButton buttonOne" (click)="showData()">
       <div class="text">Игра с компьтером</div>
     </div>
     <div class="yellowButton buttonTwo">

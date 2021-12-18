@@ -1,5 +1,5 @@
-import { createSelector, State } from "@ngrx/store";
-import { ArenaState, UserState } from "../reducers/arena.reducer";
+import { createSelector } from "@ngrx/store";
+import { ArenaState } from "../reducers/arena.reducer";
 import { AppState } from "../state/app.state";
 
 const userHealth = (state: AppState) => state.arena;
