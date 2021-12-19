@@ -21,28 +21,14 @@ if (process.env.NODE_ENV == "dev") {
 const postgresClient = new Client(psqlSettings);
 postgresClient.connect();
 
-// app.use(
-//   session({
-//     store: new redisStorage({
-//       host: "127.0.0.1",
-//       port: 6379,
-//       client: redisClient,
-//     }),
-//     secret: "dfgert235",
-//     saveUninitialized: true,
-//     cookie: { maxAge: 1000 * 60 * 60 * 24 },
-//     resave: false,
-//   })
-// );
-
-app.use(function (req: Request, res: Response, next: NextFunction) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
+// app.use(function (req: Request, res: Response, next: NextFunction) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header(
+//     "Access-Control-Allow-Headers",
+//     "Origin, X-Requested-With, Content-Type, Accept"
+//   );
+//   next();
+// });
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
