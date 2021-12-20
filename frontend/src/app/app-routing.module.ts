@@ -14,6 +14,7 @@ import { DuelsComponent } from './duels/duels.component';
 import { CreateHeroComponent } from './duels/create-hero/create-hero.component';
 import { HelpComponent } from './duels/help/help.component';
 import { PlayingCardsComponent } from './intuition/playing-cards/playing-cards.component';
+import { CardSuitsComponent } from './intuition/card-suits/card-suits.component';
 
 const routes: Routes = [
   {
@@ -43,6 +44,10 @@ const routes: Routes = [
       {
         path: 'playingCards',
         component: PlayingCardsComponent,
+      },
+      {
+        path: 'cardSuits',
+        component: CardSuitsComponent,
       },
     ],
   },

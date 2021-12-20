@@ -24,6 +24,7 @@ import { HelpComponent } from './duels/help/help.component';
 import { CreateHeroComponent } from './duels/create-hero/create-hero.component';
 import { PlayingCardsComponent } from './intuition/playing-cards/playing-cards.component';
 import { IntuitionBottomComponent } from './common/intuition-bottom/intuition-bottom.component';
+import { CardSuitsComponent } from './intuition/card-suits/card-suits.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { IntuitionBottomComponent } from './common/intuition-bottom/intuition-bo
     CreateHeroComponent,
     PlayingCardsComponent,
     IntuitionBottomComponent,
+    CardSuitsComponent,
   ],
   imports: [
     BrowserModule,

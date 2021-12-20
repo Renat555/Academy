@@ -1,0 +1,39 @@
+<div
+  class="sound"
+  (click)="toggleSound()"
+  [ngClass]="{ soundon: isAudioOn, soundoff: !isAudioOn }"
+></div>
+<div class="exit" (click)="goToMenu()"></div>
+<div class="background">
+  <div class="boxMain">
+    <div class="mainPicture">
+      <div
+        [ngClass]="{
+          diamond: isDiamond,
+          heart: isHeart,
+          club: isClub,
+          spade: isSpade
+        }"
+      ></div>
+    </div>
+  </div>
+  <div class="box box1" (click)="showPicture($event)" data-card="diamond">
+    <div class="diamond"></div>
+  </div>
+  <div class="box box2" (click)="showPicture($event)" data-card="heart">
+    <div class="heart"></div>
+  </div>
+  <div class="box box3" (click)="showPicture($event)" data-card="club">
+    <div class="club"></div>
+  </div>
+  <div class="box box4" (click)="showPicture($event)" data-card="spade">
+    <div class="spade"></div>
+  </div>
+  <div class="bottom">
+    <app-intuition-bottom
+      [rightAnswers]="rightAnswers"
+      [wrongAnswers]="wrongAnswers"
+      [percentHint]="percentHint"
+    ></app-intuition-bottom>
+  </div>
+</div>
