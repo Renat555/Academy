@@ -1,0 +1,28 @@
+<div
+  class="sound"
+  (click)="toggleSound()"
+  [ngClass]="{ soundon: isAudioOn, soundoff: !isAudioOn }"
+></div>
+<div class="exit" (click)="goToMenu()"></div>
+<div class="background">
+  <div class="firstNumber">
+    <span class="smallText">Минимум</span>
+    <input
+      type="text"
+      [formControl]="firstNumber"
+      data-input="first"
+      (keypress)="checkNumbers($event)"
+      class="inputNumber"
+    />
+  </div>
+  <div class="secondNumber">
+    <span class="smallText">Максимум</span>
+    <input
+      type="text"
+      [formControl]="secondNumber"
+      data-input="second"
+      (keypress)="checkNumbers($event)"
+      class="inputNumber secondNumber"
+    />
+  </div>
+</div>

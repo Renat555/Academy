@@ -1,0 +1,66 @@
+.background {
+  height: 100%;
+  width: 100%;
+  background-color: rgb(212, 212, 212);
+
+  display: grid;
+  grid-template-rows: 50px 100px 500px 50px;
+  grid-template-columns: 100px 200px 200px 700px 100px;
+
+  justify-items: center;
+  align-items: center;
+}
+
+.firstNumber {
+  grid-row: 2/3;
+  grid-column: 2/3;
+}
+
+.secondNumber {
+  grid-row: 2/3;
+  grid-column: 3/4;
+}
+
+.smallText {
+  font-size: 1.5rem;
+}
+
+.exit {
+  background-image: url(../../../assets/icons/door.png);
+  width: 40px;
+  height: 40px;
+  margin: 70px 0 0 10px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  position: absolute;
+}
+
+.sound {
+  width: 40px;
+  height: 40px;
+  margin: 10px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  cursor: pointer;
+}
+
+.soundoff {
+  background-image: url(../../../assets/icons/noSound.png);
+}
+
+.soundon {
+  background-image: url(../../../assets/icons/sound.png);
+}
+
+.inputNumber {
+  display: block;
+  margin: 0 auto;
+  width: 180px;
+  font-size: 25px;
+  padding: 6px 0 4px 10px;
+  border: 1px solid #cecece;
+  background: #f6f6f6;
+  border-radius: 8px;
+}

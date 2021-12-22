@@ -15,6 +15,7 @@ import { CreateHeroComponent } from './duels/create-hero/create-hero.component';
 import { HelpComponent } from './duels/help/help.component';
 import { PlayingCardsComponent } from './intuition/playing-cards/playing-cards.component';
 import { CardSuitsComponent } from './intuition/card-suits/card-suits.component';
+import { UserDefinedRangeComponent } from './intuition/user-defined-range/user-defined-range.component';
 
 const routes: Routes = [
   {
@@ -48,6 +49,10 @@ const routes: Routes = [
       {
         path: 'cardSuits',
         component: CardSuitsComponent,
+      },
+      {
+        path: 'userDefinedRanged',
+        component: UserDefinedRangeComponent,
       },
     ],
   },

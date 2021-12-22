@@ -5,19 +5,12 @@
   [ngClass]="{ soundon: isAudioOn, soundoff: !isAudioOn }"
 ></div>
 <div class="background">
-  <div class="box1 box" (click)="goToFigures()">
-    <div class="text">ФИГУРЫ</div>
-  </div>
-  <div class="box2 box" (click)="goToBlackWhite()">
-    <div class="text">ЧЕРНОЕ И БЕЛОЕ</div>
-  </div>
-  <div class="box3 box" (click)="goToColors()">
-    <div class="text">ЦВЕТА</div>
-  </div>
-  <div class="box4 box" (click)="goToPlayingCards()">
-    <div class="text">ИГРАЛЬНЫЕ КАРТЫ</div>
-  </div>
-  <div class="box5 box" (click)="goToCardSuits()">
-    <div class="text">КАРТОЧНЫЕ МАСТИ</div>
+  <div class="box1 box" (click)="goToFigures()">ФИГУРЫ</div>
+  <div class="box2 box" (click)="goToBlackWhite()">ЧЕРНОЕ И БЕЛОЕ</div>
+  <div class="box3 box" (click)="goToColors()">ЦВЕТА</div>
+  <div class="box4 box" (click)="goToPlayingCards()">ИГРАЛЬНЫЕ КАРТЫ</div>
+  <div class="box5 box" (click)="goToCardSuits()">КАРТОЧНЫЕ МАСТИ</div>
+  <div class="box6 box" (click)="goToUserDefinedRanged()">
+    ПРОИЗВОЛЬНЫЙ<br />&nbsp;&nbsp;ДИАПАЗОН
   </div>
 </div>

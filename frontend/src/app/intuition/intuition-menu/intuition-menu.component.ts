@@ -50,6 +50,11 @@ export class IntuitionMenuComponent implements OnInit {
     this.router.navigate(['intuition/cardSuits']);
   }
 
+  goToUserDefinedRanged() {
+    this.clickSound();
+    this.router.navigate(['intuition/userDefinedRanged']);
+  }
+
   toggleSound() {
     if (this.isAudioOn) {
       this.store.dispatch(soundOff());

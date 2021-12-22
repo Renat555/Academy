@@ -25,6 +25,8 @@ import { CreateHeroComponent } from './duels/create-hero/create-hero.component';
 import { PlayingCardsComponent } from './intuition/playing-cards/playing-cards.component';
 import { IntuitionBottomComponent } from './common/intuition-bottom/intuition-bottom.component';
 import { CardSuitsComponent } from './intuition/card-suits/card-suits.component';
+import { UserDefinedRangeComponent } from './intuition/user-defined-range/user-defined-range.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -48,8 +50,10 @@ import { CardSuitsComponent } from './intuition/card-suits/card-suits.component'
     PlayingCardsComponent,
     IntuitionBottomComponent,
     CardSuitsComponent,
+    UserDefinedRangeComponent,
   ],
   imports: [
+    ReactiveFormsModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
