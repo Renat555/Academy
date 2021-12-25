@@ -12,6 +12,7 @@
       [formControl]="firstNumber"
       data-input="first"
       (keypress)="checkNumbers($event)"
+      (input)="calculateAnswer()"
       class="inputNumber"
     />
   </div>
@@ -22,7 +23,26 @@
       [formControl]="secondNumber"
       data-input="second"
       (keypress)="checkNumbers($event)"
-      class="inputNumber secondNumber"
+      (input)="calculateAnswer()"
+      class="inputNumber"
     />
   </div>
+  <div class="userNumber">
+    <div class="smallText">Ваш вариант</div>
+    <input
+      type="text"
+      [formControl]="userNumber"
+      data-input="user"
+      (keypress)="checkNumbers($event)"
+      class="inputNumber"
+    />
+  </div>
+  <div class="discrepancy">
+    <div class="smallText">Отклонение {{ discrepancy }}%</div>
+  </div>
+  <div class="result">
+    <div class="bigText">{{ result }}</div>
+  </div>
+  <div class="box showAnswerButton" (click)="showAnswer()">Показать ответ</div>
+  <div class="yesNo" [ngClass]="{ yes: isYes, no: isNo }"></div>
 </div>

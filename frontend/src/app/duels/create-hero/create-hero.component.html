@@ -3,7 +3,7 @@
   <div class="header">
     <div></div>
     <div><h1>Создание героя</h1></div>
-    <div><div class="yellowButton">Описание заклинаний</div></div>
+    <div class="yellowButton" (click)="goToHelp()">Описание заклинаний</div>
   </div>
   <div class="center">
     <h2>Представтесь</h2>
@@ -15,7 +15,7 @@
       class="container elementOne"
       [ngClass]="{ selected: isElementOneSelected }"
       data-element="fire"
-      (click)="selectElement($event)"
+      (click)="addElement($event)"
     >
       <div class="picture fire"></div>
       <div class="title">Огонь</div>
@@ -24,7 +24,7 @@
       class="container elementTwo"
       [ngClass]="{ selected: isElementTwoSelected }"
       data-element="water"
-      (click)="selectElement($event)"
+      (click)="addElement($event)"
     >
       <div class="picture water"></div>
       <div class="title">Вода</div>
@@ -33,7 +33,7 @@
       class="container elementThree"
       [ngClass]="{ selected: isElementThreeSelected }"
       data-element="earth"
-      (click)="selectElement($event)"
+      (click)="addElement($event)"
     >
       <div class="picture earth"></div>
       <div class="title">Земля</div>
@@ -42,7 +42,7 @@
       class="container elementFour"
       [ngClass]="{ selected: isElementFourSelected }"
       data-element="air"
-      (click)="selectElement($event)"
+      (click)="addElement($event)"
     >
       <div class="picture air"></div>
       <div class="title">Воздух</div>
@@ -51,7 +51,7 @@
       class="container elementFive"
       [ngClass]="{ selected: isElementFiveSelected }"
       data-element="life"
-      (click)="selectElement($event)"
+      (click)="addElement($event)"
     >
       <div class="picture life"></div>
       <div class="title">Жизнь</div>
@@ -60,7 +60,7 @@
       class="container elementSix"
       [ngClass]="{ selected: isElementSixSelected }"
       data-element="death"
-      (click)="selectElement($event)"
+      (click)="addElement($event)"
     >
       <div class="picture death"></div>
       <div class="title">Смерть</div>
@@ -72,7 +72,7 @@
       class="container formOne"
       [ngClass]="{ selected: isFormOneSelected }"
       data-form="spear"
-      (click)="selectForm($event)"
+      (click)="addForm($event)"
     >
       <div class="picture spear"></div>
       <div class="title">Копье</div>
@@ -81,7 +81,7 @@
       class="container formTwo"
       [ngClass]="{ selected: isFormTwoSelected }"
       data-form="shield"
-      (click)="selectForm($event)"
+      (click)="addForm($event)"
     >
       <div class="picture shield"></div>
       <div class="title">Щит</div>
@@ -90,7 +90,7 @@
       class="container formThree"
       [ngClass]="{ selected: isFormThreeSelected }"
       data-form="crown"
-      (click)="selectForm($event)"
+      (click)="addForm($event)"
     >
       <div class="picture crown"></div>
       <div class="title">Корона</div>
@@ -99,7 +99,7 @@
       class="container formFour"
       [ngClass]="{ selected: isFormFourSelected }"
       data-form="source"
-      (click)="selectForm($event)"
+      (click)="addForm($event)"
     >
       <div class="picture source"></div>
       <div class="title">Источник</div>
@@ -108,7 +108,7 @@
       class="container formFive"
       [ngClass]="{ selected: isFormFiveSelected }"
       data-form="sphere"
-      (click)="selectForm($event)"
+      (click)="addForm($event)"
     >
       <div class="picture sphere"></div>
       <div class="title">Сфера</div>
@@ -117,7 +117,7 @@
       class="container formSix"
       [ngClass]="{ selected: isFormSixSelected }"
       data-form="stamp"
-      (click)="selectForm($event)"
+      (click)="addForm($event)"
     >
       <div class="picture stamp"></div>
       <div class="title">Печать</div>
@@ -126,7 +126,7 @@
       class="container formSeven"
       [ngClass]="{ selected: isFormSevenSelected }"
       data-form="key"
-      (click)="selectForm($event)"
+      (click)="addForm($event)"
     >
       <div class="picture key"></div>
       <div class="title">Ключ</div>
@@ -135,7 +135,7 @@
       class="container formEight"
       [ngClass]="{ selected: isFormEightSelected }"
       data-form="flow"
-      (click)="selectForm($event)"
+      (click)="addForm($event)"
     >
       <div class="picture flow"></div>
       <div class="title">Поток</div>
@@ -144,7 +144,7 @@
       class="container formNine"
       [ngClass]="{ selected: isFormNineSelected }"
       data-form="power"
-      (click)="selectForm($event)"
+      (click)="addForm($event)"
     >
       <div class="picture power"></div>
       <div class="title">Власть</div>

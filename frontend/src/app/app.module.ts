@@ -27,6 +27,7 @@ import { IntuitionBottomComponent } from './common/intuition-bottom/intuition-bo
 import { CardSuitsComponent } from './intuition/card-suits/card-suits.component';
 import { UserDefinedRangeComponent } from './intuition/user-defined-range/user-defined-range.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { WaitScreenComponent } from './duels/wait-screen/wait-screen.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     IntuitionBottomComponent,
     CardSuitsComponent,
     UserDefinedRangeComponent,
+    WaitScreenComponent,
   ],
   imports: [
     ReactiveFormsModule,

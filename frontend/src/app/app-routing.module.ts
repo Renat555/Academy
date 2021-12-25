@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ArenaComponent } from './arena/arena.component';
 import { GameComponent } from './arena/game/game.component';
+import * as duelsGame from './duels/game/game.component';
 import { LossComponent } from './arena/loss/loss.component';
 import { WinComponent } from './arena/win/win.component';
 import { MenuComponent } from './menu/menu.component';
@@ -16,6 +17,7 @@ import { HelpComponent } from './duels/help/help.component';
 import { PlayingCardsComponent } from './intuition/playing-cards/playing-cards.component';
 import { CardSuitsComponent } from './intuition/card-suits/card-suits.component';
 import { UserDefinedRangeComponent } from './intuition/user-defined-range/user-defined-range.component';
+import { WaitScreenComponent } from './duels/wait-screen/wait-screen.component';
 
 const routes: Routes = [
   {
@@ -84,11 +86,15 @@ const routes: Routes = [
       },
       {
         path: 'game',
-        component: GameComponent,
+        component: duelsGame.GameComponent,
       },
       {
         path: 'help',
         component: HelpComponent,
+      },
+      {
+        path: 'wait',
+        component: WaitScreenComponent,
       },
     ],
   },

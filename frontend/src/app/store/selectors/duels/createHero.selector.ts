@@ -2,7 +2,7 @@ import { createSelector } from '@ngrx/store';
 import { UserState } from '../../reducers/duels/createHero.reducer';
 import { AppState } from '../../state/app.state';
 
-const createHero = (state: AppState) => state.createHero;
+const createHero = (state: AppState) => state.duels.user;
 
 export const selectForms = createSelector(
   createHero,

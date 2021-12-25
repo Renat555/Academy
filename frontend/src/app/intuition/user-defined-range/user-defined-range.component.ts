@@ -30,8 +30,19 @@ export class UserDefinedRangeComponent implements OnInit {
 
   firstNumber = new FormControl('');
   secondNumber = new FormControl('');
+  userNumber = new FormControl('');
 
   isAudioOn = true;
+
+  discrepancy = 0;
+
+  result = 0;
+
+  // this value is necessary in order for the next result to be determined at the time of displaying the current result
+  nextResult = 0;
+
+  isYes = false;
+  isNo = false;
 
   checkNumbers(event: KeyboardEvent) {
     let target = event.target;
@@ -42,6 +53,8 @@ export class UserDefinedRangeComponent implements OnInit {
       if (this.firstNumber.value.length > 8) return false;
     } else if (sequence == 'second') {
       if (this.secondNumber.value.length > 8) return false;
+    } else if (sequence == 'user') {
+      if (this.userNumber.value.length > 8) return false;
     }
 
     if (
@@ -60,6 +73,57 @@ export class UserDefinedRangeComponent implements OnInit {
     } else {
       return true;
     }
+  }
+
+  showAnswer() {
+    this.clickSound();
+
+    let min = +this.firstNumber.value;
+    let max = +this.secondNumber.value;
+    let userAnswer = +this.userNumber.value;
+
+    // if the user has not entered a value in the 'userNumber' input we only check whether the maximum value is greater than the minimum
+    if (this.userNumber.value !== '') {
+      if (min >= max || userAnswer < min || userAnswer > max) return;
+    } else {
+      if (min >= max) return;
+    }
+
+    this.result = this.nextResult;
+
+    if (this.userNumber.value === '') {
+      this.discrepancy = 0;
+
+      this.isYes = false;
+      this.isNo = false;
+    } else {
+      this.discrepancy = Math.round(
+        (Math.abs(this.result - userAnswer) * 100) / (max - min)
+      );
+
+      if (this.result === userAnswer) {
+        this.isYes = true;
+        this.isNo = false;
+      } else {
+        this.isYes = false;
+        this.isNo = true;
+      }
+    }
+
+    max++;
+
+    this.nextResult = Math.floor(Math.random() * (max - min)) + min;
+  }
+
+  calculateAnswer() {
+    let min = +this.firstNumber.value;
+    let max = +this.secondNumber.value;
+
+    if (min >= max) return;
+
+    max++;
+
+    this.nextResult = Math.floor(Math.random() * (max - min)) + min;
   }
 
   goToMenu() {

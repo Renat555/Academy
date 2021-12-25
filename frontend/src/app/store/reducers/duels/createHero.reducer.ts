@@ -13,7 +13,7 @@ const initialState: UserState = {
   elements: [],
 };
 
-const createHeroReducer = createReducer(
+export const reducer = createReducer(
   initialState,
   on(CreateHeroActions.createName, (state, { name }) => ({
     ...state,
@@ -45,6 +45,6 @@ const createHeroReducer = createReducer(
   })
 );
 
-export function reducer(state: UserState | undefined, action: Action) {
-  return createHeroReducer(state, action);
-}
+// export function reducer(state: UserState | undefined, action: Action) {
+//   return createHeroReducer(state, action);
+// }
