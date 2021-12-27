@@ -151,10 +151,14 @@
     </div>
   </div>
   <div class="buttons">
-    <div class="yellowButton buttonOne" (click)="showData()">
+    <div class="yellowButton buttonOne" (click)="goToWait()">
       <div class="text">Игра с компьтером</div>
     </div>
-    <div class="yellowButton buttonTwo">
+    <div
+      class="yellowButton buttonTwo"
+      (click)="goToGame()"
+      (contextmenu)="showData()"
+    >
       <div class="text">Поиск противника</div>
     </div>
   </div>

@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { GameComponent } from './arena/game/game.component';
+import { BattleComponent } from './arena/battle/battle.component';
 import { HealthComponent } from './common/health/health.component';
 import { StoreModule } from '@ngrx/store';
 import { HttpClientModule } from '@angular/common/http';
@@ -28,11 +28,13 @@ import { CardSuitsComponent } from './intuition/card-suits/card-suits.component'
 import { UserDefinedRangeComponent } from './intuition/user-defined-range/user-defined-range.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { WaitScreenComponent } from './duels/wait-screen/wait-screen.component';
+import { EffectsComponent } from './duels/effects/effects.component';
+import { GameComponent } from './duels/game/game.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    GameComponent,
+    BattleComponent,
     ArenaComponent,
     HealthComponent,
     WinComponent,
@@ -46,6 +48,7 @@ import { WaitScreenComponent } from './duels/wait-screen/wait-screen.component';
     IntuitionBlackWhiteComponent,
     ColorsComponent,
     DuelsComponent,
+    GameComponent,
     HelpComponent,
     CreateHeroComponent,
     PlayingCardsComponent,
@@ -53,6 +56,7 @@ import { WaitScreenComponent } from './duels/wait-screen/wait-screen.component';
     CardSuitsComponent,
     UserDefinedRangeComponent,
     WaitScreenComponent,
+    EffectsComponent,
   ],
   imports: [
     ReactiveFormsModule,

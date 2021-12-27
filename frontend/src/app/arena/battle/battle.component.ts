@@ -127,9 +127,9 @@ interface Coordinate {
 }
 
 @Component({
-  selector: 'app-game',
-  templateUrl: './game.component.html',
-  styleUrls: ['./game.component.less'],
+  selector: 'app-battle',
+  templateUrl: './battle.component.html',
+  styleUrls: ['./battle.component.less'],
   animations: [
     trigger('moving', [
       state('first', style({ left: '{{left1}}px', top: '{{top1}}px' }), {
@@ -221,7 +221,7 @@ interface Coordinate {
     ]),
   ],
 })
-export class GameComponent implements OnDestroy, AfterViewInit, OnInit {
+export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
   constructor(private store: Store<AppState>, private router: Router) {}
 
   ngOnInit() {

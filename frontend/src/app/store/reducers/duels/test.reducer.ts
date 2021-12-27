@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import * as testActions from '../../actions/duels/test.actions';
+import * as testActions from '../../actions/duels/effects.actions';
 
 export interface TestState {
   test: number;

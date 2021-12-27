@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ArenaComponent } from './arena/arena.component';
-import { GameComponent } from './arena/game/game.component';
-import * as duelsGame from './duels/game/game.component';
+import { BattleComponent } from './arena/battle/battle.component';
+import { GameComponent } from './duels/game/game.component';
 import { LossComponent } from './arena/loss/loss.component';
 import { WinComponent } from './arena/win/win.component';
 import { MenuComponent } from './menu/menu.component';
@@ -64,7 +64,7 @@ const routes: Routes = [
     children: [
       {
         path: 'game',
-        component: GameComponent,
+        component: BattleComponent,
       },
       {
         path: 'win',
@@ -86,7 +86,7 @@ const routes: Routes = [
       },
       {
         path: 'game',
-        component: duelsGame.GameComponent,
+        component: GameComponent,
       },
       {
         path: 'help',

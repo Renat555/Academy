@@ -1,0 +1,7 @@
+<div class="effects">
+  <div class="close"></div>
+  <h3>Эффекты наложенные на вас.</h3>
+  <div class="effect" *ngFor="let effect of userEffects">{{ effect }}</div>
+  <h3>Эффекты наложенные на противника.</h3>
+  <div class="effect" *ngFor="let effect of enemyEffects">{{ effect }}</div>
+</div>

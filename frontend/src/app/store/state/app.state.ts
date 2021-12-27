@@ -1,7 +1,7 @@
 import { ArenaState } from '../reducers/arena.reducer';
 import { IntuitionState } from '../reducers/intuition.reducer';
 import { SoundState } from '../reducers/sound.reducer';
-import { UserState } from '../reducers/duels/createHero.reducer';
+import { UsersState } from '../reducers/duels/users.reducer';
 import { TestState } from '../reducers/duels/test.reducer';
 
 export interface AppState {
@@ -9,7 +9,7 @@ export interface AppState {
   intuition: IntuitionState;
   sound: SoundState;
   duels: {
-    user: UserState;
+    users: UsersState;
     test: TestState;
   };
 }

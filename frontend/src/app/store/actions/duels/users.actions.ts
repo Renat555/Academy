@@ -7,6 +7,11 @@ export enum chooseActions {
   deleteForm = '[choose] deleteForm',
 }
 
+export enum effectsActions {
+  addUserEffect = '[effect] addUserEffect',
+  addEnemyEffect = '[effect] addEnemyEffect',
+}
+
 export const createNameAction = '[create] createName';
 
 export const addElement = createAction(
@@ -32,4 +37,14 @@ export const deleteForm = createAction(
 export const createName = createAction(
   createNameAction,
   props<{ name: string }>()
+);
+
+export const addUserEffect = createAction(
+  effectsActions.addUserEffect,
+  props<{ effect: string }>()
+);
+
+export const addEnemyEffect = createAction(
+  effectsActions.addEnemyEffect,
+  props<{ effect: string }>()
 );

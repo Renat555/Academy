@@ -6,11 +6,12 @@ import {
   addForm,
   deleteElement,
   deleteForm,
-} from 'src/app/store/actions/duels/createHero.actions';
+} from 'src/app/store/actions/duels/users.actions';
 import {
   selectElements,
   selectForms,
-} from 'src/app/store/selectors/duels/createHero.selector';
+  selectUsers,
+} from 'src/app/store/selectors/duels/users.selectors';
 import { AppState } from 'src/app/store/state/app.state';
 
 @Component({
@@ -180,10 +181,7 @@ export class CreateHeroComponent implements OnInit {
   }
 
   showData() {
-    this.store.select(selectElements).subscribe((res) => {
-      console.log(res);
-    });
-    this.store.select(selectForms).subscribe((res) => {
+    this.store.select(selectUsers).subscribe((res) => {
       console.log(res);
     });
   }
@@ -194,5 +192,13 @@ export class CreateHeroComponent implements OnInit {
 
   goToHelp() {
     this.router.navigate(['duels/help']);
+  }
+
+  goToWait() {
+    this.router.navigate(['duels/wait']);
+  }
+
+  goToGame() {
+    this.router.navigate(['duels/game']);
   }
 }
