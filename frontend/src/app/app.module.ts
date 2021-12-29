@@ -30,6 +30,13 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { WaitScreenComponent } from './duels/wait-screen/wait-screen.component';
 import { EffectsComponent } from './duels/effects/effects.component';
 import { GameComponent } from './duels/game/game.component';
+import { BattlefieldEnemyComponent } from './duels/game/battlefield-enemy/battlefield-enemy.component';
+import { BattlefieldUserComponent } from './duels/game/battlefield-user/battlefield-user.component';
+import { BattlefieldCentreComponent } from './duels/game/battlefield-centre/battlefield-centre.component';
+import { BattlefieldMuveComponent } from './duels/game/battlefield-muve/battlefield-muve.component';
+import { ElementOrFormNameComponent } from './duels/common/element-or-form-name/element-or-form-name.component';
+import { MapComponent } from './duels/game/battlefield-centre/map/map.component';
+import { DescriptionComponent } from './duels/game/battlefield-centre/description/description.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +64,13 @@ import { GameComponent } from './duels/game/game.component';
     UserDefinedRangeComponent,
     WaitScreenComponent,
     EffectsComponent,
+    BattlefieldEnemyComponent,
+    BattlefieldUserComponent,
+    BattlefieldCentreComponent,
+    BattlefieldMuveComponent,
+    ElementOrFormNameComponent,
+    MapComponent,
+    DescriptionComponent,
   ],
   imports: [
     ReactiveFormsModule,

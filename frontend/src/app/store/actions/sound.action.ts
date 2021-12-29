@@ -1,9 +1,9 @@
 import { createAction, props } from '@ngrx/store';
 
-export enum soundAction {
+export enum soundActions {
   soundOn = '[sound] soundOn',
   soundOff = '[sound] soundOff',
 }
 
-export const soundOn = createAction(soundAction.soundOn);
-export const soundOff = createAction(soundAction.soundOff);
+export const soundOn = createAction(soundActions.soundOn);
+export const soundOff = createAction(soundActions.soundOff);

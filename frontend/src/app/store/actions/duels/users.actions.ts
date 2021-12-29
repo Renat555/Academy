@@ -12,7 +12,17 @@ export enum effectsActions {
   addEnemyEffect = '[effect] addEnemyEffect',
 }
 
-export const createNameAction = '[create] createName';
+export enum nameActions {
+  addUserName = '[name] addUserName',
+  addEnemyName = '[name] addEnemyName',
+}
+
+export enum pointsActions {
+  changeUserActionPoints = '[points] changeUserActionPoints',
+  changeEnemyActionPoints = '[points] changeEnemyActionPoints',
+  changeUserEnergyPoints = '[points] changeUserEnergyPoints',
+  changeEnemyEnergyPoints = '[points] changeEnemyEnergyPoints',
+}
 
 export const addElement = createAction(
   chooseActions.addElement,
@@ -34,8 +44,13 @@ export const deleteForm = createAction(
   props<{ form: string }>()
 );
 
-export const createName = createAction(
-  createNameAction,
+export const addUserName = createAction(
+  nameActions.addUserName,
+  props<{ name: string }>()
+);
+
+export const addEnemyName = createAction(
+  nameActions.addEnemyName,
   props<{ name: string }>()
 );
 
@@ -47,4 +62,24 @@ export const addUserEffect = createAction(
 export const addEnemyEffect = createAction(
   effectsActions.addEnemyEffect,
   props<{ effect: string }>()
+);
+
+export const changeUserActionPoints = createAction(
+  pointsActions.changeUserActionPoints,
+  props<{ points: number }>()
+);
+
+export const changeEnemyActionPoints = createAction(
+  pointsActions.changeEnemyActionPoints,
+  props<{ points: number }>()
+);
+
+export const changeUserEnergyPoints = createAction(
+  pointsActions.changeUserEnergyPoints,
+  props<{ points: number }>()
+);
+
+export const changeEnemyEnergyPoints = createAction(
+  pointsActions.changeEnemyEnergyPoints,
+  props<{ points: number }>()
 );

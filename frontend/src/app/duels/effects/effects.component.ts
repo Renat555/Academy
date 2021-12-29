@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { hideEffects } from 'src/app/store/actions/duels/effectsWindow.actions';
+import { AppState } from 'src/app/store/state/app.state';
 
 @Component({
   selector: 'app-effects',
@@ -6,10 +9,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./effects.component.less'],
 })
 export class EffectsComponent implements OnInit {
-  constructor() {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {}
 
-  userEffects = ['fireshild', 'firecrown'];
-  enemyEffects = ['watershild'];
+  userEffects = [];
+  enemyEffects = [];
+
+  hideEffects() {
+    this.store.dispatch(hideEffects());
+  }
 }

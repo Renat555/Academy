@@ -3,11 +3,13 @@ import * as Arena from './reducers/arena.reducer';
 import * as Intuition from './reducers/intuition.reducer';
 import * as Sound from './reducers/sound.reducer';
 import * as Users from './reducers/duels/users.reducer';
-import * as Test from './reducers/duels/test.reducer';
+import * as EffectsWindow from './reducers/duels/effectsWindow.reducer';
+import * as Muve from './reducers/duels/muve.reducer';
 
-let duelsReducers = combineReducers({
+const duelsReducers = combineReducers({
   users: Users.reducer,
-  test: Test.testReducerTwo,
+  effectsWidow: EffectsWindow.reducer,
+  muve: Muve.reducer,
 });
 
 export interface State {
@@ -16,7 +18,8 @@ export interface State {
   sound: Sound.SoundState;
   duels: {
     users: Users.UsersState;
-    test: Test.TestState;
+    effectsWidow: EffectsWindow.EffectsWindowState;
+    muve: Muve.MuveState;
   };
 }
 

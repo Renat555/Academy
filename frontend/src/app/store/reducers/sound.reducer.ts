@@ -1,4 +1,4 @@
-import { Action, createReducer, createSelector, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import * as SoundActions from '../actions/sound.action';
 
 export interface SoundState {
@@ -9,7 +9,7 @@ const initialState: SoundState = {
   enabled: true,
 };
 
-const soundReducer = createReducer(
+export const reducer = createReducer(
   initialState,
   on(SoundActions.soundOff, (state) => ({
     enabled: false,
@@ -18,7 +18,3 @@ const soundReducer = createReducer(
     enabled: true,
   }))
 );
-
-export function reducer(state: SoundState | undefined, action: Action) {
-  return soundReducer(state, action);
-}

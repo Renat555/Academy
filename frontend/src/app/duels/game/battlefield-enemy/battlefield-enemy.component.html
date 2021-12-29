@@ -1,0 +1,15 @@
+<div class="background">
+  <div id="enemyName">{{ name }}</div>
+
+  <div class="points action">
+    <div class="smallText">Очки действия: {{ actionPoints }}</div>
+  </div>
+
+  <div class="points energy">
+    <div class="smallText">Энергия: {{ energyPoints }}</div>
+  </div>
+
+  <div class="health">
+    <app-health [health]="healthPercent"></app-health>
+  </div>
+</div>

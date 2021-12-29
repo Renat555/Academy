@@ -1,15 +1,21 @@
-import { Action, createReducer, on } from '@ngrx/store';
-import * as CreateHeroActions from '../../actions/duels/users.actions';
+import { createReducer, on } from '@ngrx/store';
+import * as Users from '../../actions/duels/users.actions';
 
 interface UserState {
   name: string;
+  health: number;
+  actionPoints: number;
+  energyPoints: number;
+  effects: string[];
   forms: string[];
   elements: string[];
-  effects: string[];
 }
 
 interface EnemyState {
   name: string;
+  health: number;
+  actionPoints: number;
+  energyPoints: number;
   effects: string[];
 }
 
@@ -21,47 +27,70 @@ export interface UsersState {
 const initialState: UsersState = {
   user: {
     name: '',
-    forms: [],
-    elements: [],
+    health: 100,
+    actionPoints: 5,
+    energyPoints: 5,
     effects: [],
+    forms: ['sphere', 'power', 'flow', 'stamp', 'spear'],
+    elements: ['water', 'air', 'life'],
   },
   enemy: {
-    name: '',
+    name: 'Jon',
+    health: 100,
+    actionPoints: 5,
+    energyPoints: 5,
     effects: [],
   },
 };
 
 export const reducer = createReducer(
   initialState,
-  on(CreateHeroActions.createName, (state, { name }) => ({
+  on(Users.addUserName, (state, { name }) => ({
     ...state,
-    user: {
-      ...state.user,
-      name: name,
-    },
+    user: { ...state.user, name: name },
   })),
-  on(CreateHeroActions.addElement, (state, { element }) => {
+  on(Users.addEnemyName, (state, { name }) => ({
+    ...state,
+    enemy: { ...state.enemy, name: name },
+  })),
+  on(Users.addElement, (state, { element }) => {
     let newElements = state.user.elements.slice();
     newElements.push(element);
 
     return { ...state, user: { ...state.user, elements: newElements } };
   }),
-  on(CreateHeroActions.addForm, (state, { form }) => {
+  on(Users.addForm, (state, { form }) => {
     let newForms = state.user.forms.slice();
     newForms.push(form);
 
     return { ...state, user: { ...state.user, forms: newForms } };
   }),
-  on(CreateHeroActions.deleteElement, (state, { element }) => {
+  on(Users.deleteElement, (state, { element }) => {
     let newElements = state.user.elements.slice();
     newElements.splice(newElements.indexOf(element), 1);
 
     return { ...state, user: { ...state.user, elements: newElements } };
   }),
-  on(CreateHeroActions.deleteForm, (state, { form }) => {
+  on(Users.deleteForm, (state, { form }) => {
     let newForms = state.user.forms.slice();
     newForms.splice(newForms.indexOf(form), 1);
 
     return { ...state, user: { ...state.user, forms: newForms } };
-  })
+  }),
+  on(Users.changeUserActionPoints, (state, { points }) => ({
+    ...state,
+    user: { ...state.user, actionPoints: points },
+  })),
+  on(Users.changeEnemyActionPoints, (state, { points }) => ({
+    ...state,
+    enemy: { ...state.enemy, actionPoints: points },
+  })),
+  on(Users.changeUserEnergyPoints, (state, { points }) => ({
+    ...state,
+    user: { ...state.user, energyPoints: points },
+  })),
+  on(Users.changeEnemyEnergyPoints, (state, { points }) => ({
+    ...state,
+    enemy: { ...state.enemy, energyPoints: points },
+  }))
 );
