@@ -5,11 +5,15 @@ import * as Sound from './reducers/sound.reducer';
 import * as Users from './reducers/duels/users.reducer';
 import * as EffectsWindow from './reducers/duels/effectsWindow.reducer';
 import * as Muve from './reducers/duels/muve.reducer';
+import * as CurrentSpell from './reducers/duels/currentSpell.reducer';
+import * as Description from './reducers/duels/description.reducer';
 
 const duelsReducers = combineReducers({
   users: Users.reducer,
-  effectsWidow: EffectsWindow.reducer,
+  effectsWindow: EffectsWindow.reducer,
   muve: Muve.reducer,
+  currentSpell: CurrentSpell.reducer,
+  description: Description.reducer,
 });
 
 export interface State {
@@ -18,8 +22,10 @@ export interface State {
   sound: Sound.SoundState;
   duels: {
     users: Users.UsersState;
-    effectsWidow: EffectsWindow.EffectsWindowState;
+    effectsWindow: EffectsWindow.EffectsWindowState;
     muve: Muve.MuveState;
+    currentSpell: CurrentSpell.CurrentSpellState;
+    description: Description.DescriptionState;
   };
 }
 

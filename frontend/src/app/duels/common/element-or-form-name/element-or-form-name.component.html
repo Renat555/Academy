@@ -1,1 +1,3 @@
-<div class="item">{{ name }}</div>
+<div class="item" (click)="select()" [class.selected]="isSelected">
+  {{ russianName }}
+</div>

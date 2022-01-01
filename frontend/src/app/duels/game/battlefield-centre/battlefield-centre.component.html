@@ -1,77 +1,48 @@
 <div class="background">
-  <div class="row gameTable">
-    <div class="map">
-      <app-map></app-map>
-    </div>
-    <div class="col-lg-6 col-xl-4 container">
-      <div class="row justify-content-center">
-        <div class="col-xl-8 col-md-10">
-          <button
-            type="button"
-            name="buttonActiveSpell"
-            class="button"
-            id="buttonActiveSpell"
-          >
-            Активировать заклинание
-          </button>
-        </div>
-      </div>
-      <div class="row justify-content-center">
-        <div
-          class="col-xl-8 col-md-7 spell userSpell"
-          data-status="notSelected"
-          data-spellElement=""
-          data-spellForm=""
-          data-spell=""
-        ></div>
-      </div>
-      <div class="row justify-content-center">
-        <div class="col-xl-8">
-          <div class="points needPoints">
-            <div>Необходимо для активации:</div>
-            <div>Очки действия: <span id="actionPointsNeed">0</span></div>
-            <div>Энергия: <span id="energyPointsNeed">0</span></div>
-          </div>
-        </div>
-      </div>
-      <div class="row justify-content-around" id="havePoints">
-        <div class="col-md-5 col-sm-6">
-          <div class="points">
-            <div class="smallText">Очки действия</div>
-            <div class="bigText" id="actionPoints"></div>
-          </div>
-        </div>
-        <div class="col-md-5 col-sm-6">
-          <div class="points">
-            <div class="smallText">Энергия</div>
-            <div class="bigText" id="energyPoints"></div>
-          </div>
-        </div>
-      </div>
-      <div class="row justify-content-center">
-        <div class="col-xl-8 col-md-10">
-          <button type="button" (click)="showEffects()" class="button">
-            Показать эффекты
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="col-lg-12 col-xl-4 container">
-      <div class="row justify-content-center">
-        <div class="col-xl-8 col-sm-12">
-          <button
-            type="button"
-            name="buttonMuve"
-            class="button"
-            id="buttonMuve"
-          >
-            Завершить ход
-          </button>
-        </div>
-      </div>
-    </div>
-    <div class="description">
-      <app-description></app-description>
-    </div>
+  <div class="map">
+    <app-map></app-map>
+  </div>
+
+  <button
+    type="button"
+    name="buttonActiveSpell"
+    class="button"
+    id="buttonActiveSpell"
+  >
+    Активировать заклинание
+  </button>
+
+  <div
+    class="col-xl-8 col-md-7 spell userSpell"
+    data-status="notSelected"
+    data-spellElement=""
+    data-spellForm=""
+    data-spell=""
+  ></div>
+
+  <div class="points needPoints">
+    <div>Необходимо для активации:</div>
+    <div>Очки действия: <span id="actionPointsNeed">0</span></div>
+    <div>Энергия: <span id="energyPointsNeed">0</span></div>
+  </div>
+
+  <div class="points" (click)="addDescriptionRow()">
+    <div class="smallText">Очки действия</div>
+    <div class="bigText" id="actionPoints"></div>
+  </div>
+
+  <div class="points" (click)="addDescriptionBlock()">
+    <div class="smallText">Энергия</div>
+    <div class="bigText" id="energyPoints"></div>
+  </div>
+
+  <button type="button" (click)="showEffects()" class="button">
+    Показать эффекты
+  </button>
+
+  <button type="button" class="button">Завершить ход</button>
+
+  <div class="description" (click)="showDescription()">
+    <app-description></app-description>
   </div>
 </div>

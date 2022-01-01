@@ -4,6 +4,8 @@ import { SoundState } from '../reducers/sound.reducer';
 import { UsersState } from '../reducers/duels/users.reducer';
 import { EffectsWindowState } from '../reducers/duels/effectsWindow.reducer';
 import { MuveState } from '../reducers/duels/muve.reducer';
+import { CurrentSpellState } from '../reducers/duels/currentSpell.reducer';
+import { DescriptionState } from '../reducers/duels/description.reducer';
 
 export interface AppState {
   arena: ArenaState;
@@ -11,7 +13,9 @@ export interface AppState {
   sound: SoundState;
   duels: {
     users: UsersState;
-    effectsWidow: EffectsWindowState;
+    effectsWindow: EffectsWindowState;
     muve: MuveState;
+    currentSpell: CurrentSpellState;
+    description: DescriptionState;
   };
 }
