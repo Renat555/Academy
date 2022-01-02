@@ -3,7 +3,7 @@ import { createReducer, on } from '@ngrx/store';
 import * as Description from './../../actions/duels/description.actions';
 
 export interface DescriptionState {
-  description: string[];
+  description: string[][];
 }
 
 const initialState: DescriptionState = {
@@ -13,18 +13,35 @@ const initialState: DescriptionState = {
 export const reducer = createReducer(
   initialState,
   on(Description.addDescriptionBlock, (state, { description }) => {
-    state.description.push(description);
-    return { ...state, description: [...state.description] };
+    let newDescription = deepCopy(state.description);
+    let newBlock = [];
+    newBlock.push(description);
+    newDescription.unshift(newBlock);
+    return { description: newDescription };
   }),
   on(Description.addDescriptionRow, (state, { description }) => {
-    if (state.description.length === 0) {
-      state.description.push(description);
+    let newDescription = deepCopy(state.description);
+
+    if (newDescription.length === 0) {
+      let newBlock = [];
+      newBlock.push(description);
+      newDescription.push(newBlock);
     } else {
-      let last = state.description[state.description.length - 1];
-      last = last + '<br>' + description;
-      state.description.pop();
-      state.description.push(last);
+      let firstBlock = newDescription[0];
+      firstBlock.unshift(description);
+      newDescription.shift();
+      newDescription.unshift(firstBlock);
     }
-    return { ...state, description: [...state.description] };
+    return { description: newDescription };
   })
 );
+
+function deepCopy(arr: string[][]): string[][] {
+  let copy: string[][] = [];
+
+  for (let i = 0; i < arr.length; i++) {
+    copy[i] = [...arr[i]];
+  }
+
+  return copy;
+}

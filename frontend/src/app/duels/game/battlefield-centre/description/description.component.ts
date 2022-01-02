@@ -12,7 +12,9 @@ export class DescriptionComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
-    this.store.select(selectDescription).subscribe((state) => {});
+    this.store.select(selectDescription).subscribe((state) => {
+      this.description = state;
+    });
   }
 
   description = '';
