@@ -1,6 +1,50 @@
 .battlefield {
-  background-color: #498780;
+  display: grid;
+
+  grid-template-columns: repeat(7, 84px);
+  grid-template-rows: repeat(7, 84px);
 }
 .battleSquare {
+  background-color: #498780;
   border: 1px solid white;
+}
+
+.user,
+.enemy {
+  position: absolute;
+  width: 74px;
+  height: 74px;
+  background-size: contain;
+}
+
+.userBack1 {
+  background-image: url(../../../../../assets/duels/user/c1.png);
+}
+
+.userBack2 {
+  background-image: url(../../../../../assets/duels/user/c2.png);
+}
+
+.userFace1 {
+  background-image: url(../../../../../assets/duels/user/c3.png);
+}
+
+.userFace2 {
+  background-image: url(../../../../../assets/duels/user/c4.png);
+}
+
+.userLeft1 {
+  background-image: url(../../../../../assets/duels/user/c5.png);
+}
+
+.userLeft2 {
+  background-image: url(../../../../../assets/duels/user/c6.png);
+}
+
+.userRight1 {
+  background-image: url(../../../../../assets/duels/user/c7.png);
+}
+
+.userRight2 {
+  background-image: url(../../../../../assets/duels/user/c8.png);
 }

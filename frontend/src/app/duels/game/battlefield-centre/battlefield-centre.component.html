@@ -11,18 +11,18 @@
 
   <div class="points needPoints">
     <div>Необходимо для активации:</div>
-    <div>Очки действия: <span id="actionPointsNeed">0</span></div>
-    <div>Энергия: <span id="energyPointsNeed">0</span></div>
+    <div>Очки действия: <span>0</span></div>
+    <div>Энергия: <span>0</span></div>
   </div>
 
   <div class="points remainActionPoints">
     <div class="smallText">Очки действия</div>
-    <div class="bigText" id="actionPoints"></div>
+    <div class="bigText">{{ actionPoints }}</div>
   </div>
 
   <div class="points remainEnergyPoints">
     <div class="smallText">Энергия</div>
-    <div class="bigText" id="energyPoints"></div>
+    <div class="bigText">{{ energyPoints }}</div>
   </div>
 
   <button type="button" (click)="showEffects()" class="button showEffects">

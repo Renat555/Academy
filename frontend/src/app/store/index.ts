@@ -7,6 +7,8 @@ import * as EffectsWindow from './reducers/duels/effectsWindow.reducer';
 import * as Muve from './reducers/duels/muve.reducer';
 import * as CurrentSpell from './reducers/duels/currentSpell.reducer';
 import * as Description from './reducers/duels/description.reducer';
+import * as Dictionary from './reducers/duels/dictionary.reducer';
+import * as Map from './reducers/duels/map.reducer';
 
 const duelsReducers = combineReducers({
   users: Users.reducer,
@@ -14,6 +16,8 @@ const duelsReducers = combineReducers({
   muve: Muve.reducer,
   currentSpell: CurrentSpell.reducer,
   description: Description.reducer,
+  dictionary: Dictionary.reducer,
+  map: Map.reducer,
 });
 
 export interface State {
@@ -26,6 +30,8 @@ export interface State {
     muve: Muve.MuveState;
     currentSpell: CurrentSpell.CurrentSpellState;
     description: Description.DescriptionState;
+    dictionary: Dictionary.DictionaryState;
+    map: Map.MapState;
   };
 }
 

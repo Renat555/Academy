@@ -6,6 +6,8 @@ import { EffectsWindowState } from '../reducers/duels/effectsWindow.reducer';
 import { MuveState } from '../reducers/duels/muve.reducer';
 import { CurrentSpellState } from '../reducers/duels/currentSpell.reducer';
 import { DescriptionState } from '../reducers/duels/description.reducer';
+import { DictionaryState } from '../reducers/duels/dictionary.reducer';
+import { MapState } from '../reducers/duels/map.reducer';
 
 export interface AppState {
   arena: ArenaState;
@@ -17,5 +19,7 @@ export interface AppState {
     muve: MuveState;
     currentSpell: CurrentSpellState;
     description: DescriptionState;
+    dictionary: DictionaryState;
+    map: MapState;
   };
 }

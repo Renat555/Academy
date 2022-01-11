@@ -1,443 +1,72 @@
-<div class="battlefield">
+<div class="battlefield" (click)="[placeUser(), setTrajectory($event)]">
   <div
-    class="battleSquare"
-    data-row="6"
-    data-col="0"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
+    class="user"
+    #user
+    *ngIf="isUserShown"
+    [ngStyle]="{ top: userTop, left: userLeft }"
+    [@userMoving]="{
+      value: stateUserMoving,
+      params: {
+        left1: userLeft1,
+        top1: userTop1,
+        left2: userLeft2,
+        time: userTime
+      }
+    }"
+    [@userSteps]="stateUserSteps"
   ></div>
   <div
-    class="battleSquare"
-    data-row="6"
-    data-col="1"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
+    class="enemy"
+    *ngIf="isEnemyShown"
+    [ngStyle]="{ top: enemyTop, left: enemyLeft }"
   ></div>
-  <div
-    class="battleSquare"
-    data-row="6"
-    data-col="2"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="6"
-    data-col="3"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="6"
-    data-col="4"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="6"
-    data-col="5"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="6"
-    data-col="6"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="5"
-    data-col="0"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="5"
-    data-col="1"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="5"
-    data-col="2"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="5"
-    data-col="3"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="5"
-    data-col="4"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="5"
-    data-col="5"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="5"
-    data-col="6"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="4"
-    data-col="0"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="4"
-    data-col="1"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="4"
-    data-col="2"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="4"
-    data-col="3"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="4"
-    data-col="4"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="4"
-    data-col="5"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="4"
-    data-col="6"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="3"
-    data-col="0"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="3"
-    data-col="1"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="3"
-    data-col="2"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="3"
-    data-col="3"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="3"
-    data-col="4"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="3"
-    data-col="5"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="3"
-    data-col="6"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="2"
-    data-col="0"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="2"
-    data-col="1"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="2"
-    data-col="2"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="2"
-    data-col="3"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="2"
-    data-col="4"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="2"
-    data-col="5"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="2"
-    data-col="6"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="1"
-    data-col="0"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="1"
-    data-col="1"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="1"
-    data-col="2"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="1"
-    data-col="3"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="1"
-    data-col="4"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="1"
-    data-col="5"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="1"
-    data-col="6"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="0"
-    data-col="0"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="0"
-    data-col="1"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="0"
-    data-col="2"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="0"
-    data-col="3"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="0"
-    data-col="4"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="0"
-    data-col="5"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
-  <div
-    class="battleSquare"
-    data-row="0"
-    data-col="6"
-    data-player=""
-    data-spell=""
-    data-state=""
-    data-duration=""
-  ></div>
+  <div class="battleSquare" #r6c0 data-row="6" data-col="0"></div>
+  <div class="battleSquare" #r6c1 data-row="6" data-col="1"></div>
+  <div class="battleSquare" #r6c2 data-row="6" data-col="2"></div>
+  <div class="battleSquare" #r6c3 data-row="6" data-col="3"></div>
+  <div class="battleSquare" #r6c4 data-row="6" data-col="4"></div>
+  <div class="battleSquare" #r6c5 data-row="6" data-col="5"></div>
+  <div class="battleSquare" #r6c6 data-row="6" data-col="6"></div>
+  <div class="battleSquare" #r5c0 data-row="5" data-col="0"></div>
+  <div class="battleSquare" #r5c1 data-row="5" data-col="1"></div>
+  <div class="battleSquare" #r5c2 data-row="5" data-col="2"></div>
+  <div class="battleSquare" #r5c3 data-row="5" data-col="3"></div>
+  <div class="battleSquare" #r5c4 data-row="5" data-col="4"></div>
+  <div class="battleSquare" #r5c5 data-row="5" data-col="5"></div>
+  <div class="battleSquare" #r5c6 data-row="5" data-col="6"></div>
+  <div class="battleSquare" #r4c0 data-row="4" data-col="0"></div>
+  <div class="battleSquare" #r4c1 data-row="4" data-col="1"></div>
+  <div class="battleSquare" #r4c2 data-row="4" data-col="2"></div>
+  <div class="battleSquare" #r4c3 data-row="4" data-col="3"></div>
+  <div class="battleSquare" #r4c4 data-row="4" data-col="4"></div>
+  <div class="battleSquare" #r4c5 data-row="4" data-col="5"></div>
+  <div class="battleSquare" #r4c6 data-row="4" data-col="6"></div>
+  <div class="battleSquare" #r3c0 data-row="3" data-col="0"></div>
+  <div class="battleSquare" #r3c1 data-row="3" data-col="1"></div>
+  <div class="battleSquare" #r3c2 data-row="3" data-col="2"></div>
+  <div class="battleSquare" #r3c3 data-row="3" data-col="3"></div>
+  <div class="battleSquare" #r3c4 data-row="3" data-col="4"></div>
+  <div class="battleSquare" #r3c5 data-row="3" data-col="5"></div>
+  <div class="battleSquare" #r3c6 data-row="3" data-col="6"></div>
+  <div class="battleSquare" #r2c0 data-row="2" data-col="0"></div>
+  <div class="battleSquare" #r2c1 data-row="2" data-col="1"></div>
+  <div class="battleSquare" #r2c2 data-row="2" data-col="2"></div>
+  <div class="battleSquare" #r2c3 data-row="2" data-col="3"></div>
+  <div class="battleSquare" #r2c4 data-row="2" data-col="4"></div>
+  <div class="battleSquare" #r2c5 data-row="2" data-col="5"></div>
+  <div class="battleSquare" #r2c6 data-row="2" data-col="6"></div>
+  <div class="battleSquare" #r1c0 data-row="1" data-col="0"></div>
+  <div class="battleSquare" #r1c1 data-row="1" data-col="1"></div>
+  <div class="battleSquare" #r1c2 data-row="1" data-col="2"></div>
+  <div class="battleSquare" #r1c3 data-row="1" data-col="3"></div>
+  <div class="battleSquare" #r1c4 data-row="1" data-col="4"></div>
+  <div class="battleSquare" #r1c5 data-row="1" data-col="5"></div>
+  <div class="battleSquare" #r1c6 data-row="1" data-col="6"></div>
+  <div class="battleSquare" #r0c0 data-row="0" data-col="0"></div>
+  <div class="battleSquare" #r0c1 data-row="0" data-col="1"></div>
+  <div class="battleSquare" #r0c2 data-row="0" data-col="2"></div>
+  <div class="battleSquare" #r0c3 data-row="0" data-col="3"></div>
+  <div class="battleSquare" #r0c4 data-row="0" data-col="4"></div>
+  <div class="battleSquare" #r0c5 data-row="0" data-col="5"></div>
+  <div class="battleSquare" #r0c6 data-row="0" data-col="6"></div>
 </div>
