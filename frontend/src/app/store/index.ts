@@ -9,6 +9,7 @@ import * as CurrentSpell from './reducers/duels/currentSpell.reducer';
 import * as Description from './reducers/duels/description.reducer';
 import * as Dictionary from './reducers/duels/dictionary.reducer';
 import * as Map from './reducers/duels/map.reducer';
+import * as Spellbook from './reducers/duels/spellBook.reducer';
 
 const duelsReducers = combineReducers({
   users: Users.reducer,
@@ -18,6 +19,7 @@ const duelsReducers = combineReducers({
   description: Description.reducer,
   dictionary: Dictionary.reducer,
   map: Map.reducer,
+  spellbook: Spellbook.reducer,
 });
 
 export interface State {
@@ -32,6 +34,7 @@ export interface State {
     description: Description.DescriptionState;
     dictionary: Dictionary.DictionaryState;
     map: Map.MapState;
+    spellbook: Spellbook.SpellbookState;
   };
 }
 

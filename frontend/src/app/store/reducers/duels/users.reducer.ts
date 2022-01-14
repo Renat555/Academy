@@ -35,7 +35,7 @@ const initialState: UsersState = {
     elements: ['water', 'air', 'life'],
   },
   enemy: {
-    name: 'Jon',
+    name: '',
     health: 100,
     actionPoints: 5,
     energyPoints: 5,

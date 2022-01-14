@@ -8,6 +8,7 @@ import { CurrentSpellState } from '../reducers/duels/currentSpell.reducer';
 import { DescriptionState } from '../reducers/duels/description.reducer';
 import { DictionaryState } from '../reducers/duels/dictionary.reducer';
 import { MapState } from '../reducers/duels/map.reducer';
+import { SpellbookState } from '../reducers/duels/spellBook.reducer';
 
 export interface AppState {
   arena: ArenaState;
@@ -21,5 +22,6 @@ export interface AppState {
     description: DescriptionState;
     dictionary: DictionaryState;
     map: MapState;
+    spellbook: SpellbookState;
   };
 }
