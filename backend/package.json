@@ -2,8 +2,10 @@
   "name": "backend",
   "version": "0.0.0",
   "scripts": {
-    "dev": "cross-env NODE_ENV=dev ts-node-dev --respawn ./src/httpServer.ts",
-    "prod": "NODE_ENV=prod pm2 start ./build/httpServer.js"
+    "devhttp": "cross-env NODE_ENV=dev ts-node-dev --respawn ./src/httpServer.ts",
+    "devwss": "cross-env NODE_ENV=dev ts-node-dev --respawn ./src/wssServer.ts",
+    "prodhttp": "NODE_ENV=prod pm2 start ./build/httpServer.js",
+    "prodwss": "NODE_ENV=prod pm2 start ./build/wssServer.js"
   },
   "dependencies": {
     "connect-redis": "^6.0.0",
@@ -21,6 +23,7 @@
     "@types/node": "^16.11.10",
     "@types/pg": "^8.6.1",
     "@types/redis": "^2.8.32",
+    "@types/ws": "^8.2.2",
     "cross-env": "^7.0.3",
     "ts-node-dev": "^1.1.8",
     "typescript": "^4.5.2"
