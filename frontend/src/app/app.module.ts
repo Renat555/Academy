@@ -26,7 +26,7 @@ import { PlayingCardsComponent } from './intuition/playing-cards/playing-cards.c
 import { IntuitionBottomComponent } from './common/intuition-bottom/intuition-bottom.component';
 import { CardSuitsComponent } from './intuition/card-suits/card-suits.component';
 import { UserDefinedRangeComponent } from './intuition/user-defined-range/user-defined-range.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { WaitScreenComponent } from './duels/wait-screen/wait-screen.component';
 import { EffectsComponent } from './duels/effects/effects.component';
 import { GameComponent } from './duels/game/game.component';
@@ -37,6 +37,10 @@ import { BattlefieldMuveComponent } from './duels/game/battlefield-muve/battlefi
 import { ElementOrFormNameComponent } from './duels/common/element-or-form-name/element-or-form-name.component';
 import { MapComponent } from './duels/game/battlefield-centre/map/map.component';
 import { DescriptionComponent } from './duels/game/battlefield-centre/description/description.component';
+import { AuthComponent } from './auth/auth.component';
+import { AuthMiniComponent } from './auth/auth-mini/auth-mini.component';
+import { AuthorizationComponent } from './auth/authorization/authorization.component';
+import { RegistrationComponent } from './auth/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -71,6 +75,10 @@ import { DescriptionComponent } from './duels/game/battlefield-centre/descriptio
     ElementOrFormNameComponent,
     MapComponent,
     DescriptionComponent,
+    AuthComponent,
+    AuthMiniComponent,
+    AuthorizationComponent,
+    RegistrationComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -79,6 +87,7 @@ import { DescriptionComponent } from './duels/game/battlefield-centre/descriptio
     BrowserAnimationsModule,
     StoreModule.forRoot(reducers),
     HttpClientModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

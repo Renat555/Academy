@@ -1,0 +1,5 @@
+<div class="background">
+  <span *ngIf="!isAuthorized" (click)="goToRegistration()">Регистрация | </span
+  ><span *ngIf="!isAuthorized" (click)="goToAuthorization()"> Авторизация</span
+  ><span *ngIf="isAuthorized">Добро пожаловать {{ userName }}</span>
+</div>

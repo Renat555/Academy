@@ -18,6 +18,9 @@ import { PlayingCardsComponent } from './intuition/playing-cards/playing-cards.c
 import { CardSuitsComponent } from './intuition/card-suits/card-suits.component';
 import { UserDefinedRangeComponent } from './intuition/user-defined-range/user-defined-range.component';
 import { WaitScreenComponent } from './duels/wait-screen/wait-screen.component';
+import { AuthComponent } from './auth/auth.component';
+import { AuthorizationComponent } from './auth/authorization/authorization.component';
+import { RegistrationComponent } from './auth/registration/registration.component';
 
 const routes: Routes = [
   {
@@ -95,6 +98,20 @@ const routes: Routes = [
       {
         path: 'wait',
         component: WaitScreenComponent,
+      },
+    ],
+  },
+  {
+    path: 'auth',
+    component: AuthComponent,
+    children: [
+      {
+        path: 'authorization',
+        component: AuthorizationComponent,
+      },
+      {
+        path: 'registration',
+        component: RegistrationComponent,
       },
     ],
   },

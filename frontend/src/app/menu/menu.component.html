@@ -4,6 +4,7 @@
   [ngClass]="{ soundon: isAudioOn, soundoff: !isAudioOn }"
 ></div>
 <div class="background" #background>
+  <div class="auth"><app-auth-mini></app-auth-mini></div>
   <div class="box1 box" (click)="goToIntuition()">РАБОТА С ИНТУИЦИЕЙ</div>
   <div class="box2 box" (click)="goToArena()">СРАЖЕНИЕ НА АРЕНЕ</div>
   <div class="box3 box" (click)="goToDuels()">

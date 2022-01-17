@@ -1,0 +1,37 @@
+<form id="login" #regForm="ngForm" (ngSubmit)="submit(name)" novalidate>
+  <h1>регистрация</h1>
+  <fieldset id="inputs">
+    <input
+      class="username"
+      type="text"
+      placeholder="Логин"
+      name="name"
+      [(ngModel)]="model.name"
+      #name="ngModel"
+      required
+    />
+    <input
+      id="password"
+      type="password"
+      placeholder="Пароль"
+      name="password"
+      [(ngModel)]="model.password"
+      #password="ngModel"
+    />
+    <input
+      id="passwordRepeat"
+      type="password"
+      placeholder="Повторите пароль"
+      name="passwordRepeat"
+      [(ngModel)]="model.passwordRepeat"
+      #passwordRepeat="ngModel"
+    />
+    <input id="email" type="email" placeholder="Почта" name="email" />
+    <div class="alert" *ngIf="password.touched">Укажите пароль!</div>
+    <div class="alert" *ngIf="name.invalid && name.touched">Укажите логин!</div>
+  </fieldset>
+  <fieldset id="actions">
+    <input type="submit" id="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ" />
+    <a href="">Войти</a>
+  </fieldset>
+</form>
