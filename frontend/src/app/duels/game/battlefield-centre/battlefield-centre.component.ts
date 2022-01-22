@@ -17,7 +17,7 @@ import { AppState } from 'src/app/store/state/app.state';
   templateUrl: './battlefield-centre.component.html',
   styleUrls: ['./battlefield-centre.component.less'],
 })
-export class BattlefieldCentreComponent implements OnInit, DoCheck {
+export class BattlefieldCentreComponent implements OnInit {
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
@@ -28,32 +28,28 @@ export class BattlefieldCentreComponent implements OnInit, DoCheck {
     this.store.select(selectUserActionPoints).subscribe((state) => {
       this.actionPoints = state;
     });
-  }
 
-  ngDoCheck(): void {
-    let form;
-    let element;
-    let spellbook;
-
-    this.store.select(selectForm).subscribe((state) => {
-      form = state;
-    });
-    if (!form) return;
-
-    this.store.select(selectElement).subscribe((state) => {
-      element = state;
-    });
-    if (!element) return;
+    let form = '';
+    let element = '';
+    let spellbook: any;
 
     this.store.select(selectSpellbook).subscribe((state) => {
       spellbook = state;
     });
 
-    if (!spellbook) return;
+    this.store.select(selectForm).subscribe((state) => {
+      form = state;
+      if (spellbook[element + form]) {
+        this.russianNameSpell = spellbook[element + form][0];
+      }
+    });
 
-    if (spellbook[element + form]) {
-      this.russianNameSpell = spellbook[element + form][0];
-    }
+    this.store.select(selectElement).subscribe((state) => {
+      element = state;
+      if (spellbook[element + form]) {
+        this.russianNameSpell = spellbook[element + form][0];
+      }
+    });
   }
 
   showEffects() {

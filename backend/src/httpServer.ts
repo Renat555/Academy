@@ -1,13 +1,10 @@
 import express, { Request, Response, NextFunction } from "express";
 import { Client } from "pg";
-import session from "express-session";
-import connectRedis from "connect-redis";
-import * as redis from "redis";
 import { count } from "./intuition/count";
+import { registration } from "./auth/reg";
 import { dev, prod } from "./config";
+import { authentication } from "./auth/auth";
 
-const redisClient = redis.createClient();
-const redisStorage = connectRedis(session);
 const app = express();
 
 let psqlSettings;
@@ -35,7 +32,14 @@ app.use(express.urlencoded({ extended: true }));
 
 app.get("/count", (req: Request, res: Response) => {
   count(postgresClient);
-  res.send(JSON.stringify("user is counted"));
+});
+
+app.post("/reg", (req: Request, res: Response) => {
+  registration(postgresClient, req.body, res);
+});
+
+app.post("/auth", (req: Request, res: Response) => {
+  authentication(postgresClient, req.body, res);
 });
 
 app.listen(3000);

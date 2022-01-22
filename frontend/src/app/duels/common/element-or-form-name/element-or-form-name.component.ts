@@ -74,11 +74,7 @@ export class ElementOrFormNameComponent implements DoCheck {
   }
 
   showData() {
-    this.store.select(selectForm).subscribe((state) => {
-      console.log(state);
-    });
-    this.store.select(selectElement).subscribe((state) => {
-      console.log(state);
-    });
+    this.store.select(selectForm).subscribe((state) => {});
+    this.store.select(selectElement).subscribe((state) => {});
   }
 }

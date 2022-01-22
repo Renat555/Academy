@@ -1,4 +1,4 @@
-function createTables(postgresClient: any) {
+function createTable(postgresClient: any) {
   return new Promise((resolve, reject) => {
     postgresClient.query(
       "CREATE TABLE IF NOT EXISTS count(id serial PRIMARY KEY, date TIMESTAMPTZ NOT NULL, count INT)",
@@ -21,7 +21,7 @@ function selectLastCount(postgresClient: any) {
 }
 
 export async function count(postgresClient: any) {
-  createTables(postgresClient)
+  createTable(postgresClient)
     .then(() => selectLastCount(postgresClient))
     .then((res: any) => {
       if (res.rows.length === 0) {

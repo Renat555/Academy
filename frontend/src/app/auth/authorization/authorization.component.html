@@ -1,11 +1,36 @@
-<form id="login">
-  <h1>вход</h1>
-  <fieldset id="inputs">
-    <input id="username" type="text" placeholder="Логин" autofocus required />
-    <input id="password" type="password" placeholder="Пароль" required />
-  </fieldset>
-  <fieldset id="actions">
-    <input type="submit" id="submit" value="ВОЙТИ" />
-    <a href="">Забыли пароль?</a><a href="">Регистрация</a>
-  </fieldset>
-</form>
+<div
+  class="sound"
+  (click)="toggleSound()"
+  [ngClass]="{ soundon: isAudioOn, soundoff: !isAudioOn }"
+></div>
+<div class="exit" (click)="goToMenu()"></div>
+<div class="background">
+  <form id="login" #regForm="ngForm" (ngSubmit)="submit(regForm)">
+    <h1>вход</h1>
+    <fieldset id="inputs">
+      <input
+        class="username"
+        type="text"
+        placeholder="Логин"
+        name="login"
+        [(ngModel)]="model.login"
+        required
+      />
+      <input
+        id="password"
+        type="password"
+        placeholder="Пароль"
+        name="password"
+        [(ngModel)]="model.password"
+      />
+      <div class="alert" *ngIf="isLoginEmpty">Логин не указан.</div>
+      <div class="alert" *ngIf="isUserNotFound">Пользователь не найден.</div>
+      <div class="alert" *ngIf="isPasswordEmpty">Пароль не указан.</div>
+      <div class="alert" *ngIf="isWrongPassword">Неверный пароль.</div>
+    </fieldset>
+    <fieldset id="actions">
+      <input type="submit" id="submit" value="ВОЙТИ" />
+      <span>Регистрация</span><span>Забыли пароль? |</span>
+    </fieldset>
+  </form>
+</div>

@@ -1,29 +1,49 @@
+.background {
+  width: 1300px;
+  height: 700px;
+
+  display: grid;
+
+  align-items: center;
+  justify-items: center;
+}
+
+.exit {
+  background-image: url(../../../assets/icons/door.png);
+  width: 40px;
+  height: 40px;
+  margin: 70px 0 0 10px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  position: absolute;
+}
+
+.sound {
+  width: 40px;
+  height: 40px;
+  margin: 10px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  cursor: pointer;
+}
+
+.soundoff {
+  background-image: url(../../../assets/icons/noSound.png);
+}
+
+.soundon {
+  background-image: url(../../../assets/icons/sound.png);
+}
+
 #login {
   background-color: #fff;
-  background-image: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    from(#fff),
-    to(#eee)
-  );
-  background-image: -webkit-linear-gradient(top, #fff, #eee);
-  background-image: -moz-linear-gradient(top, #fff, #eee);
-  background-image: -ms-linear-gradient(top, #fff, #eee);
-  background-image: -o-linear-gradient(top, #fff, #eee);
-  background-image: linear-gradient(top, #fff, #eee);
+
   height: 360px;
   width: 400px;
   padding: 30px;
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
   border-radius: 3px;
-  -webkit-box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.2),
-    0 3px 0 #fff, 0 4px 0 rgba(0, 0, 0, 0.2), 0 6px 0 #fff,
-    0 7px 0 rgba(0, 0, 0, 0.2);
-  -moz-box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 1px 1px 0 rgba(0, 0, 0, 0.1),
-    3px 3px 0 rgba(255, 255, 255, 1), 4px 4px 0 rgba(0, 0, 0, 0.1),
-    6px 6px 0 rgba(255, 255, 255, 1), 7px 7px 0 rgba(0, 0, 0, 0.1);
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 0 1px 1px rgba(0, 0, 0, 0.2),
     0 3px 0 #fff, 0 4px 0 rgba(0, 0, 0, 0.2), 0 6px 0 #fff,
     0 7px 0 rgba(0, 0, 0, 0.2);
@@ -38,8 +58,6 @@
   bottom: 5px;
   left: 5px;
   right: 5px;
-  -moz-box-shadow: 0 0 0 1px #fff;
-  -webkit-box-shadow: 0 0 0 1px #fff;
   box-shadow: 0 0 0 1px #fff;
 }
 
@@ -54,6 +72,20 @@ input.ng-touched.ng-valid {
   color: red;
   position: absolute;
   top: 590px;
+}
+
+.message {
+  position: absolute;
+  width: 700px;
+  height: 200px;
+  border-radius: 5px;
+  border: 2px solid black;
+  background-color: #c5a473;
+  text-align: center;
+  font-size: 20px;
+
+  display: grid;
+  align-items: center;
 }
 
 h1 {
@@ -108,29 +140,8 @@ fieldset {
 
 #submit {
   background-color: #ffb94b;
-  background-image: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    from(#fddb6f),
-    to(#ffb94b)
-  );
-  background-image: -webkit-linear-gradient(top, #fddb6f, #ffb94b);
-  background-image: -moz-linear-gradient(top, #fddb6f, #ffb94b);
-  background-image: -ms-linear-gradient(top, #fddb6f, #ffb94b);
-  background-image: -o-linear-gradient(top, #fddb6f, #ffb94b);
-  background-image: linear-gradient(top, #fddb6f, #ffb94b);
-
-  -moz-border-radius: 3px;
-  -webkit-border-radius: 3px;
   border-radius: 3px;
-
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
-
-  -moz-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3),
-    0 1px 0 rgba(255, 255, 255, 0.3) inset;
-  -webkit-box-shadow: 0 0 1px rgba(0, 0, 0, 0.3),
-    0 1px 0 rgba(255, 255, 255, 0.3) inset;
   box-shadow: 0 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.3) inset;
 
   border-width: 1px;
@@ -139,7 +150,7 @@ fieldset {
 
   float: left;
   height: 35px;
-  padding: 5px;
+  padding: 5px 15px;
   cursor: pointer;
   font: bold 15px Arial, Helvetica;
   color: #8f5a0a;
@@ -148,25 +159,10 @@ fieldset {
 #submit:hover,
 #submit:focus {
   background-color: #fddb6f;
-  background-image: -webkit-gradient(
-    linear,
-    left top,
-    left bottom,
-    from(#ffb94b),
-    to(#fddb6f)
-  );
-  background-image: -webkit-linear-gradient(top, #ffb94b, #fddb6f);
-  background-image: -moz-linear-gradient(top, #ffb94b, #fddb6f);
-  background-image: -ms-linear-gradient(top, #ffb94b, #fddb6f);
-  background-image: -o-linear-gradient(top, #ffb94b, #fddb6f);
-  background-image: linear-gradient(top, #ffb94b, #fddb6f);
 }
 
 #submit:active {
   outline: none;
-
-  -moz-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
-  -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.5) inset;
 }
 
@@ -174,11 +170,12 @@ fieldset {
   border: none;
 }
 
-#actions a {
+#actions span {
   color: #3151a2;
   float: right;
   line-height: 35px;
   margin-left: 10px;
+  cursor: pointer;
 }
 
 #back {
