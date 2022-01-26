@@ -9,8 +9,10 @@ import { DescriptionState } from '../reducers/duels/description.reducer';
 import { DictionaryState } from '../reducers/duels/dictionary.reducer';
 import { MapState } from '../reducers/duels/map.reducer';
 import { SpellbookState } from '../reducers/duels/spellBook.reducer';
+import { UserState } from '../reducers/user.reducer';
 
 export interface AppState {
+  user: UserState;
   arena: ArenaState;
   intuition: IntuitionState;
   sound: SoundState;

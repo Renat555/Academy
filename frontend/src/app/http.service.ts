@@ -13,7 +13,9 @@ export class HttpService {
   constructor(private http: HttpClient) {}
 
   sendCount() {
-    return this.http.get(environment.apiUrl + '/count');
+    return this.http.get(environment.apiUrl + '/count', {
+      withCredentials: true,
+    });
   }
 
   postRegistrationData(user: User) {

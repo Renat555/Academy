@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import {
+  selectUserIsAuth,
+  selectUserName,
+} from 'src/app/store/selectors/user.selectors';
+import { AppState } from 'src/app/store/state/app.state';
 
 @Component({
   selector: 'app-auth-mini',
@@ -7,9 +13,17 @@ import { Router } from '@angular/router';
   styleUrls: ['./auth-mini.component.less'],
 })
 export class AuthMiniComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private router: Router, private store: Store<AppState>) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.select(selectUserName).subscribe((state) => {
+      this.userName = state;
+    });
+
+    this.store.select(selectUserIsAuth).subscribe((state) => {
+      this.isAuthorized = state;
+    });
+  }
 
   userName = '';
   isAuthorized = false;

@@ -21,6 +21,7 @@ import { WaitScreenComponent } from './duels/wait-screen/wait-screen.component';
 import { AuthComponent } from './auth/auth.component';
 import { AuthorizationComponent } from './auth/authorization/authorization.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
+import { authGuard } from './auth.guard';
 
 const routes: Routes = [
   {
@@ -104,6 +105,8 @@ const routes: Routes = [
   {
     path: 'auth',
     component: AuthComponent,
+    canActivate: [authGuard],
+    canActivateChild: [authGuard],
     children: [
       {
         path: 'authorization',

@@ -1,7 +1,7 @@
 import { Action, createReducer, createSelector, on } from '@ngrx/store';
 import * as ArenaActions from '../actions/arena.action';
 
-export interface UserState {
+interface UserState {
   health: number;
 }
 

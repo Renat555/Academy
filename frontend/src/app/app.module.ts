@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BattleComponent } from './arena/battle/battle.component';
 import { HealthComponent } from './common/health/health.component';
 import { StoreModule } from '@ngrx/store';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { reducers } from './store';
 import { WinComponent } from './arena/win/win.component';
 import { LossComponent } from './arena/loss/loss.component';
@@ -41,6 +41,8 @@ import { AuthComponent } from './auth/auth.component';
 import { AuthMiniComponent } from './auth/auth-mini/auth-mini.component';
 import { AuthorizationComponent } from './auth/authorization/authorization.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
+import { authGuard } from './auth.guard';
+import { AuthInterceptor } from './auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -89,7 +91,10 @@ import { RegistrationComponent } from './auth/registration/registration.componen
     HttpClientModule,
     FormsModule,
   ],
-  providers: [],
+  providers: [
+    authGuard,
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
