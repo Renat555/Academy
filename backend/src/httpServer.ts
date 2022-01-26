@@ -1,16 +1,25 @@
 import express, { Request, Response, NextFunction } from "express";
 import { Client } from "pg";
-import { count } from "./intuition/count";
-import { registration } from "./auth/reg";
+import cors from "cors";
+
 import { dev, prod } from "./config";
 import { authentication } from "./auth/auth";
+import { count } from "./intuition/count";
+import { registration } from "./auth/reg";
+import { authCheck } from "./middlewares/authCheck";
 
 const app = express();
 
+let corsSettings = {
+  origin: "http://localhost:4200",
+  credentials: true,
+};
+
 let psqlSettings;
 
-if (process.env.NODE_ENV == "dev") {
+if (process.env.NODE_ENV === "dev") {
   psqlSettings = dev.psql;
+  app.use(cors(corsSettings));
 } else {
   psqlSettings = prod.psql;
 }
@@ -18,17 +27,9 @@ if (process.env.NODE_ENV == "dev") {
 const postgresClient = new Client(psqlSettings);
 postgresClient.connect();
 
-app.use(function (req: Request, res: Response, next: NextFunction) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
-
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(authCheck);
 
 app.get("/count", (req: Request, res: Response) => {
   count(postgresClient);

@@ -1,5 +1,6 @@
 import { Response } from "express";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
 function findUser(postgresClient: any, login: string) {
   return new Promise((resolve, reject) => {
@@ -23,7 +24,19 @@ export async function authentication(
     } else {
       bcrypt.compare(user.password, result.rows[0].password, (err, hash) => {
         if (hash) {
-          res.send(JSON.stringify("ok"));
+          let token = jwt.sign(
+            {
+              id: result.rows[0].id,
+              login: result.rows[0].login,
+            },
+            ";lskjf235",
+            {
+              expiresIn: "1h",
+            }
+          );
+          res
+            .status(200)
+            .json({ token: token, userLogin: result.rows[0].login });
         } else {
           res.send(JSON.stringify("wrong password"));
         }
