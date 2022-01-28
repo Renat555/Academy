@@ -29,11 +29,6 @@ postgresClient.connect();
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(authCheck);
-
-app.get("/count", (req: Request, res: Response) => {
-  count(postgresClient);
-});
 
 app.post("/reg", (req: Request, res: Response) => {
   registration(postgresClient, req.body, res);
@@ -42,5 +37,9 @@ app.post("/reg", (req: Request, res: Response) => {
 app.post("/auth", (req: Request, res: Response) => {
   authentication(postgresClient, req.body, res);
 });
+
+app.use(authCheck);
+
+app.get("/", (req: Request, res: Response) => {});
 
 app.listen(3000);

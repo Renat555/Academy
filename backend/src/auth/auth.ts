@@ -2,12 +2,16 @@ import { Response } from "express";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-function findUser(postgresClient: any, login: string) {
+function findUser(postgresClient: any, login: string, response: Response) {
   return new Promise((resolve, reject) => {
     postgresClient.query(
       `SELECT * FROM users WHERE login = '${login}'`,
       (err: any, res: any) => {
-        resolve(res);
+        if (res.rows.length === 0) {
+          response.json("user not found");
+        } else {
+          resolve(res.rows[0]);
+        }
       }
     );
   });
@@ -16,31 +20,30 @@ function findUser(postgresClient: any, login: string) {
 export async function authentication(
   postgresClient: any,
   user: { login: string; password: string },
-  res: Response
+  response: Response
 ) {
-  findUser(postgresClient, user.login).then((result: any) => {
-    if (result.rows.length === 0) {
-      res.send(JSON.stringify("user not found"));
-    } else {
-      bcrypt.compare(user.password, result.rows[0].password, (err, hash) => {
-        if (hash) {
-          let token = jwt.sign(
-            {
-              id: result.rows[0].id,
-              login: result.rows[0].login,
-            },
-            ";lskjf235",
-            {
-              expiresIn: "1h",
-            }
-          );
-          res
-            .status(200)
-            .json({ token: token, userLogin: result.rows[0].login });
-        } else {
-          res.send(JSON.stringify("wrong password"));
-        }
-      });
+  findUser(postgresClient, user.login, response).then((result: any) => {
+    if (!result.confirmed) {
+      response.json("email not confirmed");
+      return;
     }
+
+    bcrypt.compare(user.password, result.password, (err, hash) => {
+      if (hash) {
+        let token = jwt.sign(
+          {
+            id: result.id,
+            login: result.login,
+          },
+          "ylskjf235",
+          {
+            expiresIn: "3h",
+          }
+        );
+        response.json({ token: token, userLogin: result.login });
+      } else {
+        response.json("wrong password");
+      }
+    });
   });
 }

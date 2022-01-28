@@ -35,6 +35,7 @@ export class AuthorizationComponent implements OnInit {
   isUserNotFound = false;
   isPasswordEmpty = false;
   isWrongPassword = false;
+  isEmailConfirmed = false;
 
   isAudioOn = true;
 
@@ -44,11 +45,13 @@ export class AuthorizationComponent implements OnInit {
       this.isUserNotFound = false;
       this.isPasswordEmpty = false;
       this.isWrongPassword = false;
+      this.isEmailConfirmed = false;
     } else if (form.controls.password.value === '') {
       this.isLoginEmpty = false;
       this.isUserNotFound = false;
       this.isPasswordEmpty = true;
       this.isWrongPassword = false;
+      this.isEmailConfirmed = false;
     } else {
       this.httpService.postAuthData(this.model).subscribe((data: any) => {
         if (data === 'user not found') {
@@ -56,11 +59,19 @@ export class AuthorizationComponent implements OnInit {
           this.isUserNotFound = true;
           this.isPasswordEmpty = false;
           this.isWrongPassword = false;
+          this.isEmailConfirmed = false;
         } else if (data === 'wrong password') {
           this.isLoginEmpty = false;
           this.isUserNotFound = false;
           this.isPasswordEmpty = false;
           this.isWrongPassword = true;
+          this.isEmailConfirmed = false;
+        } else if (data === 'email not confirmed') {
+          this.isLoginEmpty = false;
+          this.isUserNotFound = false;
+          this.isPasswordEmpty = false;
+          this.isWrongPassword = false;
+          this.isEmailConfirmed = true;
         } else {
           this.store.dispatch(userIsAuth());
           this.store.dispatch(addLogin({ login: data.userLogin }));

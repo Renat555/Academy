@@ -1,12 +1,22 @@
 import { Response } from "express";
 import bcrypt from "bcrypt";
 
+function randomString() {
+  const characters =
+    "0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  let string = "";
+  for (let i = 0; i < 15; i++) {
+    string += characters[Math.floor(Math.random() * characters.length)];
+  }
+  return string;
+}
+
 function createTable(postgresClient: any) {
   return new Promise((resolve, reject) => {
     postgresClient.query(
-      "CREATE TABLE IF NOT EXISTS users(id serial PRIMARY KEY, login VARCHAR (50) UNIQUE NOT NULL, password VARCHAR (100) NOT NULL, email VARCHAR (255) NOT NULL, created_on TIMESTAMP NOT NULL, confirmed BOOLEAN NOT NULL)",
+      "CREATE TABLE IF NOT EXISTS users(id serial PRIMARY KEY, login VARCHAR (50) UNIQUE NOT NULL, password VARCHAR (100) NOT NULL, email VARCHAR (255) NOT NULL, created_on TIMESTAMP NOT NULL, confirmed BOOLEAN NOT NULL, confirmationCode VARCHAR (15) NOT NULL)",
       (err: any, res: any) => {
-        resolve("");
+        resolve(res);
       }
     );
   });
@@ -29,8 +39,8 @@ async function saveUser(
 ) {
   let hashPass = await bcrypt.hash(user.password, 12);
   postgresClient.query(
-    "INSERT INTO users (login, password, email, created_on, confirmed) VALUES ($1, $2, $3, $4, $5)",
-    [user.login, hashPass, user.email, new Date(), false]
+    "INSERT INTO users (login, password, email, created_on, confirmed, confirmationCode) VALUES ($1, $2, $3, $4, $5, $6)",
+    [user.login, hashPass, user.email, new Date(), false, randomString()]
   );
 }
 

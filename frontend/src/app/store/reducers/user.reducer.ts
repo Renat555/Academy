@@ -6,13 +6,6 @@ export interface UserState {
   isAuth: boolean;
 }
 
-let token = localStorage.getItem('token');
-let isAuth = false;
-
-if (token !== null) {
-  isAuth = true;
-}
-
 const initialState: UserState = {
   login: '',
   isAuth: false,

@@ -1,0 +1,31 @@
+.background {
+  display: grid;
+
+  justify-items: center;
+  align-items: center;
+}
+
+.container {
+  width: 300px;
+  height: 300px;
+
+  text-align: center;
+}
+
+.text {
+  margin-top: 10px;
+}
+
+.spinner {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: conic-gradient(#0000 10%, #25b09b);
+
+  animation: s3 3s infinite linear;
+}
+@keyframes s3 {
+  to {
+    transform: rotate(1turn);
+  }
+}

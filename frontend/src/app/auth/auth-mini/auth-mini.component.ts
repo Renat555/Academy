@@ -6,6 +6,7 @@ import {
   selectUserName,
 } from 'src/app/store/selectors/user.selectors';
 import { AppState } from 'src/app/store/state/app.state';
+import { userIsNotAuth } from 'src/app/store/actions/user.actions';
 
 @Component({
   selector: 'app-auth-mini',
@@ -27,6 +28,11 @@ export class AuthMiniComponent implements OnInit {
 
   userName = '';
   isAuthorized = false;
+
+  logout() {
+    this.store.dispatch(userIsNotAuth());
+    localStorage.removeItem('token');
+  }
 
   goToAuthorization() {
     this.router.navigate(['auth/authorization']);

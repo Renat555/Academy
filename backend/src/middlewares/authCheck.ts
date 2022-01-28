@@ -4,10 +4,12 @@ import jwt from "jsonwebtoken";
 export function authCheck(req: Request, res: Response, next: NextFunction) {
   if (req.headers.authorization) {
     const token = req.headers.authorization.split(" ")[1];
-    jwt.verify(token, "longer-secret-is-better", (err, decoded) => {
+
+    jwt.verify(token, "ylskjf235", (err, decoded) => {
       if (err) {
-        res.status(401).json({ messge: "Authentication faliled" });
+        res.json({ message: "Authentication failed" });
       } else {
+        res.json({ message: "ok" });
         next();
       }
     });

@@ -43,6 +43,8 @@ import { AuthorizationComponent } from './auth/authorization/authorization.compo
 import { RegistrationComponent } from './auth/registration/registration.component';
 import { authGuard } from './auth.guard';
 import { AuthInterceptor } from './auth.interceptor';
+import { EmailConfirmComponent } from './auth/email-confirm/email-confirm.component';
+import { PendingComponent } from './common/pending/pending.component';
 
 @NgModule({
   declarations: [
@@ -81,6 +83,8 @@ import { AuthInterceptor } from './auth.interceptor';
     AuthMiniComponent,
     AuthorizationComponent,
     RegistrationComponent,
+    EmailConfirmComponent,
+    PendingComponent,
   ],
   imports: [
     ReactiveFormsModule,

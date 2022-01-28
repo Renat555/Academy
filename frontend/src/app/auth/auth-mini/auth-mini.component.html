@@ -3,5 +3,5 @@
   ><span *ngIf="!isAuthorized" (click)="goToAuthorization()"> Вход</span
   ><span *ngIf="isAuthorized">Добро пожаловать, {{ userName }} |</span
   ><span *ngIf="isAuthorized"> Личный кабинет |</span
-  ><span *ngIf="isAuthorized"> Выйти</span>
+  ><span *ngIf="isAuthorized" (click)="logout()"> Выйти</span>
 </div>
