@@ -4,21 +4,20 @@ import cors from "cors";
 
 import { dev, prod } from "./config";
 import { authentication } from "./auth/auth";
-import { count } from "./intuition/count";
 import { registration } from "./auth/reg";
 import { authCheck } from "./middlewares/authCheck";
 
 const app = express();
 
-let corsSettings = {
-  origin: "http://localhost:4200",
-  credentials: true,
-};
-
 let psqlSettings;
 
 if (process.env.NODE_ENV === "dev") {
   psqlSettings = dev.psql;
+
+  let corsSettings = {
+    origin: "http://localhost:4200",
+    credentials: true,
+  };
   app.use(cors(corsSettings));
 } else {
   psqlSettings = prod.psql;

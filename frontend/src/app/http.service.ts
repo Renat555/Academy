@@ -5,7 +5,6 @@ import { environment } from '../environments/environment';
 interface User {
   login: string;
   password: string;
-  email: string;
 }
 
 @Injectable()

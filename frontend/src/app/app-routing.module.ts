@@ -22,7 +22,6 @@ import { AuthComponent } from './auth/auth.component';
 import { AuthorizationComponent } from './auth/authorization/authorization.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
 import { authGuard } from './auth.guard';
-import { EmailConfirmComponent } from './auth/email-confirm/email-confirm.component';
 
 const routes: Routes = [
   {
@@ -116,10 +115,6 @@ const routes: Routes = [
       {
         path: 'registration',
         component: RegistrationComponent,
-      },
-      {
-        path: 'emailConfirm',
-        component: EmailConfirmComponent,
       },
     ],
   },

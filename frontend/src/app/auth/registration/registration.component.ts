@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { HttpService } from 'src/app/http.service';
 import { soundOff, soundOn } from 'src/app/store/actions/sound.action';
+import { addLogin, userIsAuth } from 'src/app/store/actions/user.actions';
 import { selectSoundSwitch } from 'src/app/store/selectors/sound.selector';
 import { AppState } from 'src/app/store/state/app.state';
 
@@ -29,18 +30,12 @@ export class RegistrationComponent implements OnInit {
     login: '',
     password: '',
     passwordRepeat: '',
-    email: '',
   };
 
   isLoginEmpty = false;
   isLoginExists = false;
   isPasswordEmpty = false;
   isPasswordsNotMatch = false;
-  isEmailEmpty = false;
-  isEmailCorrect = false;
-
-  isMessageActive = false;
-  message = '';
 
   isAudioOn = true;
 
@@ -50,15 +45,11 @@ export class RegistrationComponent implements OnInit {
       this.isLoginExists = false;
       this.isPasswordEmpty = false;
       this.isPasswordsNotMatch = false;
-      this.isEmailEmpty = false;
-      this.isEmailCorrect = false;
     } else if (form.controls.password.value === '') {
       this.isLoginEmpty = false;
       this.isLoginExists = false;
       this.isPasswordEmpty = true;
       this.isPasswordsNotMatch = false;
-      this.isEmailEmpty = false;
-      this.isEmailCorrect = false;
     } else if (
       form.controls.password.value !== form.controls.passwordRepeat.value
     ) {
@@ -66,37 +57,23 @@ export class RegistrationComponent implements OnInit {
       this.isLoginExists = false;
       this.isPasswordEmpty = false;
       this.isPasswordsNotMatch = true;
-      this.isEmailEmpty = false;
-      this.isEmailCorrect = false;
-    } else if (form.controls.email.value === '') {
-      this.isLoginEmpty = false;
-      this.isLoginExists = false;
-      this.isPasswordEmpty = false;
-      this.isPasswordsNotMatch = false;
-      this.isEmailEmpty = true;
-      this.isEmailCorrect = false;
-    } else if (!form.controls.email.valid) {
-      this.isLoginEmpty = false;
-      this.isLoginExists = false;
-      this.isPasswordEmpty = false;
-      this.isPasswordsNotMatch = false;
-      this.isEmailEmpty = false;
-      this.isEmailCorrect = true;
     } else {
-      this.httpService.postRegistrationData(this.model).subscribe((data) => {
-        if (data === 'user saved') {
-          this.message =
-            'На указанную при регистрацию почту, выслано письмо для подтверждения.';
-          this.isMessageActive = true;
-        } else {
-          this.isLoginEmpty = false;
-          this.isLoginExists = true;
-          this.isPasswordEmpty = false;
-          this.isPasswordsNotMatch = false;
-          this.isEmailEmpty = false;
-          this.isEmailCorrect = false;
-        }
-      });
+      this.httpService
+        .postRegistrationData(this.model)
+        .subscribe((data: any) => {
+          if (data === 'login exists') {
+            this.isLoginEmpty = false;
+            this.isLoginExists = true;
+            this.isPasswordEmpty = false;
+            this.isPasswordsNotMatch = false;
+          } else {
+            this.store.dispatch(userIsAuth());
+            this.store.dispatch(addLogin({ login: data.userLogin }));
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('login', data.userLogin);
+            this.goToMenu();
+          }
+        });
     }
   }
 

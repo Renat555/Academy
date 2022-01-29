@@ -7,6 +7,8 @@ function findUser(postgresClient: any, login: string, response: Response) {
     postgresClient.query(
       `SELECT * FROM users WHERE login = '${login}'`,
       (err: any, res: any) => {
+        console.log(res.rows);
+
         if (res.rows.length === 0) {
           response.json("user not found");
         } else {
@@ -23,11 +25,6 @@ export async function authentication(
   response: Response
 ) {
   findUser(postgresClient, user.login, response).then((result: any) => {
-    if (!result.confirmed) {
-      response.json("email not confirmed");
-      return;
-    }
-
     bcrypt.compare(user.password, result.password, (err, hash) => {
       if (hash) {
         let token = jwt.sign(

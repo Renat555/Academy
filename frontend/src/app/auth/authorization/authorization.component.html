@@ -27,11 +27,10 @@
       <div class="alert" *ngIf="isUserNotFound">Пользователь не найден.</div>
       <div class="alert" *ngIf="isPasswordEmpty">Пароль не указан.</div>
       <div class="alert" *ngIf="isWrongPassword">Неверный пароль.</div>
-      <div class="alert" *ngIf="isEmailConfirmed">Почта не подтверждена.</div>
     </fieldset>
     <fieldset id="actions">
       <input type="submit" id="submit" value="ВОЙТИ" />
-      <span>Регистрация</span><span>Забыли пароль? |</span>
+      <span (click)="goToReg()">Регистрация</span>
     </fieldset>
   </form>
 </div>

@@ -5,8 +5,6 @@
 ></div>
 <div class="exit" (click)="goToMenu()"></div>
 <div class="background">
-  <div class="message" *ngIf="isMessageActive">{{ message }}</div>
-
   <form id="login" #regForm="ngForm" (ngSubmit)="submit(regForm)" novalidate>
     <h1>регистрация</h1>
     <fieldset id="inputs">
@@ -32,24 +30,10 @@
         name="passwordRepeat"
         [(ngModel)]="model.passwordRepeat"
       />
-      <input
-        id="email"
-        type="email"
-        [(ngModel)]="model.email"
-        placeholder="Почта"
-        name="email"
-        email
-      />
       <div class="alert" *ngIf="isLoginEmpty">Логин не указан.</div>
       <div class="alert" *ngIf="isLoginExists">Логин уже занят.</div>
       <div class="alert" *ngIf="isPasswordEmpty">Пустой пароль.</div>
       <div class="alert" *ngIf="isPasswordsNotMatch">Пароли не совпадают.</div>
-      <div class="alert" *ngIf="isEmailEmpty">
-        Не указан адрес электронной почты.
-      </div>
-      <div class="alert" *ngIf="isEmailCorrect">
-        Неверный адрес электронной почты.
-      </div>
     </fieldset>
     <fieldset id="actions">
       <input type="submit" id="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ" />

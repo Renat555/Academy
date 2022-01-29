@@ -87,6 +87,10 @@ export class AuthorizationComponent implements OnInit {
     this.router.navigate(['']);
   }
 
+  goToReg() {
+    this.router.navigate(['/auth/registration']);
+  }
+
   toggleSound() {
     if (this.isAudioOn) {
       this.store.dispatch(soundOff());

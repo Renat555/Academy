@@ -11,6 +11,7 @@ import * as Dictionary from './reducers/duels/dictionary.reducer';
 import * as Map from './reducers/duels/map.reducer';
 import * as Spellbook from './reducers/duels/spellBook.reducer';
 import * as User from './reducers/user.reducer';
+import * as Pending from './reducers/pending.reducer';
 
 const duelsReducers = combineReducers({
   users: Users.reducer,
@@ -28,6 +29,7 @@ export interface State {
   arena: Arena.ArenaState;
   intuition: Intuition.IntuitionState;
   sound: Sound.SoundState;
+  pending: Pending.PendingState;
   duels: {
     users: Users.UsersState;
     effectsWindow: EffectsWindow.EffectsWindowState;
@@ -45,5 +47,6 @@ export const reducers: ActionReducerMap<State> = {
   arena: Arena.reducer,
   intuition: Intuition.reducer,
   sound: Sound.reducer,
+  pending: Pending.reducer,
   duels: duelsReducers,
 };
