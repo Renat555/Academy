@@ -1,0 +1,109 @@
+.background {
+  height: 700px;
+  width: 1300px;
+  background-color: rgb(212, 212, 212);
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 25px;
+
+  display: grid;
+  grid-template-rows: 25px 150px 150px 150px 25px;
+  grid-template-columns: 100px 500px 100px 500px 100px;
+  row-gap: 50px;
+
+  justify-items: center;
+  align-items: center;
+}
+
+.figures {
+  grid-row: 2/3;
+  grid-column: 2/3;
+}
+
+.black-white {
+  grid-row: 2/3;
+  grid-column: 4/5;
+}
+
+.colors {
+  grid-row: 3/4;
+  grid-column: 2/3;
+}
+
+.playing-cards {
+  grid-row: 3/4;
+  grid-column: 4/5;
+}
+
+.card-suits {
+  grid-row: 4/5;
+  grid-column: 2/3;
+}
+
+table {
+  width: 500px;
+  border-collapse: collapse;
+  empty-cells: hide;
+}
+
+th,
+td {
+  border: 2px solid rgba(0, 0, 0, 0.6);
+  text-align: center;
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 30px;
+  font-weight: bold;
+  padding: 5px 0;
+  background: #eaeef1;
+  background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0.1));
+  border-radius: 3px;
+
+  text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.2), 0 1px 2px rgba(0, 0, 0, 0.2),
+    inset 0 1px 2px rgba(255, 255, 255, 0.7);
+  width: 100%;
+  height: 100%;
+  &:hover {
+    background: #fff;
+  }
+  &:active {
+    background: #d0d3d6;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0));
+    box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.2),
+      inset 0 2px 5px rgba(0, 0, 0, 0.2), 0 1px rgba(255, 255, 255, 0.2);
+  }
+}
+
+.exit {
+  background-image: url(../../../assets/icons/door.png);
+  width: 40px;
+  height: 40px;
+  margin: 70px 0 0 10px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  position: absolute;
+}
+
+.sound {
+  width: 40px;
+  height: 40px;
+  margin: 10px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  cursor: pointer;
+}
+
+.soundoff {
+  background-image: url(../../../assets/icons/noSound.png);
+}
+
+.soundon {
+  background-image: url(../../../assets/icons/sound.png);
+}

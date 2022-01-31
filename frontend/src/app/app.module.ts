@@ -44,6 +44,9 @@ import { RegistrationComponent } from './auth/registration/registration.componen
 import { authGuard } from './auth.guard';
 import { AuthInterceptor } from './auth.interceptor';
 import { PendingComponent } from './common/pending/pending.component';
+import { ProfileComponent } from './profile/profile.component';
+import { GeneralStatComponent } from './profile/general-stat/general-stat.component';
+import { DetailStatComponent } from './profile/detail-stat/detail-stat.component';
 
 @NgModule({
   declarations: [
@@ -83,6 +86,9 @@ import { PendingComponent } from './common/pending/pending.component';
     AuthorizationComponent,
     RegistrationComponent,
     PendingComponent,
+    ProfileComponent,
+    GeneralStatComponent,
+    DetailStatComponent,
   ],
   imports: [
     ReactiveFormsModule,

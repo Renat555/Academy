@@ -1,5 +1,5 @@
 import { ArenaState } from '../reducers/arena.reducer';
-import { IntuitionState } from '../reducers/intuition.reducer';
+import { AnswersState } from '../reducers/intuition/answers.reducer';
 import { SoundState } from '../reducers/sound.reducer';
 import { UsersState } from '../reducers/duels/users.reducer';
 import { EffectsWindowState } from '../reducers/duels/effectsWindow.reducer';
@@ -11,11 +11,15 @@ import { MapState } from '../reducers/duels/map.reducer';
 import { SpellbookState } from '../reducers/duels/spellBook.reducer';
 import { UserState } from '../reducers/user.reducer';
 import { PendingState } from '../reducers/pending.reducer';
+import { ResultsState } from '../reducers/intuition/results.reducer';
 
 export interface AppState {
   user: UserState;
   arena: ArenaState;
-  intuition: IntuitionState;
+  intuition: {
+    answers: AnswersState;
+    results: ResultsState;
+  };
   sound: SoundState;
   pending: PendingState;
   duels: {

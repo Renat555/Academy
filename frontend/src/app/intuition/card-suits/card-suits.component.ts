@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { HttpService } from 'src/app/http.service';
@@ -11,8 +11,12 @@ import { AppState } from 'src/app/store/state/app.state';
   templateUrl: './card-suits.component.html',
   styleUrls: ['./card-suits.component.less'],
 })
-export class CardSuitsComponent implements OnInit {
-  constructor(private router: Router, private store: Store<AppState>) {}
+export class CardSuitsComponent implements OnInit, OnDestroy {
+  constructor(
+    private router: Router,
+    private store: Store<AppState>,
+    private httpService: HttpService
+  ) {}
 
   ngOnInit(): void {
     this.store.select(selectSoundSwitch).subscribe((state) => {
@@ -20,6 +24,19 @@ export class CardSuitsComponent implements OnInit {
     });
 
     this.suitIndex = this.randomIndex();
+  }
+
+  ngOnDestroy(): void {
+    let login = localStorage.getItem('login') || '';
+
+    this.httpService
+      .postIntuitionResult({
+        mode: 'card-suits',
+        login: login,
+        right: this.rightAnswers,
+        wrong: this.wrongAnswers,
+      })
+      .subscribe(() => {});
   }
 
   randomIndex() {

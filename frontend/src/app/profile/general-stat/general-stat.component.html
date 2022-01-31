@@ -1,0 +1,98 @@
+<div
+  class="sound"
+  (click)="toggleSound()"
+  [ngClass]="{ soundon: isAudioOn, soundoff: !isAudioOn }"
+></div>
+<div class="exit" (click)="goToMenu()"></div>
+<div class="background">
+  <div class="figures">
+    <table>
+      <tr>
+        <th colspan="3">Фигуры</th>
+      </tr>
+      <tr>
+        <th>Верно</th>
+        <th>Неверно</th>
+        <th>Процент</th>
+      </tr>
+      <tr>
+        <td>{{ figuresRight }}</td>
+        <td>{{ figuresWrong }}</td>
+        <td>{{ figuresPercent }}%</td>
+      </tr>
+    </table>
+    <div class="box" (click)="goToDetail('figures')">Подробнее</div>
+  </div>
+  <div class="card-suits">
+    <table>
+      <tr>
+        <th colspan="3">Масти</th>
+      </tr>
+      <tr>
+        <th>Верно</th>
+        <th>Неверно</th>
+        <th>Процент</th>
+      </tr>
+      <tr>
+        <td>{{ cardSuitsRight }}</td>
+        <td>{{ cardSuitsWrong }}</td>
+        <td>{{ cardSuitsPercent }}%</td>
+      </tr>
+    </table>
+    <div class="box" (click)="goToDetail('cardSuits')">Подробнее</div>
+  </div>
+  <div class="colors">
+    <table>
+      <tr>
+        <th colspan="3">Цвета</th>
+      </tr>
+      <tr>
+        <th>Верно</th>
+        <th>Неверно</th>
+        <th>Процент</th>
+      </tr>
+      <tr>
+        <td>{{ colorsRight }}</td>
+        <td>{{ colorsWrong }}</td>
+        <td>{{ colorsPercent }}%</td>
+      </tr>
+    </table>
+    <div class="box" (click)="goToDetail('colors')">Подробнее</div>
+  </div>
+  <div class="black-white">
+    <table>
+      <tr>
+        <th colspan="3">Черное и белое</th>
+      </tr>
+      <tr>
+        <th>Верно</th>
+        <th>Неверно</th>
+        <th>Процент</th>
+      </tr>
+      <tr>
+        <td>{{ blackWhiteRight }}</td>
+        <td>{{ blackWhiteWrong }}</td>
+        <td>{{ blackWhitePercent }}%</td>
+      </tr>
+    </table>
+    <div class="box" (click)="goToDetail('blackWhite')">Подробнее</div>
+  </div>
+  <div class="playing-cards">
+    <table>
+      <tr>
+        <th colspan="3">Игральные карты</th>
+      </tr>
+      <tr>
+        <th>Верно</th>
+        <th>Неверно</th>
+        <th>Процент</th>
+      </tr>
+      <tr>
+        <td>{{ playingCardsRight }}</td>
+        <td>{{ playingCardsWrong }}</td>
+        <td>{{ playingCardsPercent }}%</td>
+      </tr>
+    </table>
+    <div class="box" (click)="goToDetail('playingCards')">Подробнее</div>
+  </div>
+</div>

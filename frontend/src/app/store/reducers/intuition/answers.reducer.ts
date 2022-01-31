@@ -1,17 +1,17 @@
 import { Action, createReducer, createSelector, on } from '@ngrx/store';
-import * as IntuitionActions from '../actions/intuition.action';
+import * as IntuitionActions from '../../actions/intuition/answers.action';
 
-export interface IntuitionState {
+export interface AnswersState {
   right: number;
   wrong: number;
 }
 
-const initialState: IntuitionState = {
+const initialState: AnswersState = {
   right: 0,
   wrong: 0,
 };
 
-const intuitionReducer = createReducer(
+export const reducer = createReducer(
   initialState,
   on(IntuitionActions.addRightAnswer, (state) => ({
     ...state,
@@ -26,7 +26,3 @@ const intuitionReducer = createReducer(
     wrong: 0,
   }))
 );
-
-export function reducer(state: IntuitionState | undefined, action: Action) {
-  return intuitionReducer(state, action);
-}

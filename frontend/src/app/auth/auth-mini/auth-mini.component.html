@@ -2,6 +2,6 @@
   <span *ngIf="!isAuthorized" (click)="goToRegistration()">Регистрация | </span
   ><span *ngIf="!isAuthorized" (click)="goToAuthorization()"> Вход</span
   ><span *ngIf="isAuthorized">Добро пожаловать, {{ userName }} |</span
-  ><span *ngIf="isAuthorized"> Личный кабинет |</span
+  ><span *ngIf="isAuthorized" (click)="goToProfile()"> Личный кабинет |</span
   ><span *ngIf="isAuthorized" (click)="logout()"> Выйти</span>
 </div>

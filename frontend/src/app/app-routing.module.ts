@@ -22,6 +22,9 @@ import { AuthComponent } from './auth/auth.component';
 import { AuthorizationComponent } from './auth/authorization/authorization.component';
 import { RegistrationComponent } from './auth/registration/registration.component';
 import { authGuard } from './auth.guard';
+import { ProfileComponent } from './profile/profile.component';
+import { GeneralStatComponent } from './profile/general-stat/general-stat.component';
+import { DetailStatComponent } from './profile/detail-stat/detail-stat.component';
 
 const routes: Routes = [
   {
@@ -105,8 +108,6 @@ const routes: Routes = [
   {
     path: 'auth',
     component: AuthComponent,
-    canActivate: [authGuard],
-    canActivateChild: [authGuard],
     children: [
       {
         path: 'authorization',
@@ -115,6 +116,22 @@ const routes: Routes = [
       {
         path: 'registration',
         component: RegistrationComponent,
+      },
+    ],
+  },
+  {
+    path: 'profile',
+    component: ProfileComponent,
+    canActivate: [authGuard],
+    canActivateChild: [authGuard],
+    children: [
+      {
+        path: 'generalStat',
+        component: GeneralStatComponent,
+      },
+      {
+        path: 'detailStat',
+        component: DetailStatComponent,
       },
     ],
   },

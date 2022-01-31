@@ -15,6 +15,19 @@ export class HttpService {
     return this.http.get(environment.apiUrl + '/');
   }
 
+  getIntuitionResults(login: string) {
+    return this.http.post(environment.apiUrl + '/intResult', { login: login });
+  }
+
+  postIntuitionResult(result: {
+    mode: string;
+    login: string;
+    right: number;
+    wrong: number;
+  }) {
+    return this.http.post(environment.apiUrl + '/intuitionResult', result);
+  }
+
   postRegistrationData(user: User) {
     return this.http.post(environment.apiUrl + '/reg', user);
   }

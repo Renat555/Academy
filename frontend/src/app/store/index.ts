@@ -1,6 +1,7 @@
 import { ActionReducerMap, combineReducers } from '@ngrx/store';
 import * as Arena from './reducers/arena.reducer';
-import * as Intuition from './reducers/intuition.reducer';
+import * as Answers from './reducers/intuition/answers.reducer';
+import * as Results from './reducers/intuition/results.reducer';
 import * as Sound from './reducers/sound.reducer';
 import * as Users from './reducers/duels/users.reducer';
 import * as EffectsWindow from './reducers/duels/effectsWindow.reducer';
@@ -24,10 +25,18 @@ const duelsReducers = combineReducers({
   spellbook: Spellbook.reducer,
 });
 
+const intuitionReducers = combineReducers({
+  answers: Answers.reducer,
+  results: Results.reducer,
+});
+
 export interface State {
   user: User.UserState;
   arena: Arena.ArenaState;
-  intuition: Intuition.IntuitionState;
+  intuition: {
+    answers: Answers.AnswersState;
+    results: Results.ResultsState;
+  };
   sound: Sound.SoundState;
   pending: Pending.PendingState;
   duels: {
@@ -45,7 +54,7 @@ export interface State {
 export const reducers: ActionReducerMap<State> = {
   user: User.reducer,
   arena: Arena.reducer,
-  intuition: Intuition.reducer,
+  intuition: intuitionReducers,
   sound: Sound.reducer,
   pending: Pending.reducer,
   duels: duelsReducers,

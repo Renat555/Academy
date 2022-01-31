@@ -41,4 +41,8 @@ export class AuthMiniComponent implements OnInit {
   goToRegistration() {
     this.router.navigate(['auth/registration']);
   }
+
+  goToProfile() {
+    this.router.navigate(['profile/generalStat']);
+  }
 }

@@ -6,6 +6,8 @@ import { dev, prod } from "./config";
 import { authentication } from "./auth/auth";
 import { registration } from "./auth/reg";
 import { authCheck } from "./middlewares/authCheck";
+import { saveResult } from "./intuition/saveResult";
+import { getResult } from "./intuition/getResult";
 
 const app = express();
 
@@ -39,6 +41,16 @@ app.post("/auth", (req: Request, res: Response) => {
 
 app.use(authCheck);
 
-app.get("/", (req: Request, res: Response) => {});
+app.get("/", (req: Request, res: Response) => {
+  res.json({ message: "ok" });
+});
+
+app.post("/intResult", (req: Request, res: Response) => {
+  getResult(postgresClient, req.body.login, res);
+});
+
+app.post("/intuitionResult", (req: Request, res: Response) => {
+  saveResult(postgresClient, req.body, res);
+});
 
 app.listen(3000);

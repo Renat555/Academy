@@ -1,6 +1,13 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { HttpService } from 'src/app/http.service';
 import { soundOff, soundOn } from 'src/app/store/actions/sound.action';
 import { selectSoundSwitch } from 'src/app/store/selectors/sound.selector';
 import { AppState } from '../../store/state/app.state';
@@ -10,8 +17,12 @@ import { AppState } from '../../store/state/app.state';
   templateUrl: './playing-cards.component.html',
   styleUrls: ['./playing-cards.component.less'],
 })
-export class PlayingCardsComponent implements OnInit {
-  constructor(private router: Router, private store: Store<AppState>) {}
+export class PlayingCardsComponent implements OnInit, OnDestroy {
+  constructor(
+    private router: Router,
+    private store: Store<AppState>,
+    private httpService: HttpService
+  ) {}
 
   ngOnInit() {
     this.store.select(selectSoundSwitch).subscribe((state) => {
@@ -19,6 +30,19 @@ export class PlayingCardsComponent implements OnInit {
     });
 
     this.cardIndex = this.randomIndex();
+  }
+
+  ngOnDestroy(): void {
+    let login = localStorage.getItem('login') || '';
+
+    this.httpService
+      .postIntuitionResult({
+        mode: 'playing-cards',
+        login: login,
+        right: this.rightAnswers,
+        wrong: this.wrongAnswers,
+      })
+      .subscribe(() => {});
   }
 
   randomIndex() {
@@ -154,7 +178,6 @@ export class PlayingCardsComponent implements OnInit {
       } else {
         this.wrongAnswers++;
       }
-      
     }
   }
 

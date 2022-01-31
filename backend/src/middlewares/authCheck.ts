@@ -9,7 +9,6 @@ export function authCheck(req: Request, res: Response, next: NextFunction) {
       if (err) {
         res.json({ message: "Authentication failed" });
       } else {
-        res.json({ message: "ok" });
         next();
       }
     });

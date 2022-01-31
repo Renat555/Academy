@@ -1,6 +1,13 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { HttpService } from 'src/app/http.service';
 import { soundOff, soundOn } from 'src/app/store/actions/sound.action';
 import { selectSoundSwitch } from 'src/app/store/selectors/sound.selector';
 import { AppState } from '../../store/state/app.state';
@@ -10,8 +17,12 @@ import { AppState } from '../../store/state/app.state';
   templateUrl: './intuition-figures.component.html',
   styleUrls: ['./intuition-figures.component.less'],
 })
-export class IntuitionFiguresComponent implements OnInit {
-  constructor(private router: Router, private store: Store<AppState>) {}
+export class IntuitionFiguresComponent implements OnInit, OnDestroy {
+  constructor(
+    private router: Router,
+    private store: Store<AppState>,
+    private httpService: HttpService
+  ) {}
 
   ngOnInit() {
     this.store.select(selectSoundSwitch).subscribe((state) => {
@@ -19,6 +30,19 @@ export class IntuitionFiguresComponent implements OnInit {
     });
 
     this.pictureIndex = this.randomIndex();
+  }
+
+  ngOnDestroy(): void {
+    let login = localStorage.getItem('login') || '';
+
+    this.httpService
+      .postIntuitionResult({
+        mode: 'figures',
+        login: login,
+        right: this.rightAnswers,
+        wrong: this.wrongAnswers,
+      })
+      .subscribe(() => {});
   }
 
   randomIndex() {
@@ -42,7 +66,7 @@ export class IntuitionFiguresComponent implements OnInit {
   wrongAnswers = 0;
 
   percentHint = 'Среднестатистический показатель 16.7%';
-  
+
   changeScale(event: MouseEvent) {
     let target = event.currentTarget;
 

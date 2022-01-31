@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { HttpService } from './http.service';
 import {
@@ -17,7 +18,8 @@ import { AppState } from './store/state/app.state';
 export class AppComponent implements OnInit {
   constructor(
     private httpService: HttpService,
-    private store: Store<AppState>
+    private store: Store<AppState>,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -25,6 +27,7 @@ export class AppComponent implements OnInit {
       if (data.message === 'Authentication failed') {
         this.store.dispatch(userIsNotAuth());
         localStorage.removeItem('token');
+        this.router.navigate(['/']);
       } else {
         let login = localStorage.getItem('login');
         if (login) {

@@ -7,8 +7,6 @@ function findUser(postgresClient: any, login: string, response: Response) {
     postgresClient.query(
       `SELECT * FROM users WHERE login = '${login}'`,
       (err: any, res: any) => {
-        console.log(res.rows);
-
         if (res.rows.length === 0) {
           response.json("user not found");
         } else {
@@ -34,7 +32,7 @@ export async function authentication(
           },
           "ylskjf235",
           {
-            expiresIn: "3h",
+            expiresIn: "1m",
           }
         );
         response.json({ token: token, userLogin: result.login });

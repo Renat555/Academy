@@ -19,7 +19,7 @@ export class authGuard implements CanActivate, CanActivateChild {
   ): boolean {
     let result = false;
     this.store.select(selectUserIsAuth).subscribe((state) => {
-      result = !state;
+      result = state;
     });
     return result;
   }
