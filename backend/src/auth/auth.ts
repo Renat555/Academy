@@ -32,7 +32,7 @@ export async function authentication(
           },
           "ylskjf235",
           {
-            expiresIn: "1m",
+            expiresIn: "3h",
           }
         );
         response.json({ token: token, userLogin: result.login });

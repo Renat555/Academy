@@ -6,9 +6,15 @@ export interface UserState {
   isAuth: boolean;
 }
 
+let isAuth: boolean = false;
+
+if (localStorage.getItem('token') !== null) {
+  isAuth = true;
+}
+
 const initialState: UserState = {
   login: '',
-  isAuth: false,
+  isAuth: isAuth,
 };
 
 export const reducer = createReducer(

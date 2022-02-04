@@ -1,7 +1,8 @@
 import { Response } from "express";
+import { Client } from "pg";
 
 export function getResult(
-  postgresClient: any,
+  postgresClient: Client,
   login: string,
   response: Response
 ) {

@@ -12,11 +12,11 @@ export class HttpService {
   constructor(private http: HttpClient) {}
 
   getIsAuth() {
-    return this.http.get(environment.apiUrl + '/');
+    return this.http.get(environment.apiUrl);
   }
 
   getIntuitionResults(login: string) {
-    return this.http.post(environment.apiUrl + '/intResult', { login: login });
+    return this.http.post(environment.apiUrl + '/getResult', { login: login });
   }
 
   postIntuitionResult(result: {
@@ -25,7 +25,7 @@ export class HttpService {
     right: number;
     wrong: number;
   }) {
-    return this.http.post(environment.apiUrl + '/intuitionResult', result);
+    return this.http.post(environment.apiUrl + '/saveIntuitionTest', result);
   }
 
   postRegistrationData(user: User) {

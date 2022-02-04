@@ -1,12 +1,14 @@
 import express, { Request, Response, NextFunction } from "express";
 import { Client } from "pg";
 import cors from "cors";
+import https from "https";
+import fs from "fs";
 
 import { dev, prod } from "./config";
 import { authentication } from "./auth/auth";
 import { registration } from "./auth/reg";
 import { authCheck } from "./middlewares/authCheck";
-import { saveResult } from "./intuition/saveResult";
+import { saveIntuitionTest } from "./intuition/saveResult";
 import { getResult } from "./intuition/getResult";
 
 const app = express();
@@ -15,15 +17,11 @@ let psqlSettings;
 
 if (process.env.NODE_ENV === "dev") {
   psqlSettings = dev.psql;
-
-  let corsSettings = {
-    origin: "http://localhost:4200",
-    credentials: true,
-  };
-  app.use(cors(corsSettings));
 } else {
   psqlSettings = prod.psql;
 }
+
+app.use(cors());
 
 const postgresClient = new Client(psqlSettings);
 postgresClient.connect();
@@ -31,26 +29,29 @@ postgresClient.connect();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.post("/reg", (req: Request, res: Response) => {
+app.post("/backend/reg", (req: Request, res: Response) => {
   registration(postgresClient, req.body, res);
 });
 
-app.post("/auth", (req: Request, res: Response) => {
+app.post("/backend/auth", (req: Request, res: Response) => {
   authentication(postgresClient, req.body, res);
 });
 
 app.use(authCheck);
 
-app.get("/", (req: Request, res: Response) => {
+app.get("/backend", (req: Request, res: Response) => {
   res.json({ message: "ok" });
 });
 
-app.post("/intResult", (req: Request, res: Response) => {
+app.post("/backend/getResult", (req: Request, res: Response) => {
   getResult(postgresClient, req.body.login, res);
 });
 
-app.post("/intuitionResult", (req: Request, res: Response) => {
-  saveResult(postgresClient, req.body, res);
+app.post("/backend/saveIntuitionTest", (req: Request, res: Response) => {
+  saveIntuitionTest(postgresClient, req.body, res);
 });
 
-app.listen(3000);
+app.listen(3000, () => {
+  console.log("HTTP Server running on port 3000");
+  console.log(new Date());
+});

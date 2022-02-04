@@ -21,6 +21,7 @@ export class authGuard implements CanActivate, CanActivateChild {
     this.store.select(selectUserIsAuth).subscribe((state) => {
       result = state;
     });
+
     return result;
   }
 

@@ -30,10 +30,14 @@
         name="passwordRepeat"
         [(ngModel)]="model.passwordRepeat"
       />
-      <div class="alert" *ngIf="isLoginEmpty">Логин не указан.</div>
-      <div class="alert" *ngIf="isLoginExists">Логин уже занят.</div>
-      <div class="alert" *ngIf="isPasswordEmpty">Пустой пароль.</div>
-      <div class="alert" *ngIf="isPasswordsNotMatch">Пароли не совпадают.</div>
+      <div class="alertContainer">
+        <div class="alert" *ngIf="isLoginEmpty">Логин не указан.</div>
+        <div class="alert" *ngIf="isLoginExists">Логин уже занят.</div>
+        <div class="alert" *ngIf="isPasswordEmpty">Пустой пароль.</div>
+        <div class="alert" *ngIf="isPasswordsNotMatch">
+          Пароли не совпадают.
+        </div>
+      </div>
     </fieldset>
     <fieldset id="actions">
       <input type="submit" id="submit" value="ЗАРЕГИСТРИРОВАТЬСЯ" />

@@ -20,8 +20,8 @@ mongoClient.connect(function (err, client) {
   wss.on("connection", function connection(ws) {
     ws.on("message", function (message) {
       //let request = JSON.parse(message);
-      console.log("new message");
-      console.log(message);
+      // console.log("new message");
+      // console.log(message);
     });
   });
 });

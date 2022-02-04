@@ -23,10 +23,12 @@
         name="password"
         [(ngModel)]="model.password"
       />
-      <div class="alert" *ngIf="isLoginEmpty">Логин не указан.</div>
-      <div class="alert" *ngIf="isUserNotFound">Пользователь не найден.</div>
-      <div class="alert" *ngIf="isPasswordEmpty">Пароль не указан.</div>
-      <div class="alert" *ngIf="isWrongPassword">Неверный пароль.</div>
+      <div class="alertContainer">
+        <div class="alert" *ngIf="isLoginEmpty">Логин не указан.</div>
+        <div class="alert" *ngIf="isUserNotFound">Пользователь не найден.</div>
+        <div class="alert" *ngIf="isPasswordEmpty">Пароль не указан.</div>
+        <div class="alert" *ngIf="isWrongPassword">Неверный пароль.</div>
+      </div>
     </fieldset>
     <fieldset id="actions">
       <input type="submit" id="submit" value="ВОЙТИ" />
