@@ -1,14 +1,28 @@
 .messageContainer {
   background-color: rgb(255, 204, 138);
-  display: grid;
-  justify-items: center;
-  align-items: center;
   border-radius: 20px;
   border: 2px rgb(228, 157, 25) solid;
+
+  display: grid;
+
+  grid-template-columns: auto auto;
+
+  justify-items: center;
+  align-items: center;
 }
 
 .message {
   padding: 20px;
   font-size: 1.5rem;
   font-style: italic;
+}
+
+.cross {
+  margin-right: 15px;
+  justify-self: right;
+  background-size: cover;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  background-image: url(../../../assets/icons/cross.png);
 }

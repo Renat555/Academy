@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { AIEnemy } from 'src/app/store/actions/duels/generalInfo.actions';
 import {
   addElement,
   addForm,
@@ -12,6 +13,7 @@ import {
   selectForms,
   selectUsers,
 } from 'src/app/store/selectors/duels/users.selectors';
+import { selectUserName } from 'src/app/store/selectors/duels/users.selectors';
 import { AppState } from 'src/app/store/state/app.state';
 
 @Component({
@@ -34,6 +36,15 @@ export class CreateHeroComponent implements OnInit {
         this.selectForm(res[i]);
       }
     });
+
+    this.store.select(selectUserName).subscribe((res) => {
+      if (res === '') {
+        this.isUserAuth = false;
+      } else {
+        this.userName = res;
+        this.isUserAuth = true;
+      }
+    });
   }
 
   isElementOneSelected = false;
@@ -51,6 +62,13 @@ export class CreateHeroComponent implements OnInit {
   isFormSevenSelected = false;
   isFormEightSelected = false;
   isFormNineSelected = false;
+
+  textHint = '';
+  isHintHide = true;
+
+  userName = '';
+
+  isUserAuth = false;
 
   addElement(event: MouseEvent) {
     let target = event.currentTarget;
@@ -136,7 +154,7 @@ export class CreateHeroComponent implements OnInit {
     }
   }
 
-  selectForm(form: string): void {
+  selectForm(form: string) {
     if (form == 'spear') {
       this.isFormOneSelected = true;
     } else if (form == 'shield') {
@@ -158,7 +176,7 @@ export class CreateHeroComponent implements OnInit {
     }
   }
 
-  cancelSelectForm(form: string): void {
+  cancelSelectForm(form: string) {
     if (form == 'spear') {
       this.isFormOneSelected = false;
     } else if (form == 'shield') {
@@ -180,10 +198,8 @@ export class CreateHeroComponent implements OnInit {
     }
   }
 
-  showData() {
-    this.store.select(selectUsers).subscribe((res) => {
-      console.log(res);
-    });
+  closeHint() {
+    this.isHintHide = true;
   }
 
   goToHall() {
@@ -195,10 +211,27 @@ export class CreateHeroComponent implements OnInit {
   }
 
   goToWait() {
-    this.router.navigate(['duels/wait']);
-  }
+    this.store.dispatch(AIEnemy());
 
-  goToGame() {
-    this.router.navigate(['duels/game']);
+    let elements = [];
+    let forms = [];
+
+    this.store.select(selectElements).subscribe((res) => {
+      elements = res;
+    });
+
+    this.store.select(selectForms).subscribe((res) => {
+      forms = res;
+    });
+
+    if (elements.length < 3) {
+      this.textHint = 'Выберите три стихии.';
+      this.isHintHide = false;
+    } else if (forms.length < 5) {
+      this.textHint = 'Выберите пять форм';
+      this.isHintHide = false;
+    } else {
+      this.router.navigate(['duels/wait']);
+    }
   }
 }

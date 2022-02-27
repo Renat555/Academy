@@ -5,7 +5,7 @@ import * as Results from './reducers/intuition/results.reducer';
 import * as Sound from './reducers/sound.reducer';
 import * as Users from './reducers/duels/users.reducer';
 import * as EffectsWindow from './reducers/duels/effectsWindow.reducer';
-import * as Muve from './reducers/duels/muve.reducer';
+import * as GeneralInfo from './reducers/duels/generalInfo.reducer';
 import * as CurrentSpell from './reducers/duels/currentSpell.reducer';
 import * as Description from './reducers/duels/description.reducer';
 import * as Dictionary from './reducers/duels/dictionary.reducer';
@@ -17,7 +17,7 @@ import * as Pending from './reducers/pending.reducer';
 const duelsReducers = combineReducers({
   users: Users.reducer,
   effectsWindow: EffectsWindow.reducer,
-  muve: Muve.reducer,
+  muve: GeneralInfo.reducer,
   currentSpell: CurrentSpell.reducer,
   description: Description.reducer,
   dictionary: Dictionary.reducer,
@@ -42,7 +42,7 @@ export interface State {
   duels: {
     users: Users.UsersState;
     effectsWindow: EffectsWindow.EffectsWindowState;
-    muve: Muve.MuveState;
+    muve: GeneralInfo.GeneralInfoState;
     currentSpell: CurrentSpell.CurrentSpellState;
     description: Description.DescriptionState;
     dictionary: Dictionary.DictionaryState;

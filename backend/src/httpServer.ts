@@ -1,15 +1,13 @@
 import express, { Request, Response, NextFunction } from "express";
 import { Client } from "pg";
 import cors from "cors";
-import https from "https";
-import fs from "fs";
 
 import { dev, prod } from "./config";
 import { authentication } from "./auth/auth";
 import { registration } from "./auth/reg";
 import { authCheck } from "./middlewares/authCheck";
-import { saveIntuitionTest } from "./intuition/saveResult";
 import { getResult } from "./intuition/getResult";
+import { saveIntTestResult } from "./intuition/saveResult";
 
 const app = express();
 
@@ -17,11 +15,11 @@ let psqlSettings;
 
 if (process.env.NODE_ENV === "dev") {
   psqlSettings = dev.psql;
+
+  app.use(cors());
 } else {
   psqlSettings = prod.psql;
 }
-
-app.use(cors());
 
 const postgresClient = new Client(psqlSettings);
 postgresClient.connect();
@@ -48,7 +46,7 @@ app.post("/backend/getResult", (req: Request, res: Response) => {
 });
 
 app.post("/backend/saveIntuitionTest", (req: Request, res: Response) => {
-  saveIntuitionTest(postgresClient, req.body, res);
+  saveIntTestResult(postgresClient, req.body, res);
 });
 
 app.listen(3000, () => {

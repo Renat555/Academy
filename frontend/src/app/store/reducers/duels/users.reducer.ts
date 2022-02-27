@@ -3,20 +3,25 @@ import * as Users from '../../actions/duels/users.actions';
 
 interface UserState {
   name: string;
-  health: number;
+  enemyType: string;
   actionPoints: number;
   energyPoints: number;
-  effects: string[];
+  health: number;
+  maxHealth: number;
   forms: string[];
   elements: string[];
+  buffs: string[];
+  debuffs: string[];
 }
 
 interface EnemyState {
   name: string;
   health: number;
+  maxHealth: number;
   actionPoints: number;
   energyPoints: number;
-  effects: string[];
+  buffs: string[];
+  debuffs: string[];
 }
 
 export interface UsersState {
@@ -27,19 +32,24 @@ export interface UsersState {
 const initialState: UsersState = {
   user: {
     name: '',
-    health: 100,
+    enemyType: '',
     actionPoints: 5,
     energyPoints: 5,
-    effects: [],
-    forms: ['sphere', 'power', 'flow', 'stamp', 'spear'],
-    elements: ['water', 'air', 'life'],
+    health: 100,
+    maxHealth: 100,
+    forms: [],
+    elements: [],
+    buffs: [],
+    debuffs: [],
   },
   enemy: {
     name: '',
     health: 100,
+    maxHealth: 100,
     actionPoints: 5,
     energyPoints: 5,
-    effects: [],
+    buffs: [],
+    debuffs: [],
   },
 };
 
@@ -48,6 +58,10 @@ export const reducer = createReducer(
   on(Users.addUserName, (state, { name }) => ({
     ...state,
     user: { ...state.user, name: name },
+  })),
+  on(Users.deleteUserName, (state) => ({
+    ...state,
+    user: { ...state.user, name: '' },
   })),
   on(Users.addEnemyName, (state, { name }) => ({
     ...state,

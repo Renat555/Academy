@@ -24,15 +24,35 @@ export const selectEnemyName = createSelector(
   (state: UsersState) => state.enemy.name
 );
 
-export const selectUserEffects = createSelector(
-  users,
-  (state: UsersState) => state.user.effects
-);
+export const selectUserEffects = createSelector(users, (state: UsersState) => {
+  let effects = [];
+  let userBuffs = state.user.buffs;
+  let userDebuffs = state.user.debuffs;
 
-export const selectEnemyEffects = createSelector(
-  users,
-  (state: UsersState) => state.enemy.effects
-);
+  for (let i = 0; i < userBuffs.length; i++) {
+    effects.push(userBuffs[i]);
+  }
+  for (let i = 0; i < userDebuffs.length; i++) {
+    effects.push(userDebuffs[i]);
+  }
+
+  return effects;
+});
+
+export const selectEnemyEffects = createSelector(users, (state: UsersState) => {
+  let effects = [];
+  let enemyBuffs = state.enemy.buffs;
+  let enemyDebuffs = state.enemy.debuffs;
+
+  for (let i = 0; i < enemyBuffs.length; i++) {
+    effects.push(enemyBuffs[i]);
+  }
+  for (let i = 0; i < enemyDebuffs.length; i++) {
+    effects.push(enemyDebuffs[i]);
+  }
+
+  return effects;
+});
 
 export const selectUserActionPoints = createSelector(
   users,

@@ -8,12 +8,15 @@ export enum chooseActions {
 }
 
 export enum effectsActions {
-  addUserEffect = '[effect] addUserEffect',
-  addEnemyEffect = '[effect] addEnemyEffect',
+  addUserBuff = '[effect] addUserBuff',
+  addUserDebuff = '[effect] addUserDebuff',
+  addEnemyBuff = '[effect] addEnemyBuff',
+  addEnemyDebuff = '[effect] addEnemyDebuff',
 }
 
 export enum nameActions {
   addUserName = '[name] addUserName',
+  deleteUserName = '[name] deleteUserName',
   addEnemyName = '[name] addEnemyName',
 }
 
@@ -49,18 +52,30 @@ export const addUserName = createAction(
   props<{ name: string }>()
 );
 
+export const deleteUserName = createAction(nameActions.deleteUserName);
+
 export const addEnemyName = createAction(
   nameActions.addEnemyName,
   props<{ name: string }>()
 );
 
-export const addUserEffect = createAction(
-  effectsActions.addUserEffect,
+export const addUserBuff = createAction(
+  effectsActions.addUserBuff,
   props<{ effect: string }>()
 );
 
-export const addEnemyEffect = createAction(
-  effectsActions.addEnemyEffect,
+export const addUserDebuff = createAction(
+  effectsActions.addUserDebuff,
+  props<{ effect: string }>()
+);
+
+export const addEnemyBuff = createAction(
+  effectsActions.addEnemyBuff,
+  props<{ effect: string }>()
+);
+
+export const addEnemyDebuff = createAction(
+  effectsActions.addEnemyDebuff,
   props<{ effect: string }>()
 );
 

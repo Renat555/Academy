@@ -8,7 +8,7 @@ export interface DictionaryState {
   life: string;
   death: string;
   spear: string;
-  shild: string;
+  shield: string;
   crown: string;
   source: string;
   sphere: string;
@@ -26,7 +26,7 @@ const initialState: DictionaryState = {
   life: 'Жизнь',
   death: 'Смерть',
   spear: 'Копье',
-  shild: 'Щит',
+  shield: 'Щит',
   crown: 'Корона',
   source: 'Источник',
   sphere: 'Сфера',

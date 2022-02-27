@@ -2,7 +2,7 @@ import { createReducer } from '@ngrx/store';
 
 export interface SpellbookState {
   firespear: [string, number, number, string, string[]];
-  fireshild: [string, number, number, string, string[]];
+  fireshield: [string, number, number, string, string[]];
   firecrown: [string, number, number, string, string[]];
   firesource: [string, number, number, string, string[]];
   firesphere: [string, number, number, string, string[]];
@@ -11,7 +11,7 @@ export interface SpellbookState {
   fireflow: [string, number, number, string, string[]];
   firepower: [string, number, number, string, string[]];
   waterspear: [string, number, number, string, string[]];
-  watershild: [string, number, number, string, string[]];
+  watershield: [string, number, number, string, string[]];
   watercrown: [string, number, number, string, string[]];
   watersource: [string, number, number, string, string[]];
   watersphere: [string, number, number, string, string[]];
@@ -20,7 +20,7 @@ export interface SpellbookState {
   waterflow: [string, number, number, string, string[]];
   waterpower: [string, number, number, string, string[]];
   earthspear: [string, number, number, string, string[]];
-  earthshild: [string, number, number, string, string[]];
+  earthshield: [string, number, number, string, string[]];
   earthcrown: [string, number, number, string, string[]];
   earthsource: [string, number, number, string, string[]];
   earthsphere: [string, number, number, string, string[]];
@@ -29,7 +29,7 @@ export interface SpellbookState {
   earthflow: [string, number, number, string, string[]];
   earthpower: [string, number, number, string, string[]];
   airspear: [string, number, number, string, string[]];
-  airshild: [string, number, number, string, string[]];
+  airshield: [string, number, number, string, string[]];
   aircrown: [string, number, number, string, string[]];
   airsource: [string, number, number, string, string[]];
   airsphere: [string, number, number, string, string[]];
@@ -38,7 +38,7 @@ export interface SpellbookState {
   airflow: [string, number, number, string, string[]];
   airpower: [string, number, number, string, string[]];
   lifespear: [string, number, number, string, string[]];
-  lifeshild: [string, number, number, string, string[]];
+  lifeshield: [string, number, number, string, string[]];
   lifecrown: [string, number, number, string, string[]];
   lifesource: [string, number, number, string, string[]];
   lifesphere: [string, number, number, string, string[]];
@@ -47,7 +47,7 @@ export interface SpellbookState {
   lifeflow: [string, number, number, string, string[]];
   lifepower: [string, number, number, string, string[]];
   deathspear: [string, number, number, string, string[]];
-  deathshild: [string, number, number, string, string[]];
+  deathshield: [string, number, number, string, string[]];
   deathcrown: [string, number, number, string, string[]];
   deathsource: [string, number, number, string, string[]];
   deathsphere: [string, number, number, string, string[]];
@@ -67,7 +67,7 @@ const initialState: SpellbookState = {
     '(огонь, прямой урон) Наносит урон противнику от 20 до 30 единиц.',
     [],
   ],
-  fireshild: [
+  fireshield: [
     'Огненный щит',
     1,
     1,
@@ -141,7 +141,7 @@ const initialState: SpellbookState = {
     '(вода, прямой урон) Наносит противнику от 5 до 15 единиц урона, за каждый дебаф, наложенный на противника, наносимый урон дополнительно увеличивается на 5.',
     [],
   ],
-  watershild: [
+  watershield: [
     'Ледяная стена',
     1,
     1,
@@ -212,7 +212,7 @@ const initialState: SpellbookState = {
     '(земля, прямой урон) Наносит урон противнику от 50 до 70 единиц. Попадает в цель с вероятностью 33%',
     [],
   ],
-  earthshild: [
+  earthshield: [
     'Скала',
     1,
     1,
@@ -282,7 +282,7 @@ const initialState: SpellbookState = {
     '(воздух, прямой урон) Наносит противнику 25 единиц урона, попадает в цель с вероятностью 75% .',
     [],
   ],
-  airshild: [
+  airshield: [
     'Вихрь',
     1,
     1,
@@ -356,7 +356,7 @@ const initialState: SpellbookState = {
     '(жизнь, диспел) Позволяет снять дебаф смерти. Не забудьте выбрать цель.',
     ['deathshild', 'deathsphere', 'deathstamp', 'deathflow'],
   ],
-  lifeshild: [
+  lifeshield: [
     'Щит жизни',
     1,
     1,
@@ -453,7 +453,7 @@ const initialState: SpellbookState = {
       'deathkey',
     ],
   ],
-  deathshild: [
+  deathshield: [
     'Пелена смерти',
     1,
     1,

@@ -5,4 +5,8 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './duels.component.html',
   styleUrls: ['./duels.component.less'],
 })
-export class DuelsComponent {}
+export class DuelsComponent implements OnInit {
+  constructor() {}
+
+  ngOnInit() {}
+}

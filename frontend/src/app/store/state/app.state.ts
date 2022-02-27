@@ -3,7 +3,7 @@ import { AnswersState } from '../reducers/intuition/answers.reducer';
 import { SoundState } from '../reducers/sound.reducer';
 import { UsersState } from '../reducers/duels/users.reducer';
 import { EffectsWindowState } from '../reducers/duels/effectsWindow.reducer';
-import { MuveState } from '../reducers/duels/muve.reducer';
+import { GeneralInfoState } from '../reducers/duels/generalInfo.reducer';
 import { CurrentSpellState } from '../reducers/duels/currentSpell.reducer';
 import { DescriptionState } from '../reducers/duels/description.reducer';
 import { DictionaryState } from '../reducers/duels/dictionary.reducer';
@@ -25,7 +25,7 @@ export interface AppState {
   duels: {
     users: UsersState;
     effectsWindow: EffectsWindowState;
-    muve: MuveState;
+    muve: GeneralInfoState;
     currentSpell: CurrentSpellState;
     description: DescriptionState;
     dictionary: DictionaryState;

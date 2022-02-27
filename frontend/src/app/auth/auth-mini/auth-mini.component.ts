@@ -7,6 +7,10 @@ import {
 } from 'src/app/store/selectors/user.selectors';
 import { AppState } from 'src/app/store/state/app.state';
 import { userIsNotAuth } from 'src/app/store/actions/user.actions';
+import {
+  addUserName,
+  deleteUserName,
+} from 'src/app/store/actions/duels/users.actions';
 
 @Component({
   selector: 'app-auth-mini',
@@ -31,6 +35,7 @@ export class AuthMiniComponent implements OnInit {
 
   logout() {
     this.store.dispatch(userIsNotAuth());
+    this.store.dispatch(deleteUserName());
     localStorage.removeItem('token');
   }
 

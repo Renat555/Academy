@@ -8,6 +8,7 @@ import {
   userIsNotAuth,
 } from './store/actions/user.actions';
 import { AppState } from './store/state/app.state';
+import { WebsocketService } from './websocket.service';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,8 @@ export class AppComponent implements OnInit {
   constructor(
     private httpService: HttpService,
     private store: Store<AppState>,
-    private router: Router
+    private router: Router,
+    private wssService: WebsocketService
   ) {}
 
   ngOnInit() {
@@ -36,5 +38,7 @@ export class AppComponent implements OnInit {
         this.store.dispatch(userIsAuth());
       }
     });
+
+    this.wssService.connect();
   }
 }

@@ -47,6 +47,8 @@ import { PendingComponent } from './common/pending/pending.component';
 import { ProfileComponent } from './profile/profile.component';
 import { GeneralStatComponent } from './profile/general-stat/general-stat.component';
 import { DetailStatComponent } from './profile/detail-stat/detail-stat.component';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { AnomalyComponent } from './arena/anomaly/anomaly.component';
 
 @NgModule({
   declarations: [
@@ -89,6 +91,7 @@ import { DetailStatComponent } from './profile/detail-stat/detail-stat.component
     ProfileComponent,
     GeneralStatComponent,
     DetailStatComponent,
+    AnomalyComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -98,6 +101,16 @@ import { DetailStatComponent } from './profile/detail-stat/detail-stat.component
     StoreModule.forRoot(reducers),
     HttpClientModule,
     FormsModule,
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: false,
+      autoPause: true,
+      features: {
+        pause: false,
+        lock: true,
+        persist: true,
+      },
+    }),
   ],
   providers: [
     authGuard,

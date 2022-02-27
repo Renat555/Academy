@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { HttpService } from 'src/app/http.service';
+import { addUserName } from 'src/app/store/actions/duels/users.actions';
 import { soundOff, soundOn } from 'src/app/store/actions/sound.action';
 import { addLogin, userIsAuth } from 'src/app/store/actions/user.actions';
 import { selectSoundSwitch } from 'src/app/store/selectors/sound.selector';
@@ -68,6 +69,7 @@ export class RegistrationComponent implements OnInit {
             this.isPasswordsNotMatch = false;
           } else {
             this.store.dispatch(userIsAuth());
+            this.store.dispatch(addUserName({ name: data.userLogin }));
             this.store.dispatch(addLogin({ login: data.userLogin }));
             localStorage.setItem('token', data.token);
             localStorage.setItem('login', data.userLogin);

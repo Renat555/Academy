@@ -1,13 +1,30 @@
 <div class="exit" (click)="goToHall()"></div>
-<div class="background">
+
+<div class="hintContainer" [hidden]="isHintHide">
+  <div #hint class="hint">
+    <app-hint
+      [text]="textHint"
+      [isCross]="true"
+      (closeHint)="closeHint()"
+    ></app-hint>
+  </div>
+</div>
+
+<div class="background" #background>
   <div class="header">
     <div></div>
     <div><h1>Создание героя</h1></div>
     <div class="yellowButton" (click)="goToHelp()">Описание заклинаний</div>
   </div>
   <div class="center">
-    <h2>Представтесь</h2>
-    <input type="text" class="inputName" />
+    <div class="name" *ngIf="!isUserAuth">
+      <h2>Представтесь</h2>
+      <input type="text" class="inputName" />
+    </div>
+    <div class="name" *ngIf="isUserAuth">
+      <h2>Добро пожаловать, {{ userName }}.</h2>
+    </div>
+
     <h2>Выберите три стихии</h2>
   </div>
   <div class="elements">
@@ -154,11 +171,7 @@
     <div class="yellowButton buttonOne" (click)="goToWait()">
       <div class="text">Игра с компьтером</div>
     </div>
-    <div
-      class="yellowButton buttonTwo"
-      (click)="goToGame()"
-      (contextmenu)="showData()"
-    >
+    <div class="yellowButton buttonTwo">
       <div class="text">Поиск противника</div>
     </div>
   </div>

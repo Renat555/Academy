@@ -20,7 +20,7 @@ import {
   selectMapEnemy,
   selectMapUser,
 } from 'src/app/store/selectors/duels/map.selectors';
-import { selectMuve } from 'src/app/store/selectors/duels/muve.selectors';
+import { selectMuve } from 'src/app/store/selectors/duels/generalInfo.selectors';
 import { selectUserActionPoints } from 'src/app/store/selectors/duels/users.selectors';
 import { AppState } from 'src/app/store/state/app.state';
 

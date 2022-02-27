@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectMuve } from 'src/app/store/selectors/duels/muve.selectors';
+import { selectMuve } from 'src/app/store/selectors/duels/generalInfo.selectors';
 import { AppState } from 'src/app/store/state/app.state';
 
 @Component({

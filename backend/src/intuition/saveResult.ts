@@ -1,6 +1,6 @@
 import { Response } from "express";
 import { Client } from "pg";
-import { IntuitTestResult } from "../interfaces/interfaces";
+import { IntuitTestResult } from "../interfaces/intuition";
 
 function createTable(postgresClient: Client, login: string) {
   return new Promise((resolve, reject) => {
@@ -37,7 +37,7 @@ function save(postgresClient: Client, result: IntuitTestResult) {
   });
 }
 
-export async function saveIntuitionTest(
+export async function saveIntTestResult(
   postgresClient: Client,
   result: IntuitTestResult,
   response: Response
