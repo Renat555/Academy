@@ -8,8 +8,6 @@ import { HealthComponent } from './common/health/health.component';
 import { StoreModule } from '@ngrx/store';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { reducers } from './store';
-import { WinComponent } from './arena/win/win.component';
-import { LossComponent } from './arena/loss/loss.component';
 import { MenuComponent } from './menu/menu.component';
 import { HintComponent } from './common/hint/hint.component';
 import { IntuitionFiguresComponent } from './intuition/intuition-figures/intuition-figures.component';
@@ -56,8 +54,6 @@ import { AnomalyComponent } from './arena/anomaly/anomaly.component';
     BattleComponent,
     ArenaComponent,
     HealthComponent,
-    WinComponent,
-    LossComponent,
     MenuComponent,
     HintComponent,
     IntuitionComponent,

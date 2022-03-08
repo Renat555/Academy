@@ -3,8 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { ArenaComponent } from './arena/arena.component';
 import { BattleComponent } from './arena/battle/battle.component';
 import { GameComponent } from './duels/game/game.component';
-import { LossComponent } from './arena/loss/loss.component';
-import { WinComponent } from './arena/win/win.component';
 import { MenuComponent } from './menu/menu.component';
 import { IntuitionMenuComponent } from './intuition/intuition-menu/intuition-menu.component';
 import { IntuitionComponent } from './intuition/intuition.component';
@@ -72,14 +70,6 @@ const routes: Routes = [
       {
         path: 'game',
         component: BattleComponent,
-      },
-      {
-        path: 'win',
-        component: WinComponent,
-      },
-      {
-        path: 'loss',
-        component: LossComponent,
       },
     ],
   },

@@ -14,6 +14,11 @@
     params: { left3: left3, top3: top3, left4: left4, top4: top4, time2: time2 }
   }"
 ></div>
+<div class="endGameContainer" *ngIf="enemyHealth <= 0 || userHealth <= 0">
+  <h1>{{ endGameText }}</h1>
+  <div class="button24" (click)="restartGame()">Играть снова</div>
+</div>
+
 <div
   class="energy"
   #energy1
@@ -21,6 +26,7 @@
     value: stateSpellEnemyOne,
     params: { left5: left5, top5: top5, left6: left6, top6: top6, time3: time3 }
   }"
+  *ngIf="enemyHealth > 0 && userHealth > 0"
 ></div>
 <div
   class="energy"
@@ -29,6 +35,7 @@
     value: stateSpellEnemyTwo,
     params: { left5: left5, top5: top5, left7: left7, top7: top7, time3: time3 }
   }"
+  *ngIf="enemyHealth > 0 && userHealth > 0"
 ></div>
 <div
   class="energy"
@@ -37,6 +44,7 @@
     value: stateSpellEnemyThree,
     params: { left5: left5, top5: top5, left8: left8, top8: top8, time3: time3 }
   }"
+  *ngIf="enemyHealth > 0 && userHealth > 0"
 ></div>
 <div
   class="energy"
@@ -45,6 +53,7 @@
     value: stateSpellEnemyFour,
     params: { left5: left5, top5: top5, left9: left9, top9: top9, time3: time3 }
   }"
+  *ngIf="enemyHealth > 0 && userHealth > 0"
 ></div>
 <div
   class="background"
@@ -57,7 +66,9 @@
     data-way="obstacle"
     [health]="enemyHealthPercent"
   ></app-health>
-  <div class="enemy" #enemy data-way="obstacle"></div>
+  <div class="enemy" #enemy data-way="obstacle">
+    <app-anomaly [health]="enemyHealth"></app-anomaly>
+  </div>
   <app-health
     class="healthUser"
     data-way="obstacle"

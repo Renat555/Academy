@@ -143,35 +143,35 @@ interface Coordinate {
     trigger('steps', [
       state(
         'backOne',
-        style({ backgroundImage: 'url(../../assets/hero/c1.png)' })
+        style({ backgroundImage: 'url(../../assets/arena/hero/c1.png)' })
       ),
       state(
         'backTwo',
-        style({ backgroundImage: 'url(../../assets/hero/c2.png)' })
+        style({ backgroundImage: 'url(../../assets/arena/hero/c2.png)' })
       ),
       state(
         'faceOne',
-        style({ backgroundImage: 'url(../../assets/hero/c3.png)' })
+        style({ backgroundImage: 'url(../../assets/arena/hero/c3.png)' })
       ),
       state(
         'faceTwo',
-        style({ backgroundImage: 'url(../../assets/hero/c4.png)' })
+        style({ backgroundImage: 'url(../../assets/arena/hero/c4.png)' })
       ),
       state(
         'leftOne',
-        style({ backgroundImage: 'url(../../assets/hero/c5.png)' })
+        style({ backgroundImage: 'url(../../assets/arena/hero/c5.png)' })
       ),
       state(
         'leftTwo',
-        style({ backgroundImage: 'url(../../assets/hero/c6.png)' })
+        style({ backgroundImage: 'url(../../assets/arena/hero/c6.png)' })
       ),
       state(
         'rightOne',
-        style({ backgroundImage: 'url(../../assets/hero/c7.png)' })
+        style({ backgroundImage: 'url(../../assets/arena/hero/c7.png)' })
       ),
       state(
         'rightTwo',
-        style({ backgroundImage: 'url(../../assets/hero/c8.png)' })
+        style({ backgroundImage: 'url(../../assets/arena/hero/c8.png)' })
       ),
     ]),
     trigger('spell', [
@@ -248,12 +248,15 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
   }
 
   setUser() {
+    this.stateMoving = '';
+
     let background = this.background.nativeElement.getBoundingClientRect();
     let user = this.user.nativeElement.getBoundingClientRect();
 
     let top = background.top + 500;
 
     this.userTop = top + 'px';
+    console.log(this.userTop);
   }
 
   enemyDamageTracking() {
@@ -281,7 +284,7 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
           fireball.right > enemy.left &&
           fireball.right < enemy.right)
       ) {
-        this.enemyDamage(5);
+        this.enemyDamage(20);
       }
     }, 200);
   }
@@ -316,7 +319,7 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
           energy1.right < user.right)
       ) {
         this.dischargeSound();
-        this.userDamage(5);
+        this.userDamage(20);
       }
 
       if (
@@ -338,7 +341,7 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
           energy2.right < user.right)
       ) {
         this.dischargeSound();
-        this.userDamage(5);
+        this.userDamage(20);
       }
 
       if (
@@ -360,7 +363,7 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
           energy3.right < user.right)
       ) {
         this.dischargeSound();
-        this.userDamage(5);
+        this.userDamage(20);
       }
 
       if (
@@ -382,7 +385,7 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
           energy4.right < user.right)
       ) {
         this.dischargeSound();
-        this.userDamage(5);
+        this.userDamage(20);
       }
     }, 200);
   }
@@ -444,14 +447,20 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
     this.userHealth -= damage;
     this.userHealthPercent = this.userHealth + '%';
 
-    if (this.userHealth <= 0) this.router.navigate(['/arena/loss']);
+    if (this.userHealth <= 0) {
+      clearInterval(this.enemySpellsTimerId);
+      this.endGameText = 'Вы проиграли...';
+    }
   }
 
   enemyDamage(damage: number) {
     this.enemyHealth -= damage;
     this.enemyHealthPercent = this.enemyHealth + '%';
 
-    if (this.enemyHealth <= 0) this.router.navigate(['/arena/win']);
+    if (this.enemyHealth <= 0) {
+      clearInterval(this.enemySpellsTimerId);
+      this.endGameText = 'Вы победили!';
+    }
   }
 
   enemySpellsTimerId: any;
@@ -464,45 +473,47 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
   enemyHealth = 100;
   enemyHealthPercent = '100%';
 
-  isAudioOn: boolean = true;
+  isAudioOn = true;
 
-  isFireVisible: boolean = false;
-  isSpellComplete: boolean = true;
+  isFireVisible = false;
+  isSpellComplete = true;
 
-  userTop: string = '';
+  userTop = '';
 
-  left1: number = 0;
-  top1: number = 0;
-  left2: number = 0;
-  top2: number = 0;
-  left3: number = 0;
-  top3: number = 0;
-  left4: number = 0;
-  top4: number = 0;
-  left5: number = 0;
-  top5: number = 0;
-  left6: number = 0;
-  top6: number = 0;
-  left7: number = 0;
-  top7: number = 0;
-  left8: number = 0;
-  top8: number = 0;
-  left9: number = 0;
-  top9: number = 0;
+  left1 = 0;
+  top1 = 0;
+  left2 = 0;
+  top2 = 0;
+  left3 = 0;
+  top3 = 0;
+  left4 = 0;
+  top4 = 0;
+  left5 = 0;
+  top5 = 0;
+  left6 = 0;
+  top6 = 0;
+  left7 = 0;
+  top7 = 0;
+  left8 = 0;
+  top8 = 0;
+  left9 = 0;
+  top9 = 0;
 
-  time: number = 1;
-  time2: number = 2;
-  time3: number = 3;
+  time = 1;
+  time2 = 2;
+  time3 = 3;
 
-  degree: string = 'rotate(270deg)';
+  degree = 'rotate(270deg)';
 
-  stateMoving: string = '';
-  stateSpell: string = '';
-  stateSpellEnemyOne: string = '';
-  stateSpellEnemyTwo: string = '';
-  stateSpellEnemyThree: string = '';
-  stateSpellEnemyFour: string = '';
-  stateSteps: string = '';
+  stateMoving = '';
+  stateSpell = '';
+  stateSpellEnemyOne = '';
+  stateSpellEnemyTwo = '';
+  stateSpellEnemyThree = '';
+  stateSpellEnemyFour = '';
+  stateSteps = '';
+
+  endGameText = '';
 
   @ViewChild('user') user!: ElementRef;
   @ViewChild('enemy') enemy!: ElementRef;
@@ -669,5 +680,25 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
 
   goToHall() {
     this.router.navigate(['']);
+  }
+
+  restartGame() {
+    clearInterval(this.enemySpellsTimerId);
+    clearInterval(this.enemyDamageTrackingId);
+    clearInterval(this.userDamageTrackingId);
+
+    this.userHealth = 100;
+    this.userHealthPercent = '100%';
+    this.enemyHealth = 100;
+    this.enemyHealthPercent = '100%';
+
+    setTimeout(() => {
+      this.setUser();
+      this.castEnemeySpells();
+    }, 0);
+
+    this.castingEnemySpells();
+    this.enemyDamageTracking();
+    this.userDamageTrecking();
   }
 }

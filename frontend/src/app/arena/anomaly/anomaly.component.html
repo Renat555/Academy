@@ -1,1 +1,5 @@
-<p>anomaly works!</p>
+<div class="explosion" *ngIf="isExplosion"></div>
+<div
+  class="anomaly fire"
+  [ngClass]="{ intact: isIntact, broken: isBroken }"
+></div>

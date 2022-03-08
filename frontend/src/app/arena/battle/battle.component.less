@@ -1,7 +1,7 @@
 .background {
   height: 100%;
   width: 100%;
-  background-image: url(../../../assets/grass.jpg);
+  background-image: url(../../../assets/arena/grass.jpg);
   background-color: aqua;
 
   display: grid;
@@ -13,9 +13,6 @@
 .enemy {
   height: 150px;
   width: 150px;
-  background-image: url(../../../assets/enemy/812.gif);
-  background-size: contain;
-  align-self: center;
 }
 
 .user {
@@ -29,7 +26,7 @@
 }
 
 .fireball {
-  background-image: url(../../../assets/hero/fire.gif);
+  background-image: url(../../../assets/arena/hero/fire.gif);
   background-size: cover;
   background-repeat: no-repeat;
   position: absolute;
@@ -40,7 +37,7 @@
 .energy {
   width: 65px;
   height: 65px;
-  background-image: url(../../../assets/enemy/energy.gif);
+  background-image: url(../../../assets/arena/enemy/energy.gif);
   background-size: cover;
   background-repeat: no-repeat;
   position: absolute;
@@ -55,6 +52,43 @@
   width: 30%;
   height: 30px;
   align-self: end;
+}
+
+.endGameContainer {
+  position: absolute;
+  height: 700px;
+  width: 1100px;
+  margin-left: 100px;
+
+  display: grid;
+
+  align-items: center;
+  justify-items: center;
+}
+
+h1 {
+  font-size: 35px;
+  color: #fff;
+}
+
+.button24 {
+  color: white;
+  font-size: 30px;
+  padding: 20px;
+  cursor: pointer;
+  outline: none;
+  border-width: 2px 0;
+  border-style: solid none;
+  border-color: #fdbe33 #000 #d77206;
+  border-radius: 6px;
+  background: linear-gradient(#f3ae0f, #e38916) #e38916;
+  transition: 0.2s;
+}
+.button24:hover {
+  background: linear-gradient(#f5ae00, #f59500) #f5ae00;
+}
+.button24:active {
+  background: linear-gradient(#f59500, #f5ae00) #f59500;
 }
 
 .sound {
@@ -87,33 +121,33 @@
 }
 
 .back1 {
-  background-image: url(../../../assets/hero/c1.png);
+  background-image: url(../../../assets/arena/hero/c1.png);
 }
 
 .back2 {
-  background-image: url(../../../assets/hero/c2.png);
+  background-image: url(../../../assets/arena/hero/c2.png);
 }
 
 .face1 {
-  background-image: url(../../../assets/hero/c3.png);
+  background-image: url(../../../assets/arena/hero/c3.png);
 }
 
 .face2 {
-  background-image: url(../../../assets/hero/c4.png);
+  background-image: url(../../../assets/arena/hero/c4.png);
 }
 
 .left1 {
-  background-image: url(../../../assets/hero/c5.png);
+  background-image: url(../../../assets/arena/hero/c5.png);
 }
 
 .left2 {
-  background-image: url(../../../assets/hero/c6.png);
+  background-image: url(../../../assets/arena/hero/c6.png);
 }
 
 .right1 {
-  background-image: url(../../../assets/hero/c7.png);
+  background-image: url(../../../assets/arena/hero/c7.png);
 }
 
 .right2 {
-  background-image: url(../../../assets/hero/c8.png);
+  background-image: url(../../../assets/arena/hero/c8.png);
 }
