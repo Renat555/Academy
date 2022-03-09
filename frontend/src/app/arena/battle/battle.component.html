@@ -76,12 +76,16 @@
   ></app-health>
 </div>
 <div
-  class="user right1"
-  [ngStyle]="{ top: userTop }"
+  class="user"
   #user
+  [ngStyle]="{ top: userTop }"
   [@moving]="{
     value: stateMoving,
     params: { left1: left1, top1: top1, left2: left2, top2: top2, time: time }
   }"
-  [@steps]="stateSteps"
-></div>
+>
+  <app-arena-hero
+    [stateSteps]="stateSteps"
+    [discharge]="dischargeSound"
+  ></app-arena-hero>
+</div>

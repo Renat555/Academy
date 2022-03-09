@@ -140,40 +140,6 @@ interface Coordinate {
       }),
       transition('first => second', animate('{{time}}s')),
     ]),
-    trigger('steps', [
-      state(
-        'backOne',
-        style({ backgroundImage: 'url(../../assets/arena/hero/c1.png)' })
-      ),
-      state(
-        'backTwo',
-        style({ backgroundImage: 'url(../../assets/arena/hero/c2.png)' })
-      ),
-      state(
-        'faceOne',
-        style({ backgroundImage: 'url(../../assets/arena/hero/c3.png)' })
-      ),
-      state(
-        'faceTwo',
-        style({ backgroundImage: 'url(../../assets/arena/hero/c4.png)' })
-      ),
-      state(
-        'leftOne',
-        style({ backgroundImage: 'url(../../assets/arena/hero/c5.png)' })
-      ),
-      state(
-        'leftTwo',
-        style({ backgroundImage: 'url(../../assets/arena/hero/c6.png)' })
-      ),
-      state(
-        'rightOne',
-        style({ backgroundImage: 'url(../../assets/arena/hero/c7.png)' })
-      ),
-      state(
-        'rightTwo',
-        style({ backgroundImage: 'url(../../assets/arena/hero/c8.png)' })
-      ),
-    ]),
     trigger('spell', [
       state('first', style({ left: '{{left3}}px', top: '{{top3}}px' }), {
         params: { left3: 0, top3: 0 },
@@ -251,12 +217,10 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
     this.stateMoving = '';
 
     let background = this.background.nativeElement.getBoundingClientRect();
-    let user = this.user.nativeElement.getBoundingClientRect();
 
     let top = background.top + 500;
 
     this.userTop = top + 'px';
-    console.log(this.userTop);
   }
 
   enemyDamageTracking() {
@@ -300,6 +264,8 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
       let energy3 = this.energy3.nativeElement.getBoundingClientRect();
       let energy4 = this.energy4.nativeElement.getBoundingClientRect();
 
+      this.dischargeSound = false;
+
       if (
         (energy1.bottom > user.top &&
           energy1.bottom < user.bottom &&
@@ -318,7 +284,7 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
           energy1.right > user.left &&
           energy1.right < user.right)
       ) {
-        this.dischargeSound();
+        this.dischargeSound = true;
         this.userDamage(20);
       }
 
@@ -340,7 +306,7 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
           energy2.right > user.left &&
           energy2.right < user.right)
       ) {
-        this.dischargeSound();
+        this.dischargeSound = true;
         this.userDamage(20);
       }
 
@@ -362,7 +328,7 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
           energy3.right > user.left &&
           energy3.right < user.right)
       ) {
-        this.dischargeSound();
+        this.dischargeSound = true;
         this.userDamage(20);
       }
 
@@ -384,7 +350,7 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
           energy4.right > user.left &&
           energy4.right < user.right)
       ) {
-        this.dischargeSound();
+        this.dischargeSound = true;
         this.userDamage(20);
       }
     }, 200);
@@ -468,6 +434,8 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
   enemyDamageTrackingId: any;
   timerId: any;
 
+  dischargeSound = false;
+
   userHealth = 100;
   userHealthPercent = '100%';
   enemyHealth = 100;
@@ -506,12 +474,12 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
   degree = 'rotate(270deg)';
 
   stateMoving = '';
+  stateSteps = '';
   stateSpell = '';
   stateSpellEnemyOne = '';
   stateSpellEnemyTwo = '';
   stateSpellEnemyThree = '';
   stateSpellEnemyFour = '';
-  stateSteps = '';
 
   endGameText = '';
 
@@ -574,18 +542,6 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
     sound.play();
   }
 
-  stepSound() {
-    if (!this.isAudioOn) return;
-    let sound = new Audio('./assets/audio/step.mp3');
-    sound.play();
-  }
-
-  dischargeSound() {
-    if (!this.isAudioOn) return;
-    let sound = new Audio('./assets/audio/discharge.mp3');
-    sound.play();
-  }
-
   toggleSound() {
     if (this.isAudioOn) {
       this.store.dispatch(soundOff());
@@ -598,8 +554,6 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
     let toggle: boolean = true;
 
     let id = setInterval(() => {
-      this.stepSound();
-
       if (direction == 'up') {
         if (toggle) {
           this.stateSteps = 'backOne';

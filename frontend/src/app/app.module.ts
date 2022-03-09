@@ -47,6 +47,7 @@ import { GeneralStatComponent } from './profile/general-stat/general-stat.compon
 import { DetailStatComponent } from './profile/detail-stat/detail-stat.component';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AnomalyComponent } from './arena/anomaly/anomaly.component';
+import { ArenaHeroComponent } from './arena/arena-hero/arena-hero.component';
 
 @NgModule({
   declarations: [
@@ -88,6 +89,7 @@ import { AnomalyComponent } from './arena/anomaly/anomaly.component';
     GeneralStatComponent,
     DetailStatComponent,
     AnomalyComponent,
+    ArenaHeroComponent,
   ],
   imports: [
     ReactiveFormsModule,
