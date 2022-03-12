@@ -48,6 +48,8 @@ import { DetailStatComponent } from './profile/detail-stat/detail-stat.component
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { AnomalyComponent } from './arena/anomaly/anomaly.component';
 import { ArenaHeroComponent } from './arena/arena-hero/arena-hero.component';
+import { ToolbarComponent } from './arena/toolbar/toolbar.component';
+import { HealthPotionComponent } from './arena/toolbar/health-potion/health-potion.component';
 
 @NgModule({
   declarations: [
@@ -90,6 +92,8 @@ import { ArenaHeroComponent } from './arena/arena-hero/arena-hero.component';
     DetailStatComponent,
     AnomalyComponent,
     ArenaHeroComponent,
+    ToolbarComponent,
+    HealthPotionComponent,
   ],
   imports: [
     ReactiveFormsModule,

@@ -106,5 +106,21 @@ export const reducer = createReducer(
   on(Users.changeEnemyEnergyPoints, (state, { points }) => ({
     ...state,
     enemy: { ...state.enemy, energyPoints: points },
+  })),
+  on(Users.increaseUserHealth, (state, { points }) => ({
+    ...state,
+    user: { ...state.user, health: state.user.health + points },
+  })),
+  on(Users.decreaseUserHealth, (state, { points }) => ({
+    ...state,
+    user: { ...state.user, health: state.user.health - points },
+  })),
+  on(Users.increaseEnemyHealth, (state, { points }) => ({
+    ...state,
+    enemy: { ...state.enemy, health: state.enemy.health + points },
+  })),
+  on(Users.decreaseEnemyHealth, (state, { points }) => ({
+    ...state,
+    enemy: { ...state.enemy, health: state.enemy.health - points },
   }))
 );

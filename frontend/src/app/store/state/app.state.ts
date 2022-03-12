@@ -1,4 +1,3 @@
-import { ArenaState } from '../reducers/arena.reducer';
 import { AnswersState } from '../reducers/intuition/answers.reducer';
 import { SoundState } from '../reducers/sound.reducer';
 import { UsersState } from '../reducers/duels/users.reducer';
@@ -12,10 +11,15 @@ import { SpellbookState } from '../reducers/duels/spellBook.reducer';
 import { UserState } from '../reducers/user.reducer';
 import { PendingState } from '../reducers/pending.reducer';
 import { ResultsState } from '../reducers/intuition/results.reducer';
+import { ArenaUsersState } from '../reducers/arena/health.reducer';
+import { ToolbarState } from '../reducers/arena/toolbar.reducer';
 
 export interface AppState {
   user: UserState;
-  arena: ArenaState;
+  arena: {
+    health: ArenaUsersState;
+    toolbar: ToolbarState;
+  };
   intuition: {
     answers: AnswersState;
     results: ResultsState;

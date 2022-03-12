@@ -13,6 +13,8 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { increaseUserHealth } from 'src/app/store/actions/arena/health.actions';
+import { selectFirstPotion } from 'src/app/store/selectors/arena/toolbar.selectors';
 import { selectSoundSwitch } from 'src/app/store/selectors/sound.selector';
 import { AppState } from 'src/app/store/state/app.state';
 
@@ -63,6 +65,7 @@ export class ArenaHeroComponent implements OnInit, OnChanges {
   isAudioOn = true;
 
   isDischarge = false;
+  isSparks = false;
 
   @Input() stateSteps!: string;
   @Input() discharge!: boolean;
@@ -70,6 +73,16 @@ export class ArenaHeroComponent implements OnInit, OnChanges {
   ngOnInit(): void {
     this.store.select(selectSoundSwitch).subscribe((state) => {
       this.isAudioOn = state;
+    });
+
+    this.store.select(selectFirstPotion).subscribe((potionState) => {
+      if (!potionState) {
+        this.isSparks = true;
+
+        setTimeout(() => {
+          this.isSparks = false;
+        }, 1000);
+      }
     });
   }
 

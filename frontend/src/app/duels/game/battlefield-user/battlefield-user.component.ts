@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { DictionaryState } from 'src/app/store/reducers/duels/dictionary.reducer';
-import { selectUserHealth } from 'src/app/store/selectors/arena.selector';
 import { selectDictionary } from 'src/app/store/selectors/duels/dictionary.selectors';
 import {
   selectElements,
   selectForms,
+  selectUserHealth,
 } from 'src/app/store/selectors/duels/users.selectors';
 import { AppState } from 'src/app/store/state/app.state';
 

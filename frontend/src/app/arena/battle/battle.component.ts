@@ -19,6 +19,17 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/state/app.state';
 import { soundOff, soundOn } from 'src/app/store/actions/sound.action';
+import { fromEvent } from 'rxjs';
+import { firstHealthPotionRefill } from 'src/app/store/actions/arena/toolbar.actions';
+import {
+  selectEnemyHealth,
+  selectUserHealth,
+} from 'src/app/store/selectors/arena/health.selector';
+import {
+  decreaseEnemyHealth,
+  decreaseUserHealth,
+  resetHealth,
+} from 'src/app/store/actions/arena/health.actions';
 
 function calcDirection(
   userTop: number,
@@ -194,9 +205,21 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
     this.store.select(selectSoundSwitch).subscribe((state) => {
       this.isAudioOn = state;
     });
+
+    this.store.select(selectUserHealth).subscribe((health) => {
+      this.userHealth = health;
+      this.userHealthPercent = this.userHealth + '%';
+    });
+
+    this.store.select(selectEnemyHealth).subscribe((health) => {
+      this.enemyHealth = health;
+      this.enemyHealthPercent = this.enemyHealth + '%';
+    });
   }
 
   ngAfterViewInit() {
+    this.store.dispatch(resetHealth());
+
     setTimeout(() => {
       this.setUser();
       this.castEnemeySpells();
@@ -205,9 +228,14 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
     this.castingEnemySpells();
     this.enemyDamageTracking();
     this.userDamageTrecking();
+
+    this.store.dispatch(firstHealthPotionRefill());
   }
 
   ngOnDestroy() {
+    this.store.dispatch(resetHealth());
+    this.store.dispatch(firstHealthPotionRefill());
+
     clearInterval(this.enemySpellsTimerId);
     clearInterval(this.enemyDamageTrackingId);
     clearInterval(this.userDamageTrackingId);
@@ -410,8 +438,7 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
   }
 
   userDamage(damage: number) {
-    this.userHealth -= damage;
-    this.userHealthPercent = this.userHealth + '%';
+    this.store.dispatch(decreaseUserHealth({ health: damage }));
 
     if (this.userHealth <= 0) {
       clearInterval(this.enemySpellsTimerId);
@@ -420,8 +447,7 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
   }
 
   enemyDamage(damage: number) {
-    this.enemyHealth -= damage;
-    this.enemyHealthPercent = this.enemyHealth + '%';
+    this.store.dispatch(decreaseEnemyHealth({ health: damage }));
 
     if (this.enemyHealth <= 0) {
       clearInterval(this.enemySpellsTimerId);
@@ -437,9 +463,9 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
   dischargeSound = false;
 
   userHealth = 100;
-  userHealthPercent = '100%';
+  userHealthPercent = '';
   enemyHealth = 100;
-  enemyHealthPercent = '100%';
+  enemyHealthPercent = '';
 
   isAudioOn = true;
 
@@ -641,10 +667,9 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
     clearInterval(this.enemyDamageTrackingId);
     clearInterval(this.userDamageTrackingId);
 
-    this.userHealth = 100;
-    this.userHealthPercent = '100%';
-    this.enemyHealth = 100;
-    this.enemyHealthPercent = '100%';
+    this.store.dispatch(resetHealth());
+
+    this.store.dispatch(firstHealthPotionRefill());
 
     setTimeout(() => {
       this.setUser();

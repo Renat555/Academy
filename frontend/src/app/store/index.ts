@@ -1,5 +1,4 @@
 import { ActionReducerMap, combineReducers } from '@ngrx/store';
-import * as Arena from './reducers/arena.reducer';
 import * as Answers from './reducers/intuition/answers.reducer';
 import * as Results from './reducers/intuition/results.reducer';
 import * as Sound from './reducers/sound.reducer';
@@ -13,6 +12,8 @@ import * as Map from './reducers/duels/map.reducer';
 import * as Spellbook from './reducers/duels/spellBook.reducer';
 import * as User from './reducers/user.reducer';
 import * as Pending from './reducers/pending.reducer';
+import * as ArenaUsers from './reducers/arena/health.reducer';
+import * as ArenaToolbar from './reducers/arena/toolbar.reducer';
 
 const duelsReducers = combineReducers({
   users: Users.reducer,
@@ -25,6 +26,11 @@ const duelsReducers = combineReducers({
   spellbook: Spellbook.reducer,
 });
 
+const ArenaReducers = combineReducers({
+  health: ArenaUsers.reducer,
+  toolbar: ArenaToolbar.reducer,
+});
+
 const intuitionReducers = combineReducers({
   answers: Answers.reducer,
   results: Results.reducer,
@@ -32,7 +38,10 @@ const intuitionReducers = combineReducers({
 
 export interface State {
   user: User.UserState;
-  arena: Arena.ArenaState;
+  arena: {
+    health: ArenaUsers.ArenaUsersState;
+    toolbar: ArenaToolbar.ToolbarState;
+  };
   intuition: {
     answers: Answers.AnswersState;
     results: Results.ResultsState;
@@ -53,7 +62,7 @@ export interface State {
 
 export const reducers: ActionReducerMap<State> = {
   user: User.reducer,
-  arena: Arena.reducer,
+  arena: ArenaReducers,
   intuition: intuitionReducers,
   sound: Sound.reducer,
   pending: Pending.reducer,

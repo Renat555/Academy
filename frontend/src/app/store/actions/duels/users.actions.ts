@@ -27,6 +27,13 @@ export enum pointsActions {
   changeEnemyEnergyPoints = '[points] changeEnemyEnergyPoints',
 }
 
+export enum healthActions {
+  increaseUserHealth = '[health] increaseUserHealth',
+  decreaseUserHealth = '[health] decreaseUserHealth',
+  increaseEnemyHealth = '[health] increaseEnemyHealth',
+  decreaseEnemyHealth = '[health] decreaseEnemyHealth',
+}
+
 export const addElement = createAction(
   chooseActions.addElement,
   props<{ element: string }>()
@@ -96,5 +103,25 @@ export const changeUserEnergyPoints = createAction(
 
 export const changeEnemyEnergyPoints = createAction(
   pointsActions.changeEnemyEnergyPoints,
+  props<{ points: number }>()
+);
+
+export const increaseUserHealth = createAction(
+  healthActions.increaseUserHealth,
+  props<{ points: number }>()
+);
+
+export const decreaseUserHealth = createAction(
+  healthActions.decreaseUserHealth,
+  props<{ points: number }>()
+);
+
+export const increaseEnemyHealth = createAction(
+  healthActions.increaseEnemyHealth,
+  props<{ points: number }>()
+);
+
+export const decreaseEnemyHealth = createAction(
+  healthActions.decreaseEnemyHealth,
   props<{ points: number }>()
 );

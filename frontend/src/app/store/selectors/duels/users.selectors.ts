@@ -74,4 +74,14 @@ export const selectEnemyEnergyPoints = createSelector(
   (state: UsersState) => state.enemy.energyPoints
 );
 
+export const selectUserHealth = createSelector(
+  users,
+  (state: UsersState) => state.user.health
+);
+
+export const selectEnemyHealth = createSelector(
+  users,
+  (state: UsersState) => state.enemy.health
+);
+
 export const selectUsers = createSelector(users, (state: UsersState) => state);
