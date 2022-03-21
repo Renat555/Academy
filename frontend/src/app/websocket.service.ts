@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { EMPTY, observable, Observable } from 'rxjs';
+import { catchError, tap } from 'rxjs/operators';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { environment } from 'src/environments/environment';
 
@@ -8,15 +10,11 @@ import { environment } from 'src/environments/environment';
 export class WebsocketService {
   constructor() {
     this.socket = webSocket(environment.apiWss);
+
+    this.socket.subscribe((x) => console.log(x));
   }
 
   socket: WebSocketSubject<any>;
-
-  connect() {
-    if (!this.socket || this.socket.closed) {
-      this.socket = webSocket(environment.apiWss);
-    }
-  }
 
   sendMessage(msg: any) {
     this.socket.next(msg);

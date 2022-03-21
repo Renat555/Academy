@@ -14,6 +14,11 @@ export const selectElements = createSelector(
   (state: UsersState) => state.user.elements
 );
 
+export const selectUserId = createSelector(
+  users,
+  (state: UsersState) => state.user.id
+);
+
 export const selectUserName = createSelector(
   users,
   (state: UsersState) => state.user.name

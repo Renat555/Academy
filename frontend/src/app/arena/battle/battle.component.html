@@ -66,10 +66,10 @@
     data-way="obstacle"
     [health]="enemyHealthPercent"
   ></app-health>
-  <div class="enemy" #enemy data-way="obstacle">
+  <div class="enemy" #enemy>
     <app-anomaly [health]="enemyHealth"></app-anomaly>
   </div>
-  <div class="toolbar">
+  <div class="toolbar" data-way="obstacle">
     <app-toolbar></app-toolbar>
   </div>
   <app-health

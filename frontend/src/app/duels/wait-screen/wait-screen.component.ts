@@ -4,6 +4,10 @@ import { Store } from '@ngrx/store';
 import { selectEnemyType } from 'src/app/store/selectors/duels/generalInfo.selectors';
 import { AppState } from 'src/app/store/state/app.state';
 import { WebsocketService } from 'src/app/websocket.service';
+import {
+  selectUserId,
+  selectUserName,
+} from 'src/app/store/selectors/duels/users.selectors';
 
 @Component({
   selector: 'app-wait-screen',
@@ -17,7 +21,11 @@ export class WaitScreenComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    let enemyType;
+
     this.store.select(selectEnemyType).subscribe((type) => {
+      enemyType = type;
+
       if (type === 'human') {
         this.text = 'Поиск противника...';
       } else {
@@ -25,11 +33,24 @@ export class WaitScreenComponent implements OnInit {
       }
     });
 
-    this.wssService.sendMessage({
+    let name;
+
+    this.store.select(selectUserName).subscribe((userName) => {
+      name = userName;
+    });
+
+    let id;
+
+    this.store.select(selectUserId).subscribe((userId) => {
+      id = userId;
+    });
+
+    let gameInformation = {
       header: 'createGame',
       user: {
-        name: '',
-        enemyType: '',
+        name: name,
+        id: id,
+        enemyType: enemyType,
         idGame: '',
         actionPoints: 5,
         energyPoints: 5,
@@ -46,7 +67,9 @@ export class WaitScreenComponent implements OnInit {
         buffs: [],
         debuffs: [],
       },
-    });
+    };
+
+    this.wssService.sendMessage(gameInformation);
   }
 
   text = '';

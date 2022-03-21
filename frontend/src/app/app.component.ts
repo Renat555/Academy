@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { from, Observable } from 'rxjs';
+import { catchError, switchAll } from 'rxjs/operators';
 import { HttpService } from './http.service';
 import {
   addLogin,
@@ -14,9 +16,8 @@ import { WebsocketService } from './websocket.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.less'],
-  providers: [HttpService],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   constructor(
     private httpService: HttpService,
     private store: Store<AppState>,
@@ -38,7 +39,9 @@ export class AppComponent implements OnInit {
         this.store.dispatch(userIsAuth());
       }
     });
+  }
 
-    this.wssService.connect();
+  ngOnDestroy() {
+    this.wssService.close();
   }
 }

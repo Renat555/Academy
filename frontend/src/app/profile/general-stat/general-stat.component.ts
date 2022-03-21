@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { HttpService } from 'src/app/http.service';
-import { addResults } from 'src/app/store/actions/intuition/results.actions';
+import {
+  addResults,
+  getResults,
+} from 'src/app/store/actions/intuition/results.actions';
 import { soundOff, soundOn } from 'src/app/store/actions/sound.action';
 import {
   selectBlackWhite,
@@ -31,11 +34,8 @@ export class GeneralStatComponent implements OnInit {
       this.isAudioOn = state;
     });
 
-    let login = localStorage.getItem('login') || '';
+    this.store.dispatch(getResults());
 
-    this.httpService.getIntuitionResults(login).subscribe((result: any) => {
-      this.store.dispatch(addResults({ results: result }));
-    });
     this.figuresStat();
     this.cardSuitsStat();
     this.colorsStat();

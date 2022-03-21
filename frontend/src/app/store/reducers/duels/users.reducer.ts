@@ -1,8 +1,20 @@
 import { createReducer, on } from '@ngrx/store';
 import * as Users from '../../actions/duels/users.actions';
 
+function randomString() {
+  let string = 'qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM0123456789';
+  let result = '';
+
+  for (let i = 0; i < 10; i++) {
+    result += string[Math.floor(Math.random() * Math.floor(62))];
+  }
+
+  return result;
+}
+
 interface UserState {
   name: string;
+  id: string;
   enemyType: string;
   actionPoints: number;
   energyPoints: number;
@@ -32,6 +44,7 @@ export interface UsersState {
 const initialState: UsersState = {
   user: {
     name: '',
+    id: randomString(),
     enemyType: '',
     actionPoints: 5,
     energyPoints: 5,

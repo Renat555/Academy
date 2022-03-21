@@ -26,6 +26,8 @@ mongoClient.connect(function (err, client) {
 
       let request = JSON.parse(message.toString());
 
+      console.log(request);
+
       // if (request["generalInfo"]["enemyType"] === "AI") {
       //   createGameWithComputer(request["user"], collection, ws);
       // }

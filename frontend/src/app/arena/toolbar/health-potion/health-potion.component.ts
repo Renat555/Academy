@@ -1,4 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
 import { fromEvent } from 'rxjs';
 import { increaseUserHealth } from 'src/app/store/actions/arena/health.actions';
@@ -16,7 +22,7 @@ import { AppState } from 'src/app/store/state/app.state';
   templateUrl: './health-potion.component.html',
   styleUrls: ['./health-potion.component.less'],
 })
-export class HealthPotionComponent implements OnInit {
+export class HealthPotionComponent implements OnInit, AfterViewInit {
   constructor(private store: Store<AppState>) {}
 
   ngOnInit(): void {
@@ -38,8 +44,18 @@ export class HealthPotionComponent implements OnInit {
     this.store.select(selectEnemyHealth).subscribe((health) => {
       this.enemyHealth = health;
     });
+  }
 
+  ngAfterViewInit(): void {
     let keydown = fromEvent(document, 'keydown');
+
+    let clicks = fromEvent(this.potion.nativeElement, 'click');
+
+    clicks.subscribe(() => {
+      if (this.isFull && this.userHealth > 0 && this.enemyHealth > 0) {
+        this.consumePotion();
+      }
+    });
 
     keydown.subscribe((x) => {
       let key = (x as KeyboardEvent).key;
@@ -50,14 +66,20 @@ export class HealthPotionComponent implements OnInit {
         this.userHealth > 0 &&
         this.enemyHealth > 0
       ) {
-        this.store.dispatch(firstHealthPotionConsume());
-        this.potionSound();
-        this.store.dispatch(increaseUserHealth({ health: 30 }));
-        this.isFull = false;
-        this.isEmpty = true;
+        this.consumePotion();
       }
     });
   }
+
+  consumePotion() {
+    this.store.dispatch(firstHealthPotionConsume());
+    this.potionSound();
+    this.store.dispatch(increaseUserHealth({ health: 30 }));
+    this.isFull = false;
+    this.isEmpty = true;
+  }
+
+  @ViewChild('potion') potion!: ElementRef;
 
   isFull = true;
   isEmpty = false;

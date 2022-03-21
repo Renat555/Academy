@@ -50,6 +50,8 @@ import { AnomalyComponent } from './arena/anomaly/anomaly.component';
 import { ArenaHeroComponent } from './arena/arena-hero/arena-hero.component';
 import { ToolbarComponent } from './arena/toolbar/toolbar.component';
 import { HealthPotionComponent } from './arena/toolbar/health-potion/health-potion.component';
+import { EffectsModule } from '@ngrx/effects';
+import { IntStatEffects } from './effects/intStat.effects';
 
 @NgModule({
   declarations: [
@@ -103,6 +105,7 @@ import { HealthPotionComponent } from './arena/toolbar/health-potion/health-poti
     StoreModule.forRoot(reducers),
     HttpClientModule,
     FormsModule,
+    EffectsModule.forRoot([IntStatEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: false,

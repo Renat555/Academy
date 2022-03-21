@@ -7,7 +7,9 @@ interface User {
   password: string;
 }
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class HttpService {
   constructor(private http: HttpClient) {}
 
