@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { selectEnemyType } from 'src/app/store/selectors/duels/generalInfo.selectors';
+import {
+  selectEnemyType,
+  selectIsEnemyCreated,
+} from 'src/app/store/selectors/duels/generalInfo.selectors';
 import { AppState } from 'src/app/store/state/app.state';
 import { WebsocketService } from 'src/app/websocket.service';
 import {
@@ -17,7 +20,8 @@ import {
 export class WaitScreenComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
-    private wssService: WebsocketService
+    private wssService: WebsocketService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -70,6 +74,10 @@ export class WaitScreenComponent implements OnInit {
     };
 
     this.wssService.sendMessage(gameInformation);
+
+    this.store.select(selectIsEnemyCreated).subscribe((state) => {
+      if (state) this.router.navigate(['/duels/game']);
+    });
   }
 
   text = '';

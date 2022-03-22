@@ -22,15 +22,11 @@ mongoClient.connect(function (err, client) {
     console.log("open");
 
     ws.on("message", function (message) {
-      console.log(Date());
-
       let request = JSON.parse(message.toString());
 
-      console.log(request);
-
-      // if (request["generalInfo"]["enemyType"] === "AI") {
-      //   createGameWithComputer(request["user"], collection, ws);
-      // }
+      if (request["user"]["enemyType"] === "AI") {
+        createGameWithComputer(request["user"], collection, ws);
+      }
     });
   });
 });

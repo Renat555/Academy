@@ -13,3 +13,8 @@ export const selectEnemyType = createSelector(
   muve,
   (state: GeneralInfoState) => state.enemyType
 );
+
+export const selectIsEnemyCreated = createSelector(
+  muve,
+  (state: GeneralInfoState) => state.enemyCreated
+);

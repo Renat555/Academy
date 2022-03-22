@@ -1,5 +1,13 @@
-import { Component, DoCheck, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  DoCheck,
+  ElementRef,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Store } from '@ngrx/store';
+import { fromEvent } from 'rxjs';
 import { showEffects } from 'src/app/store/actions/duels/effectsWindow.actions';
 import {
   selectElement,
@@ -17,8 +25,45 @@ import { AppState } from 'src/app/store/state/app.state';
   templateUrl: './battlefield-centre.component.html',
   styleUrls: ['./battlefield-centre.component.less'],
 })
-export class BattlefieldCentreComponent implements OnInit {
+export class BattlefieldCentreComponent implements OnInit, AfterViewInit {
   constructor(private store: Store<AppState>) {}
+
+  @ViewChild('hint') hint!: ElementRef;
+  @ViewChild('userSpell') userSpell!: ElementRef;
+
+  russianNameSpell = '';
+  spellDescription = '';
+
+  energyPoints = 0;
+  actionPoints = 0;
+  needEnergyPoints = 0;
+  needActionPoints = 0;
+
+  isHintHidden = true;
+  hintLeft = '';
+  hintTop = '';
+  hintWidth = '';
+
+  ngAfterViewInit(): void {
+    let userSpell = this.userSpell.nativeElement;
+
+    let mouseEnter = fromEvent(userSpell, 'mouseenter');
+
+    let mouseLeave = fromEvent(userSpell, 'mouseleave');
+
+    mouseEnter.subscribe((event) => {
+      let spellCoord = userSpell.getBoundingClientRect();
+
+      this.hintWidth = spellCoord.width + 'px';
+      this.hintTop = spellCoord.bottom + 10 + window.pageYOffset + 'px';
+      this.hintLeft = spellCoord.left + 'px';
+      this.isHintHidden = false;
+    });
+
+    mouseLeave.subscribe((event) => {
+      this.isHintHidden = true;
+    });
+  }
 
   ngOnInit(): void {
     this.store.select(selectUserEnergyPoints).subscribe((state) => {
@@ -41,6 +86,9 @@ export class BattlefieldCentreComponent implements OnInit {
       form = state;
       if (spellbook[element + form]) {
         this.russianNameSpell = spellbook[element + form][0];
+        this.needActionPoints = spellbook[element + form][1];
+        this.needEnergyPoints = spellbook[element + form][2];
+        this.spellDescription = spellbook[element + form][3];
       }
     });
 
@@ -48,6 +96,9 @@ export class BattlefieldCentreComponent implements OnInit {
       element = state;
       if (spellbook[element + form]) {
         this.russianNameSpell = spellbook[element + form][0];
+        this.needActionPoints = spellbook[element + form][1];
+        this.needEnergyPoints = spellbook[element + form][2];
+        this.spellDescription = spellbook[element + form][3];
       }
     });
   }
@@ -55,9 +106,4 @@ export class BattlefieldCentreComponent implements OnInit {
   showEffects() {
     this.store.dispatch(showEffects());
   }
-
-  russianNameSpell = '';
-
-  energyPoints = 0;
-  actionPoints = 0;
 }

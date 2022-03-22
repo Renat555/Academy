@@ -7,12 +7,24 @@
     Активировать заклинание
   </button>
 
-  <div class="spell userSpell">{{ russianNameSpell }}</div>
+  <div
+    class="hint"
+    #hint
+    [hidden]="isHintHidden"
+    [ngStyle]="{ top: hintTop, left: hintLeft, width: hintWidth }"
+  >
+    <app-hint [text]="spellDescription"></app-hint>
+  </div>
+  <div class="spell userSpell" #userSpell>{{ russianNameSpell }}</div>
 
   <div class="points needPoints">
     <div>Необходимо для активации:</div>
-    <div>Очки действия: <span>0</span></div>
-    <div>Энергия: <span>0</span></div>
+    <div>
+      Очки действия: <span>{{ needActionPoints }}</span>
+    </div>
+    <div>
+      Энергия: <span>{{ needEnergyPoints }}</span>
+    </div>
   </div>
 
   <div class="points remainActionPoints">

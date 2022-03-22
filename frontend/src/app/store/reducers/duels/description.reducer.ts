@@ -7,7 +7,7 @@ export interface DescriptionState {
 }
 
 const initialState: DescriptionState = {
-  description: [],
+  description: [['Дуэль началась!']],
 };
 
 export const reducer = createReducer(
