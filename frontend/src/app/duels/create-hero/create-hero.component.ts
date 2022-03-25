@@ -1,10 +1,14 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { AIEnemy } from 'src/app/store/actions/duels/generalInfo.actions';
+import {
+  AIEnemy,
+  humanEnemy,
+} from 'src/app/store/actions/duels/generalInfo.actions';
 import {
   addElement,
   addForm,
+  addUserName,
   deleteElement,
   deleteForm,
 } from 'src/app/store/actions/duels/users.actions';
@@ -37,11 +41,11 @@ export class CreateHeroComponent implements OnInit {
       }
     });
 
-    this.store.select(selectUserName).subscribe((res) => {
-      if (res === '') {
+    this.store.select(selectUserName).subscribe((name) => {
+      if (name === '') {
         this.isUserAuth = false;
       } else {
-        this.userName = res;
+        this.userName = name;
         this.isUserAuth = true;
       }
     });
@@ -210,9 +214,7 @@ export class CreateHeroComponent implements OnInit {
     this.router.navigate(['duels/help']);
   }
 
-  goToWait() {
-    this.store.dispatch(AIEnemy());
-
+  createUser() {
     let elements = [];
     let forms = [];
 
@@ -231,7 +233,18 @@ export class CreateHeroComponent implements OnInit {
       this.textHint = 'Выберите пять форм';
       this.isHintHide = false;
     } else {
+      this.store.dispatch(addUserName({ name: this.userName }));
       this.router.navigate(['duels/wait']);
     }
+  }
+
+  createGameWithAI() {
+    this.store.dispatch(AIEnemy());
+    this.createUser();
+  }
+
+  createGameWithHuman() {
+    this.store.dispatch(humanEnemy());
+    this.createUser();
   }
 }

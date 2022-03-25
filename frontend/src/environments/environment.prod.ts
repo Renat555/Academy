@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
   apiUrl: 'https://a33.kz/backend',
-  apiWss: 'ws://localhost:3001',
+  apiWss: 'wss://a33.kz/socket:3001',
 };

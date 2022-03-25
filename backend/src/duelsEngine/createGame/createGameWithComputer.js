@@ -46,7 +46,7 @@ function createEnemy(user, mongoCollection, ws) {
     .findOneAndUpdate(
       { id: user["id"] },
       { $set: { muve: userMuve, idGame: idGame } },
-      { returnOriginal: false }
+      { returnDocument: "after" }
     )
     .then((doc) => {
       response["user"] = doc["value"];

@@ -2,6 +2,7 @@ import WebSocket from "ws";
 import { MongoClient } from "mongodb";
 import { dev, prod } from "./config";
 import createGameWithComputer = require("./duelsEngine/createGame/createGameWithComputer");
+import createGameWithHuman = require("./duelsEngine/createGame/createGameWithHuman");
 
 let urlMongo;
 
@@ -19,13 +20,14 @@ mongoClient.connect(function (err, client) {
   const db = client.db("duelsdb");
   const collection = db.collection("duels");
   wss.on("connection", function connection(ws) {
-    console.log("open");
-
     ws.on("message", function (message) {
       let request = JSON.parse(message.toString());
+      //console.log(request);
 
       if (request["user"]["enemyType"] === "AI") {
         createGameWithComputer(request["user"], collection, ws);
+      } else if (request["user"]["enemyType"] === "human") {
+        createGameWithHuman(request["user"], collection, ws, wss);
       }
     });
   });

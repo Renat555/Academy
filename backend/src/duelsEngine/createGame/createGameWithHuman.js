@@ -69,7 +69,7 @@ function searchEnemy(user, mongoCollection, ws, wss) {
     .findOneAndUpdate(
       { $and: [{ id: { $not: { $eq: user["id"] } } }, { idGame: "" }] },
       { $set: { idGame: generatingRandomString() } },
-      { returnOriginal: false }
+      { returnDocument: "after" }
     )
     .then((res) => {
       if (res["value"] === null) return;
@@ -79,7 +79,7 @@ function searchEnemy(user, mongoCollection, ws, wss) {
         .findOneAndUpdate(
           { id: user["id"] },
           { $set: { idGame: res["value"]["idGame"] } },
-          { returnOriginal: false }
+          { returnDocument: "after" }
         )
         .then((res) => {
           setMuve(user, mongoCollection).then((res) => {

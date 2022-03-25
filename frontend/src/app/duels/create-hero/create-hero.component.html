@@ -19,7 +19,7 @@
   <div class="center">
     <div class="name" *ngIf="!isUserAuth">
       <h2>Представтесь</h2>
-      <input type="text" class="inputName" />
+      <input type="text" class="inputName" [(ngModel)]="userName" />
     </div>
     <div class="name" *ngIf="isUserAuth">
       <h2>Добро пожаловать, {{ userName }}.</h2>
@@ -168,10 +168,10 @@
     </div>
   </div>
   <div class="buttons">
-    <div class="yellowButton buttonOne" (click)="goToWait()">
+    <div class="yellowButton buttonOne" (click)="createGameWithAI()">
       <div class="text">Игра с компьтером</div>
     </div>
-    <div class="yellowButton buttonTwo">
+    <div class="yellowButton buttonTwo" (click)="createGameWithHuman()">
       <div class="text">Поиск противника</div>
     </div>
   </div>

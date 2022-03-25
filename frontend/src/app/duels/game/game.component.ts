@@ -19,15 +19,6 @@ export class GameComponent implements OnInit, OnDestroy {
     this.store.select(selectEffectsWindowSwitch).subscribe((state) => {
       this.isEffectsShow = state;
     });
-
-    this.wssService.socket.subscribe((data) => {
-      console.log(data);
-    });
-    this.wssService.sendMessage({
-      user: {
-        enemyType: 'human',
-      },
-    });
   }
 
   ngOnDestroy(): void {}
