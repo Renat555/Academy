@@ -9,7 +9,13 @@ import {
   enemyMuve,
   userMuve,
 } from './store/actions/duels/generalInfo.actions';
-import { addEnemyName } from './store/actions/duels/users.actions';
+import { setEnemy } from './store/actions/duels/map.actions';
+import {
+  addEnemyName,
+  changeEnemyActionPoints,
+  changeUserActionPoints,
+} from './store/actions/duels/users.actions';
+import { selectMapEnemy } from './store/selectors/duels/map.selectors';
 import { AppState } from './store/state/app.state';
 
 @Injectable({
@@ -32,6 +38,38 @@ export class WebsocketService {
           this.store.dispatch(enemyMuve());
         }
         this.store.dispatch(enemyCreated());
+      } else if (gameInformation['header'] === 'playerMovement') {
+        this.store.dispatch(
+          changeUserActionPoints({
+            points: gameInformation['user']['actionPoints'],
+          })
+        );
+
+        this.store.dispatch(
+          changeEnemyActionPoints({
+            points: gameInformation['enemy']['actionPoints'],
+          })
+        );
+
+        let enemyPath = gameInformation['user']['position']['enemy'];
+
+        let enemyDestination = enemyPath[enemyPath.length - 1];
+        let enemyCurrentPosition;
+
+        this.store.select(selectMapEnemy).subscribe((coord) => {
+          enemyCurrentPosition = coord;
+        });
+
+        if (
+          enemyDestination === undefined ||
+          enemyCurrentPosition === enemyDestination
+        )
+          return;
+        console.log('dispatch setEnemy');
+
+        this.store.dispatch(
+          setEnemy({ row: enemyDestination[0], col: enemyDestination[1] })
+        );
       }
     });
   }

@@ -110,5 +110,22 @@ export const reducer = createReducer(
     map[row][col][1] = 'user';
 
     return { map: [...map] };
+  }),
+  on(Map.setEnemy, (state, { row, col }) => {
+    let map = deepCopy(state.map);
+
+    for (let i = 0; i < map.length; i++) {
+      for (let j = 0; j < map[i].length; j++) {
+        if (map[i][j][1] === 'enemy') {
+          map[i][j][0] = '';
+          map[i][j][1] = '';
+        }
+      }
+    }
+
+    map[row][col][0] = 'block';
+    map[row][col][1] = 'enemy';
+
+    return { map: [...map] };
   })
 );

@@ -23,6 +23,7 @@ import {
 import { selectMuve } from 'src/app/store/selectors/duels/generalInfo.selectors';
 import { selectUserActionPoints } from 'src/app/store/selectors/duels/users.selectors';
 import { AppState } from 'src/app/store/state/app.state';
+import { WebsocketService } from 'src/app/websocket.service';
 
 function isPathFree(
   map: string[][],
@@ -52,7 +53,7 @@ function isPathFree(
   }
 }
 
-function calcTimeForUser(firstPoint: number, secondPoint: number): number {
+function calcTimeMoving(firstPoint: number, secondPoint: number): number {
   let pathLength = Math.abs(firstPoint - secondPoint);
 
   let time = Math.floor((pathLength / 200) * 100) / 100;
@@ -89,6 +90,31 @@ function calcTimeForUser(firstPoint: number, secondPoint: number): number {
       ),
       transition('first => second', animate('{{userTimeVertical}}s')),
       transition('second => third', animate('{{userTimeHorizontal}}s')),
+    ]),
+    trigger('enemyMoving', [
+      state(
+        'first',
+        style({ left: '{{enemyLeft1}}px', top: '{{enemyTop1}}px' }),
+        {
+          params: { enemyLeft1: 0, enemyTop1: 0 },
+        }
+      ),
+      state(
+        'second',
+        style({ left: '{{enemyLeft2}}px', top: '{{enemyTop2}}px' }),
+        {
+          params: { enemyLeft2: 0, enemyTop2: 0 },
+        }
+      ),
+      state(
+        'third',
+        style({ left: '{{enemyLeft3}}px', top: '{{enemyTop3}}px' }),
+        {
+          params: { enemyLeft3: 0, enemyTop3: 0 },
+        }
+      ),
+      transition('first => second', animate('{{enemyTimeVertical}}s')),
+      transition('second => third', animate('{{enemyTimeHorizontal}}s')),
     ]),
     trigger('userSteps', [
       state(
@@ -192,10 +218,14 @@ function calcTimeForUser(firstPoint: number, secondPoint: number): number {
     ]),
   ],
 })
-export class MapComponent implements OnInit, AfterContentChecked {
-  constructor(private store: Store<AppState>) {}
+export class MapComponent implements OnInit {
+  constructor(
+    private store: Store<AppState>,
+    private wssService: WebsocketService
+  ) {}
 
   @ViewChild('user') user!: ElementRef;
+  @ViewChild('enemy') enemy!: ElementRef;
   @ViewChild('r0c6') r0c6!: ElementRef;
   @ViewChild('r0c5') r0c5!: ElementRef;
   @ViewChild('r0c4') r0c4!: ElementRef;
@@ -250,10 +280,12 @@ export class MapComponent implements OnInit, AfterContentChecked {
     setTimeout(() => {
       this.placeUser();
       this.placeEnemy();
+
+      this.store.select(selectMapEnemy).subscribe((coord) => {
+        this.moveEnemy(coord);
+      });
     }, 0);
   }
-
-  ngAfterContentChecked(): void {}
 
   userTop = '';
   userLeft = '';
@@ -270,17 +302,27 @@ export class MapComponent implements OnInit, AfterContentChecked {
   userTimeVertical = 1;
   userTimeHorizontal = 1;
 
+  stateEnemyMoving = '';
+  enemyLeft1 = 0;
+  enemyLeft2 = 0;
+  enemyLeft3 = 0;
+  enemyTop1 = 0;
+  enemyTop2 = 0;
+  enemyTop3 = 0;
+  enemyTimeVertical = 1;
+  enemyTimeHorizontal = 1;
+
   stateUserSteps = '';
   stateEnemySteps = '';
 
-  setTrajectory(event: MouseEvent) {
-    let muve;
+  moveUser(event: MouseEvent) {
+    let move;
 
     this.store.select(selectMuve).subscribe((state) => {
-      muve = state;
+      move = state;
     });
 
-    if (muve !== 'user') return;
+    if (move !== 'user') return;
 
     let target = event.target as HTMLElement;
 
@@ -316,6 +358,7 @@ export class MapComponent implements OnInit, AfterContentChecked {
       targetRow,
       targetCol
     );
+
     let pathSquares = this.getPathSquares(
       userRow,
       userCol,
@@ -331,11 +374,14 @@ export class MapComponent implements OnInit, AfterContentChecked {
 
     if (pathData.length > actionPoints) return;
 
-    this.store.dispatch(
-      changeUserActionPoints({ points: actionPoints - pathData.length })
-    );
-
     if (!isPathFree(map, userRow, userCol, targetRow, targetCol)) return;
+
+    let trajectory = this.getTrajectory(userRow, userCol, targetRow, targetCol);
+
+    this.wssService.sendMessage({
+      header: 'playerMovement',
+      trajectory: trajectory,
+    });
 
     let verticalSquare = this.calculateSquare({
       row: targetRow,
@@ -359,8 +405,8 @@ export class MapComponent implements OnInit, AfterContentChecked {
     this.userLeft3 = targetCoord.left + 5;
     this.userTop3 = targetCoord.top + 5;
 
-    this.userTimeVertical = calcTimeForUser(this.userTop1, this.userTop2);
-    this.userTimeHorizontal = calcTimeForUser(this.userLeft2, this.userLeft3);
+    this.userTimeVertical = calcTimeMoving(this.userTop1, this.userTop2);
+    this.userTimeHorizontal = calcTimeMoving(this.userLeft2, this.userLeft3);
 
     this.store.dispatch(setUser({ row: targetRow, col: targetCol }));
 
@@ -374,7 +420,7 @@ export class MapComponent implements OnInit, AfterContentChecked {
       } else {
         direction = 'up';
       }
-      this.makeSteps(this.userTimeVertical, direction);
+      this.makeUserSteps(this.userTimeVertical, direction);
       setTimeout(() => {
         this.stateUserMoving = 'third';
 
@@ -385,7 +431,7 @@ export class MapComponent implements OnInit, AfterContentChecked {
         } else {
           direction = 'left';
         }
-        this.makeSteps(this.userTimeHorizontal, direction);
+        this.makeUserSteps(this.userTimeHorizontal, direction);
 
         setTimeout(() => {
           this.faceToEnemy();
@@ -394,7 +440,7 @@ export class MapComponent implements OnInit, AfterContentChecked {
     }, 0);
   }
 
-  makeSteps(time: number, direction: string) {
+  makeUserSteps(time: number, direction: string) {
     let toggle: boolean = true;
 
     let id = setInterval(() => {
@@ -428,6 +474,106 @@ export class MapComponent implements OnInit, AfterContentChecked {
           toggle = false;
         } else {
           this.stateUserSteps = 'userLeftTwo';
+          toggle = true;
+        }
+      }
+    }, 250);
+
+    setTimeout(() => {
+      clearInterval(id);
+    }, time * 1000);
+
+    return id;
+  }
+
+  moveEnemy(coord: { row: number; col: number }) {
+    let targetRow = coord['row'];
+    let targetCol = coord['col'];
+
+    let target = this.calculateSquare(coord);
+
+    let enemyCoord = this.enemy.nativeElement.getBoundingClientRect();
+
+    this.enemyLeft1 = enemyCoord.left;
+    this.enemyTop1 = enemyCoord.top;
+
+    this.stateEnemyMoving = 'first';
+
+    let targetCoord = target.getBoundingClientRect();
+
+    this.enemyLeft2 = this.enemyLeft1;
+    this.enemyTop2 = targetCoord.top;
+
+    this.enemyLeft3 = targetCoord.left + 5;
+    this.enemyTop3 = this.enemyTop2;
+
+    this.enemyTimeVertical = calcTimeMoving(this.enemyTop1, this.enemyTop2);
+    this.enemyTimeHorizontal = calcTimeMoving(this.enemyLeft2, this.enemyLeft3);
+
+    setTimeout(() => {
+      this.stateEnemyMoving = 'second';
+
+      let direction;
+
+      if (this.enemyTop1 < this.enemyTop2) {
+        direction = 'down';
+      } else {
+        direction = 'up';
+      }
+      this.makeEnemySteps(this.enemyTimeVertical, direction);
+      setTimeout(() => {
+        this.stateEnemyMoving = 'third';
+
+        let direction;
+
+        if (this.enemyLeft2 < this.enemyLeft3) {
+          direction = 'right';
+        } else {
+          direction = 'left';
+        }
+        this.makeEnemySteps(this.enemyTimeHorizontal, direction);
+
+        setTimeout(() => {
+          this.faceToEnemy();
+        }, this.enemyTimeHorizontal * 1020);
+      }, this.enemyTimeVertical * 1020);
+    }, 0);
+  }
+
+  makeEnemySteps(time: number, direction: string) {
+    let toggle: boolean = true;
+
+    let id = setInterval(() => {
+      if (direction == 'up') {
+        if (toggle) {
+          this.stateEnemySteps = 'enemyBackOne';
+          toggle = false;
+        } else {
+          this.stateEnemySteps = 'enemyBackTwo';
+          toggle = true;
+        }
+      } else if (direction == 'right') {
+        if (toggle) {
+          this.stateEnemySteps = 'enemyRightOne';
+          toggle = false;
+        } else {
+          this.stateEnemySteps = 'enemyRightTwo';
+          toggle = true;
+        }
+      } else if (direction == 'down') {
+        if (toggle) {
+          this.stateEnemySteps = 'enemyFaceOne';
+          toggle = false;
+        } else {
+          this.stateEnemySteps = 'enemyFaceTwo';
+          toggle = true;
+        }
+      } else if (direction == 'left') {
+        if (toggle) {
+          this.stateEnemySteps = 'enemyLeftOne';
+          toggle = false;
+        } else {
+          this.stateEnemySteps = 'enemyLeftTwo';
           toggle = true;
         }
       }
@@ -491,24 +637,47 @@ export class MapComponent implements OnInit, AfterContentChecked {
     return result;
   }
 
+  getTrajectory(
+    userRow: number,
+    userCol: number,
+    targetRow: number,
+    targetCol: number
+  ) {
+    let trajectory = [];
+
+    while (userRow !== targetRow || userCol !== targetCol) {
+      if (userRow < targetRow) {
+        userRow++;
+        trajectory.push([userRow, userCol]);
+      } else if (userRow > targetRow) {
+        userRow--;
+        trajectory.push([userRow, userCol]);
+      } else if (userCol > targetCol) {
+        userCol--;
+        trajectory.push([userRow, userCol]);
+      } else if (userCol < targetCol) {
+        userCol++;
+        trajectory.push([userRow, userCol]);
+      }
+    }
+
+    return trajectory;
+  }
+
   placeUser() {
-    this.store.select(selectMapUser).subscribe((state) => {
-      let square = this.calculateSquare(state);
-      let coord = square.getBoundingClientRect();
-      this.userTop = coord.top + 5 + 'px';
-      this.userLeft = coord.left + 5 + 'px';
-      this.stateUserSteps = 'userBackOne';
-    });
+    let square = this.calculateSquare({ row: 0, col: 3 });
+    let coord = square.getBoundingClientRect();
+    this.userTop = coord.top + 5 + 'px';
+    this.userLeft = coord.left + 5 + 'px';
+    this.stateUserSteps = 'userBackOne';
   }
 
   placeEnemy() {
-    this.store.select(selectMapEnemy).subscribe((state) => {
-      let square = this.calculateSquare(state);
-      let coord = square.getBoundingClientRect();
-      this.enemyTop = coord.top + 5 + 'px';
-      this.enemyLeft = coord.left + 5 + 'px';
-      this.stateEnemySteps = 'enemyFaceOne';
-    });
+    let square = this.calculateSquare({ row: 6, col: 3 });
+    let coord = square.getBoundingClientRect();
+    this.enemyTop = coord.top + 5 + 'px';
+    this.enemyLeft = coord.left + 5 + 'px';
+    this.stateEnemySteps = 'enemyFaceOne';
   }
 
   faceToEnemy() {
@@ -525,12 +694,16 @@ export class MapComponent implements OnInit, AfterContentChecked {
 
     if (userCoord.row < enemyCoord.row) {
       this.stateUserSteps = 'userBackOne';
+      this.stateEnemySteps = 'enemyFaceOne';
     } else if (userCoord.row > enemyCoord.row) {
       this.stateUserSteps = 'userFaceOne';
+      this.stateEnemySteps = 'enemyBackOne';
     } else if (userCoord.col < enemyCoord.col) {
       this.stateUserSteps = 'userRightOne';
+      this.stateEnemySteps = 'enemyLeftOne';
     } else if (userCoord.col > enemyCoord.col) {
       this.stateUserSteps = 'userLeftOne';
+      this.stateEnemySteps = 'enemyRightOne';
     }
   }
 

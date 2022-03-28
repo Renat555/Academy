@@ -9,3 +9,8 @@ export const setUser = createAction(
   playersActions.setUser,
   props<{ row: number; col: number }>()
 );
+
+export const setEnemy = createAction(
+  playersActions.setEnemy,
+  props<{ row: number; col: number }>()
+);

@@ -1,4 +1,4 @@
-<div class="battlefield" (click)="setTrajectory($event)">
+<div class="battlefield" (click)="moveUser($event)">
   <div
     class="user"
     #user
@@ -20,6 +20,20 @@
   ></div>
   <div
     class="enemy"
+    #enemy
+    [@enemyMoving]="{
+      value: stateEnemyMoving,
+      params: {
+        enemyLeft1: enemyLeft1,
+        enemyTop1: enemyTop1,
+        enemyLeft2: enemyLeft2,
+        enemyTop2: enemyTop2,
+        enemyLeft3: enemyLeft3,
+        enemyTop3: enemyTop3,
+        enemyTimeVertical: enemyTimeVertical,
+        enemyTimeHorizontal: enemyTimeHorizontal
+      }
+    }"
     [ngStyle]="{ top: enemyTop, left: enemyLeft }"
     [@enemySteps]="stateEnemySteps"
   ></div>

@@ -9,7 +9,6 @@ function createSpellNamesFromEffects(arrEffects) {
 }
 
 function savePlayers(user, enemy, mongoCollection, ws) {
-  console.log("save user", user["health"]);
   return new Promise((resolve, reject) => {
     user["buffs"] = createSpellNamesFromEffects(user["buffs"]);
     user["debuffs"] = createSpellNamesFromEffects(user["debuffs"]);
