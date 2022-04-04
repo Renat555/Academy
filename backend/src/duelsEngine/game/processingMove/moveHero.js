@@ -1,5 +1,5 @@
 const createPlayers = require("../createPlayers");
-const makeMuve = require("./makeMuve");
+const makeMuve = require("./makeMove");
 const savePlayers = require("../savePlayers");
 const sendGameInformation = require("../sendGameInformation");
 

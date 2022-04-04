@@ -52,6 +52,7 @@ import { ToolbarComponent } from './arena/toolbar/toolbar.component';
 import { HealthPotionComponent } from './arena/toolbar/health-potion/health-potion.component';
 import { EffectsModule } from '@ngrx/effects';
 import { IntStatEffects } from './effects/intStat.effects';
+import { DuelsHealthComponent } from './duels/common/duels-health/duels-health.component';
 
 @NgModule({
   declarations: [
@@ -96,6 +97,7 @@ import { IntStatEffects } from './effects/intStat.effects';
     ArenaHeroComponent,
     ToolbarComponent,
     HealthPotionComponent,
+    DuelsHealthComponent,
   ],
   imports: [
     ReactiveFormsModule,

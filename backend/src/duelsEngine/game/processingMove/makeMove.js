@@ -1,4 +1,4 @@
-function makeMuve(muve, user, enemy) {
+function makeMove(muve, user, enemy) {
   user.actionPoints = user.actionPoints - muve.length;
   user["position"]["user"] = muve;
 
@@ -36,4 +36,4 @@ function makeMuve(muve, user, enemy) {
   enemy["position"]["enemy"] = coordForEnemy;
 }
 
-module.exports = makeMuve;
+module.exports = makeMove;

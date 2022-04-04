@@ -3,7 +3,9 @@ import { MongoClient } from "mongodb";
 import { dev, prod } from "./config";
 import createGameWithComputer = require("./duelsEngine/createGame/createGameWithComputer");
 import createGameWithHuman = require("./duelsEngine/createGame/createGameWithHuman");
-const playerMovement = require("./duelsEngine/game/processingMuve/muveHero");
+import endMove = require("./duelsEngine/game/endMove/endMove");
+import processingSpell = require("./duelsEngine/game/processingSpell/processingSpell");
+const playerMovement = require("./duelsEngine/game/processingMove/moveHero");
 
 let urlMongo;
 
@@ -35,6 +37,12 @@ mongoClient.connect(function (err, client) {
           break;
         case "playerMovement":
           playerMovement(request["trajectory"], collection, ws, wss);
+          break;
+        case "spell":
+          processingSpell(request["spell"], collection, ws, wss);
+          break;
+        case "endMove":
+          endMove(collection, ws, wss);
           break;
       }
     });

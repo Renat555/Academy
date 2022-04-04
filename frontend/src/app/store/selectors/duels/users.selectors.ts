@@ -89,4 +89,14 @@ export const selectEnemyHealth = createSelector(
   (state: UsersState) => state.enemy.health
 );
 
+export const selectUserMaxHealth = createSelector(
+  users,
+  (state: UsersState) => state.user.maxHealth
+);
+
+export const selectEnemyMaxHealth = createSelector(
+  users,
+  (state: UsersState) => state.enemy.maxHealth
+);
+
 export const selectUsers = createSelector(users, (state: UsersState) => state);

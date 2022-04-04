@@ -3,7 +3,11 @@
     <app-map></app-map>
   </div>
 
-  <button type="button" class="button buttonAcivateSpell">
+  <button
+    type="button"
+    class="button buttonAcivateSpell"
+    (click)="activationSpell()"
+  >
     Активировать заклинание
   </button>
 
@@ -41,7 +45,9 @@
     Показать эффекты
   </button>
 
-  <button type="button" class="button endMuve">Завершить ход</button>
+  <button type="button" class="button endMove" (click)="endMove()">
+    Завершить ход
+  </button>
 
   <div class="description">
     <app-description></app-description>

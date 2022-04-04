@@ -5,7 +5,7 @@ const activationEffectsAtEndMuve = require("./activationEffectsAtEndMuve");
 const sendGameInformation = require("../sendGameInformation");
 const savePlayers = require("../savePlayers");
 
-function endMuve(collection, ws, wss) {
+function endMove(collection, ws, wss) {
   createPlayers(collection, ws).then((result) => {
     let { user, enemy } = result;
     activationBattlefieldEffects(user, enemy);
@@ -33,4 +33,4 @@ function endMuve(collection, ws, wss) {
   });
 }
 
-module.exports = endMuve;
+module.exports = endMove;

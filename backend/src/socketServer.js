@@ -7,8 +7,8 @@ const computerMuve = require("./duelsEngine/computerMuve");
 const processingSpell = require("./duelsEngine/game/processingSpell/processingSpell");
 const processingEffect = require("./duelsEngine/game/processingEffect/processingEffect");
 const processingDespell = require("./duelsEngine/game/processingDespell/processingDespell");
-const muveHero = require("./duelsEngine/game/processingMuve/muveHero");
-const endMuve = require("./duelsEngine/game/endMuve/endMuve");
+const muveHero = require("./duelsEngine/game/processingMove/moveHero");
+const endMuve = require("./duelsEngine/game/endMove/endMove");
 const processingBattlefieldSpell = require("./duelsEngine/game/processingBattlefieldSpell/processingBattlefieldSpell");
 
 const isDev = process.env.NODE_ENV === "development";

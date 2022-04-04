@@ -6,6 +6,7 @@ import {
   selectElements,
   selectForms,
   selectUserHealth,
+  selectUserMaxHealth,
 } from 'src/app/store/selectors/duels/users.selectors';
 import { AppState } from 'src/app/store/state/app.state';
 
@@ -25,7 +26,11 @@ export class BattlefieldUserComponent implements OnInit {
     });
 
     this.store.select(selectUserHealth).subscribe((state) => {
-      this.healthPercent = state + '%';
+      this.health = state;
+    });
+
+    this.store.select(selectUserMaxHealth).subscribe((state) => {
+      this.maxHealth = state;
     });
 
     this.store.select(selectForms).subscribe((state) => {
@@ -56,7 +61,8 @@ export class BattlefieldUserComponent implements OnInit {
     });
   }
 
-  healthPercent = '';
+  health = 0;
+  maxHealth = 0;
 
   firstForm = '';
   firstFormInRussian = '';

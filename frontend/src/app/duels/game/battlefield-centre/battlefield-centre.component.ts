@@ -13,12 +13,14 @@ import {
   selectElement,
   selectForm,
 } from 'src/app/store/selectors/duels/currentSpell.selectors';
+import { selectMuve } from 'src/app/store/selectors/duels/generalInfo.selectors';
 import { selectSpellbook } from 'src/app/store/selectors/duels/spellbook.selectors';
 import {
   selectUserActionPoints,
   selectUserEnergyPoints,
 } from 'src/app/store/selectors/duels/users.selectors';
 import { AppState } from 'src/app/store/state/app.state';
+import { WebsocketService } from 'src/app/websocket.service';
 
 @Component({
   selector: 'app-battlefield-centre',
@@ -26,11 +28,16 @@ import { AppState } from 'src/app/store/state/app.state';
   styleUrls: ['./battlefield-centre.component.less'],
 })
 export class BattlefieldCentreComponent implements OnInit, AfterViewInit {
-  constructor(private store: Store<AppState>) {}
+  constructor(
+    private store: Store<AppState>,
+    private wssService: WebsocketService
+  ) {}
 
   @ViewChild('hint') hint!: ElementRef;
   @ViewChild('userSpell') userSpell!: ElementRef;
 
+  currentSpellForm = '';
+  currentSpellElement = '';
   russianNameSpell = '';
   spellDescription = '';
 
@@ -74,8 +81,6 @@ export class BattlefieldCentreComponent implements OnInit, AfterViewInit {
       this.actionPoints = state;
     });
 
-    let form = '';
-    let element = '';
     let spellbook: any;
 
     this.store.select(selectSpellbook).subscribe((state) => {
@@ -83,27 +88,80 @@ export class BattlefieldCentreComponent implements OnInit, AfterViewInit {
     });
 
     this.store.select(selectForm).subscribe((state) => {
-      form = state;
-      if (spellbook[element + form]) {
-        this.russianNameSpell = spellbook[element + form][0];
-        this.needActionPoints = spellbook[element + form][1];
-        this.needEnergyPoints = spellbook[element + form][2];
-        this.spellDescription = spellbook[element + form][3];
+      this.currentSpellForm = state;
+      if (spellbook[this.currentSpellElement + this.currentSpellForm]) {
+        this.russianNameSpell =
+          spellbook[this.currentSpellElement + this.currentSpellForm][0];
+        this.needActionPoints =
+          spellbook[this.currentSpellElement + this.currentSpellForm][1];
+        this.needEnergyPoints =
+          spellbook[this.currentSpellElement + this.currentSpellForm][2];
+        this.spellDescription =
+          spellbook[this.currentSpellElement + this.currentSpellForm][3];
       }
     });
 
     this.store.select(selectElement).subscribe((state) => {
-      element = state;
-      if (spellbook[element + form]) {
-        this.russianNameSpell = spellbook[element + form][0];
-        this.needActionPoints = spellbook[element + form][1];
-        this.needEnergyPoints = spellbook[element + form][2];
-        this.spellDescription = spellbook[element + form][3];
+      this.currentSpellElement = state;
+      if (spellbook[this.currentSpellElement + this.currentSpellForm]) {
+        this.russianNameSpell =
+          spellbook[this.currentSpellElement + this.currentSpellForm][0];
+        this.needActionPoints =
+          spellbook[this.currentSpellElement + this.currentSpellForm][1];
+        this.needEnergyPoints =
+          spellbook[this.currentSpellElement + this.currentSpellForm][2];
+        this.spellDescription =
+          spellbook[this.currentSpellElement + this.currentSpellForm][3];
       }
     });
   }
 
   showEffects() {
     this.store.dispatch(showEffects());
+  }
+
+  activationSpell() {
+    if (!this.currentSpellElement && !this.currentSpellForm) return;
+
+    let spell = this.currentSpellElement + this.currentSpellForm;
+
+    switch (spell) {
+      case 'firespear':
+      case 'firestamp':
+      case 'fireflow':
+      case 'waterspear':
+      case 'waterflow':
+      case 'earthspear':
+      case 'earthflow':
+      case 'airspear':
+      case 'airflow':
+      case 'lifecrown':
+      case 'lifesource':
+      case 'deathcrown':
+      case 'deathsource':
+        this.sendSpell(spell);
+        break;
+    }
+  }
+
+  sendSpell(spellName: string) {
+    let gameInformation = { header: 'spell', spell: spellName };
+    this.wssService.sendMessage(gameInformation);
+  }
+
+  isUserMove() {
+    let gameMove;
+    this.store.select(selectMuve).subscribe((move) => {
+      gameMove = move;
+    });
+    if (gameMove === 'user') return true;
+    return false;
+  }
+
+  endMove() {
+    if (!this.isUserMove()) return;
+
+    let gameInformation = { header: 'endMove' };
+    this.wssService.sendMessage(gameInformation);
   }
 }

@@ -46,10 +46,10 @@ const initialState: UsersState = {
     name: '',
     id: randomString(),
     enemyType: '',
-    actionPoints: 5,
-    energyPoints: 5,
-    health: 100,
-    maxHealth: 100,
+    actionPoints: 0,
+    energyPoints: 0,
+    health: 0,
+    maxHealth: 0,
     forms: [],
     elements: [],
     buffs: [],
@@ -57,10 +57,10 @@ const initialState: UsersState = {
   },
   enemy: {
     name: '',
-    health: 100,
-    maxHealth: 100,
-    actionPoints: 5,
-    energyPoints: 5,
+    health: 0,
+    maxHealth: 0,
+    actionPoints: 0,
+    energyPoints: 0,
     buffs: [],
     debuffs: [],
   },
@@ -120,20 +120,20 @@ export const reducer = createReducer(
     ...state,
     enemy: { ...state.enemy, energyPoints: points },
   })),
-  on(Users.increaseUserHealth, (state, { points }) => ({
+  on(Users.setUserHealth, (state, { health }) => ({
     ...state,
-    user: { ...state.user, health: state.user.health + points },
+    user: { ...state.user, health: health },
   })),
-  on(Users.decreaseUserHealth, (state, { points }) => ({
+  on(Users.setEnemyHealth, (state, { health }) => ({
     ...state,
-    user: { ...state.user, health: state.user.health - points },
+    enemy: { ...state.enemy, health: health },
   })),
-  on(Users.increaseEnemyHealth, (state, { points }) => ({
+  on(Users.setUserMaxHealth, (state, { health }) => ({
     ...state,
-    enemy: { ...state.enemy, health: state.enemy.health + points },
+    user: { ...state.user, maxHealth: health },
   })),
-  on(Users.decreaseEnemyHealth, (state, { points }) => ({
+  on(Users.setEnemyMaxHealth, (state, { health }) => ({
     ...state,
-    enemy: { ...state.enemy, health: state.enemy.health - points },
+    enemy: { ...state.enemy, maxHealth: health },
   }))
 );

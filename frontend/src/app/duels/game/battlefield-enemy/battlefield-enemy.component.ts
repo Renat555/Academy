@@ -3,6 +3,8 @@ import { Store } from '@ngrx/store';
 import {
   selectEnemyActionPoints,
   selectEnemyEnergyPoints,
+  selectEnemyHealth,
+  selectEnemyMaxHealth,
   selectEnemyName,
 } from 'src/app/store/selectors/duels/users.selectors';
 import { AppState } from 'src/app/store/state/app.state';
@@ -27,9 +29,18 @@ export class BattlefieldEnemyComponent implements OnInit {
     this.store.select(selectEnemyEnergyPoints).subscribe((energyPoints) => {
       this.energyPoints = energyPoints;
     });
+
+    this.store.select(selectEnemyHealth).subscribe((state) => {
+      this.health = state;
+    });
+
+    this.store.select(selectEnemyMaxHealth).subscribe((state) => {
+      this.maxHealth = state;
+    });
   }
 
-  healthPercent = '100%';
+  health = 0;
+  maxHealth = 0;
 
   name = '';
 

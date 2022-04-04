@@ -13,10 +13,48 @@ import { setEnemy } from './store/actions/duels/map.actions';
 import {
   addEnemyName,
   changeEnemyActionPoints,
+  changeEnemyEnergyPoints,
   changeUserActionPoints,
+  changeUserEnergyPoints,
+  setEnemyHealth,
+  setEnemyMaxHealth,
+  setUserHealth,
+  setUserMaxHealth,
 } from './store/actions/duels/users.actions';
 import { selectMapEnemy } from './store/selectors/duels/map.selectors';
 import { AppState } from './store/state/app.state';
+import {
+  addDescriptionBlock,
+  addDescriptionRow,
+} from './store/actions/duels/description.actions';
+
+interface GameInformation {
+  header: string;
+  user: Player;
+  enemy: Player;
+}
+
+interface Player {
+  actionPoints: number;
+  energyPoints: number;
+  battlefield: [];
+  buffs: [];
+  debuffs: [];
+  elements: string[];
+  forms: string[];
+  enemyType: string;
+  health: number;
+  maxHealth: number;
+  id: string;
+  idGame: string;
+  muve: number;
+  name: string;
+  description: string;
+  position: {
+    user: number[][];
+    enemy: number[][];
+  };
+}
 
 @Injectable({
   providedIn: 'root',
@@ -27,30 +65,11 @@ export class WebsocketService {
 
     this.socket.subscribe((gameInformation) => {
       console.log(gameInformation);
+      this.loadGameInformation(gameInformation);
 
       if (gameInformation['header'] === 'createGame') {
-        this.store.dispatch(
-          addEnemyName({ name: gameInformation['enemy']['name'] })
-        );
-        if (gameInformation['enemy']['muve'] === 0) {
-          this.store.dispatch(userMuve());
-        } else {
-          this.store.dispatch(enemyMuve());
-        }
         this.store.dispatch(enemyCreated());
       } else if (gameInformation['header'] === 'playerMovement') {
-        this.store.dispatch(
-          changeUserActionPoints({
-            points: gameInformation['user']['actionPoints'],
-          })
-        );
-
-        this.store.dispatch(
-          changeEnemyActionPoints({
-            points: gameInformation['enemy']['actionPoints'],
-          })
-        );
-
         let enemyPath = gameInformation['user']['position']['enemy'];
 
         let enemyDestination = enemyPath[enemyPath.length - 1];
@@ -65,13 +84,49 @@ export class WebsocketService {
           enemyCurrentPosition === enemyDestination
         )
           return;
-        console.log('dispatch setEnemy');
 
         this.store.dispatch(
           setEnemy({ row: enemyDestination[0], col: enemyDestination[1] })
         );
+      } else if (gameInformation['header'] === 'changeMuve') {
+        this.store.dispatch(
+          addDescriptionBlock({ description: 'Следующий ход ' })
+        );
       }
     });
+  }
+
+  loadGameInformation(info: GameInformation) {
+    if (info['user']['muve'] === 0) {
+      this.store.dispatch(enemyMuve());
+    } else {
+      this.store.dispatch(userMuve());
+    }
+
+    this.store.dispatch(
+      changeEnemyActionPoints({ points: info['enemy']['actionPoints'] })
+    );
+    this.store.dispatch(
+      changeEnemyEnergyPoints({ points: info['enemy']['energyPoints'] })
+    );
+    this.store.dispatch(
+      changeUserActionPoints({ points: info['user']['actionPoints'] })
+    );
+    this.store.dispatch(
+      changeUserEnergyPoints({ points: info['user']['energyPoints'] })
+    );
+    this.store.dispatch(setUserHealth({ health: info['user']['health'] }));
+    this.store.dispatch(setEnemyHealth({ health: info['enemy']['health'] }));
+    this.store.dispatch(
+      setUserMaxHealth({ health: info['user']['maxHealth'] })
+    );
+    this.store.dispatch(
+      setEnemyMaxHealth({ health: info['enemy']['maxHealth'] })
+    );
+    this.store.dispatch(addEnemyName({ name: info['enemy']['name'] }));
+    this.store.dispatch(
+      addDescriptionRow({ description: info['user']['description'] })
+    );
   }
 
   socket: WebSocketSubject<any>;

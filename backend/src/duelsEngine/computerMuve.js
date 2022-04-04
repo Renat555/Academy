@@ -1,4 +1,4 @@
-const endMuve = require("./game/endMuve/endMuve");
+const endMuve = require("./game/endMove/endMove");
 const processingSpell = require("./game/processingSpell/processingSpell");
 
 function computerMuve(collection, ws, wss) {
