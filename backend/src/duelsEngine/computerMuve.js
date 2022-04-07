@@ -22,7 +22,6 @@ function computerMuve(collection, ws, wss) {
           endMuve(collection, ws, wss);
         }, 2000);
       } else {
-        console.log("firespear", player["health"]);
         setTimeout(() => {
           processingSpell("firespear", collection, ws, wss);
 

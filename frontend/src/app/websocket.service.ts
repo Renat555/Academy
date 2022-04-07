@@ -90,7 +90,9 @@ export class WebsocketService {
         );
       } else if (gameInformation['header'] === 'changeMuve') {
         this.store.dispatch(
-          addDescriptionBlock({ description: 'Следующий ход ' })
+          addDescriptionBlock({
+            description: 'Следующий ход \u269C \u269C \u269C \u269C \u269C',
+          })
         );
       }
     });
@@ -124,9 +126,11 @@ export class WebsocketService {
       setEnemyMaxHealth({ health: info['enemy']['maxHealth'] })
     );
     this.store.dispatch(addEnemyName({ name: info['enemy']['name'] }));
-    this.store.dispatch(
-      addDescriptionRow({ description: info['user']['description'] })
-    );
+    if (info['user']['description']) {
+      this.store.dispatch(
+        addDescriptionRow({ description: info['user']['description'] })
+      );
+    }
   }
 
   socket: WebSocketSubject<any>;

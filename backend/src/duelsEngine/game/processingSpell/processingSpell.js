@@ -11,7 +11,7 @@ function processingSpell(spellName, collection, ws, wss) {
     let { user, enemy } = result;
     let spell = createSpell(spellName);
 
-    if (ws["enemyType"] == "computer" && ws["muve"] == "0") {
+    if (ws["enemyType"] == "AI" && ws["muve"] == "0") {
       applyUserEffectsOnSpell(spell, enemy, user);
       applyEnemyEffectsOnSpell(spell, enemy, user);
       applySpell(spell, enemy, user);

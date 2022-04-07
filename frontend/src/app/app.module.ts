@@ -9,7 +9,7 @@ import { StoreModule } from '@ngrx/store';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { reducers } from './store';
 import { MenuComponent } from './menu/menu.component';
-import { HintComponent } from './common/hint/hint.component';
+import { MessageComponent } from './common/message/message.component';
 import { IntuitionFiguresComponent } from './intuition/intuition-figures/intuition-figures.component';
 import { ScaleComponent } from './common/scale/scale.component';
 import { ArenaComponent } from './arena/arena.component';
@@ -61,7 +61,7 @@ import { DuelsHealthComponent } from './duels/common/duels-health/duels-health.c
     ArenaComponent,
     HealthComponent,
     MenuComponent,
-    HintComponent,
+    MessageComponent,
     IntuitionComponent,
     IntuitionFiguresComponent,
     ScaleComponent,

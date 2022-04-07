@@ -1,5 +1,13 @@
-<div class="effects" *ngIf="isEffectsShow">
+<div class="messege" *ngIf="isEffectsShow">
   <app-effects></app-effects>
+</div>
+
+<div class="messege" *ngIf="isEndGameMessageShown">
+  <app-message
+    [isCross]="true"
+    [text]="textForEndGame"
+    (closeHint)="closeEndGameMessage()"
+  ></app-message>
 </div>
 
 <div class="background">

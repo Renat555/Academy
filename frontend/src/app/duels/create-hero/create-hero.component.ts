@@ -68,7 +68,7 @@ export class CreateHeroComponent implements OnInit {
   isFormNineSelected = false;
 
   textHint = '';
-  isHintHide = true;
+  isHintShown = false;
 
   userName = '';
 
@@ -203,7 +203,7 @@ export class CreateHeroComponent implements OnInit {
   }
 
   closeHint() {
-    this.isHintHide = true;
+    this.isHintShown = false;
   }
 
   goToHall() {
@@ -228,10 +228,10 @@ export class CreateHeroComponent implements OnInit {
 
     if (elements.length < 3) {
       this.textHint = 'Выберите три стихии.';
-      this.isHintHide = false;
+      this.isHintShown = true;
     } else if (forms.length < 5) {
       this.textHint = 'Выберите пять форм';
-      this.isHintHide = false;
+      this.isHintShown = true;
     } else {
       this.store.dispatch(addUserName({ name: this.userName }));
       this.router.navigate(['duels/wait']);

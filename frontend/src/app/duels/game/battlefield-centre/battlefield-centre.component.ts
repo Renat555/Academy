@@ -123,6 +123,12 @@ export class BattlefieldCentreComponent implements OnInit, AfterViewInit {
   activationSpell() {
     if (!this.currentSpellElement && !this.currentSpellForm) return;
 
+    if (
+      this.needEnergyPoints > this.energyPoints ||
+      this.needActionPoints > this.actionPoints
+    )
+      return;
+
     let spell = this.currentSpellElement + this.currentSpellForm;
 
     switch (spell) {

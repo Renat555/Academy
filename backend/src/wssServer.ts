@@ -5,6 +5,8 @@ import createGameWithComputer = require("./duelsEngine/createGame/createGameWith
 import createGameWithHuman = require("./duelsEngine/createGame/createGameWithHuman");
 import endMove = require("./duelsEngine/game/endMove/endMove");
 import processingSpell = require("./duelsEngine/game/processingSpell/processingSpell");
+import { gameOver } from "./duelsEngine/gameOver";
+import computerMuve = require("./duelsEngine/computerMuve");
 const playerMovement = require("./duelsEngine/game/processingMove/moveHero");
 
 let urlMongo;
@@ -25,12 +27,15 @@ mongoClient.connect(function (err, client) {
   wss.on("connection", function connection(ws) {
     ws.on("message", function (message) {
       let request = JSON.parse(message.toString());
-      console.log(request);
+      //console.log(request);
 
       switch (request["header"]) {
         case "createGame":
           if (request["user"]["enemyType"] === "AI") {
             createGameWithComputer(request["user"], collection, ws);
+            setTimeout(() => {
+              computerMuve(collection, ws, wss);
+            }, 2000);
           } else if (request["user"]["enemyType"] === "human") {
             createGameWithHuman(request["user"], collection, ws, wss);
           }
@@ -43,28 +48,18 @@ mongoClient.connect(function (err, client) {
           break;
         case "endMove":
           endMove(collection, ws, wss);
+          setTimeout(() => {
+            computerMuve(collection, ws, wss);
+          }, 2000);
+          break;
+        case "gameOver":
+          gameOver(collection, ws, wss);
           break;
       }
     });
 
     ws.on("close", function close(event, message) {
-      //console.log(message);
-      // if (message == "gameOver") {
-      //   collection.deleteOne({ id: ws["id"] });
-      //   if (ws["enemyType"] == "computer") {
-      //     collection.deleteOne({ id: ws["idEnemy"] });
-      //   }
-      // }
-      // collection.deleteOne({ id: ws["id"] }, function (err, doc) {
-      //   if (ws["enemyType"] == "computer") {
-      //     collection.deleteOne({ id: ws["idEnemy"] });
-      //   }
-      //   wss.clients.forEach(function each(client) {
-      //     if (client.readyState == 1 && client["id"] == ws["idEnemy"]) {
-      //       client.send(JSON.stringify({ header: "enemyIsLeft" }));
-      //     }
-      //   });
-      // });
+      gameOver(collection, ws, wss);
     });
   });
 

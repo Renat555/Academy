@@ -17,5 +17,5 @@ export class DescriptionComponent implements OnInit {
     });
   }
 
-  description = '';
+  description: string[][] = [];
 }

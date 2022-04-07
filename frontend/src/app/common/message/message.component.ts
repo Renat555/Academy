@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: 'app-hint',
-  templateUrl: './hint.component.html',
-  styleUrls: ['./hint.component.less'],
+  selector: 'app-message',
+  templateUrl: './message.component.html',
+  styleUrls: ['./message.component.less'],
 })
-export class HintComponent {
+export class MessageComponent {
   constructor() {
     this.isCross = false;
   }

@@ -12,7 +12,7 @@ function endMove(collection, ws, wss) {
     applyEffectsToOthers(user, enemy);
     activationEffectsAtEndMuve(user, enemy);
 
-    if (ws["enemyType"] == "computer" && ws["muve"] == 0) {
+    if (ws["enemyType"] == "AI" && ws["muve"] == 0) {
       ws["muve"] = 1;
       user["muve"] = 1;
       enemy["muve"] = 0;

@@ -1,1 +1,5 @@
-<div class="description">{{ description }}</div>
+<div class="description">
+  <div *ngFor="let item of description">
+    <div *ngFor="let row of item">{{ row }}</div>
+  </div>
+</div>

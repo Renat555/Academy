@@ -1,12 +1,12 @@
 <div class="exit" (click)="goToHall()"></div>
 
-<div class="hintContainer" [hidden]="isHintHide">
-  <div #hint class="hint">
-    <app-hint
+<div class="hintContainer" *ngIf="isHintShown">
+  <div>
+    <app-message
       [text]="textHint"
       [isCross]="true"
       (closeHint)="closeHint()"
-    ></app-hint>
+    ></app-message>
   </div>
 </div>
 
