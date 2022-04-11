@@ -7,6 +7,7 @@ import endMove = require("./duelsEngine/game/endMove/endMove");
 import processingSpell = require("./duelsEngine/game/processingSpell/processingSpell");
 import { gameOver } from "./duelsEngine/gameOver";
 import computerMuve = require("./duelsEngine/computerMuve");
+import processingEffect = require("./duelsEngine/game/processingEffect/processingEffect");
 const playerMovement = require("./duelsEngine/game/processingMove/moveHero");
 
 let urlMongo;
@@ -35,7 +36,7 @@ mongoClient.connect(function (err, client) {
             createGameWithComputer(request["user"], collection, ws);
             setTimeout(() => {
               computerMuve(collection, ws, wss);
-            }, 2000);
+            }, 1000);
           } else if (request["user"]["enemyType"] === "human") {
             createGameWithHuman(request["user"], collection, ws, wss);
           }
@@ -46,11 +47,14 @@ mongoClient.connect(function (err, client) {
         case "spell":
           processingSpell(request["spell"], collection, ws, wss);
           break;
+        case "effect":
+          processingEffect(request, collection, ws, wss);
+          break;
         case "endMove":
           endMove(collection, ws, wss);
           setTimeout(() => {
             computerMuve(collection, ws, wss);
-          }, 2000);
+          }, 1000);
           break;
         case "gameOver":
           gameOver(collection, ws, wss);

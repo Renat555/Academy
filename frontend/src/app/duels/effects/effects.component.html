@@ -1,7 +1,29 @@
+<div class="effectHint" #hint [hidden]="isHintHidden">
+  <app-message [text]="hintText"></app-message>
+</div>
+
 <div class="effects">
   <div class="close" (click)="hideEffects()"></div>
   <h3>Эффекты наложенные на вас.</h3>
-  <div class="effect" *ngFor="let effect of userEffects">{{ effect }}</div>
+  <div
+    class="effect"
+    *ngFor="let effect of userEffects"
+    (mouseenter)="showHint($event)"
+    (mouseleave)="hideHint()"
+    attr.data-spell="{{ effect.name }}"
+    attr.data-duration="{{ effect.duration }}"
+  >
+    {{ effect.russianName }}
+  </div>
   <h3>Эффекты наложенные на противника.</h3>
-  <div class="effect" *ngFor="let effect of enemyEffects">{{ effect }}</div>
+  <div
+    class="effect"
+    *ngFor="let effect of enemyEffects"
+    (mouseenter)="showHint($event)"
+    (mouseleave)="hideHint()"
+    attr.data-spell="{{ effect.name }}"
+    attr.data-duration="{{ effect.duration }}"
+  >
+    {{ effect.russianName }}
+  </div>
 </div>

@@ -8,10 +8,10 @@ export enum chooseActions {
 }
 
 export enum effectsActions {
-  addUserBuff = '[effect] addUserBuff',
-  addUserDebuff = '[effect] addUserDebuff',
-  addEnemyBuff = '[effect] addEnemyBuff',
-  addEnemyDebuff = '[effect] addEnemyDebuff',
+  setUserBuffs = '[effect] setUserBuffs',
+  setUserDebuffs = '[effect] setUserDebuffs',
+  setEnemyBuffs = '[effect] setEnemyBuffs',
+  setEnemyDebuffs = '[effect] setEnemyDebuffs',
 }
 
 export enum nameActions {
@@ -66,24 +66,24 @@ export const addEnemyName = createAction(
   props<{ name: string }>()
 );
 
-export const addUserBuff = createAction(
-  effectsActions.addUserBuff,
-  props<{ effect: string }>()
+export const setUserBuffs = createAction(
+  effectsActions.setUserBuffs,
+  props<{ userBuffs: [string, number][] }>()
 );
 
-export const addUserDebuff = createAction(
-  effectsActions.addUserDebuff,
-  props<{ effect: string }>()
+export const setUserDebuffs = createAction(
+  effectsActions.setUserDebuffs,
+  props<{ userDebuffs: [string, number][] }>()
 );
 
-export const addEnemyBuff = createAction(
-  effectsActions.addEnemyBuff,
-  props<{ effect: string }>()
+export const setEnemyBuffs = createAction(
+  effectsActions.setEnemyBuffs,
+  props<{ enemyBuffs: [string, number][] }>()
 );
 
-export const addEnemyDebuff = createAction(
-  effectsActions.addEnemyDebuff,
-  props<{ effect: string }>()
+export const setEnemyDebuffs = createAction(
+  effectsActions.setEnemyDebuffs,
+  props<{ enemyDebuffs: [string, number][] }>()
 );
 
 export const changeUserActionPoints = createAction(

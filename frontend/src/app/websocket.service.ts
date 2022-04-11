@@ -16,8 +16,12 @@ import {
   changeEnemyEnergyPoints,
   changeUserActionPoints,
   changeUserEnergyPoints,
+  setEnemyBuffs,
+  setEnemyDebuffs,
   setEnemyHealth,
   setEnemyMaxHealth,
+  setUserBuffs,
+  setUserDebuffs,
   setUserHealth,
   setUserMaxHealth,
 } from './store/actions/duels/users.actions';
@@ -126,6 +130,14 @@ export class WebsocketService {
       setEnemyMaxHealth({ health: info['enemy']['maxHealth'] })
     );
     this.store.dispatch(addEnemyName({ name: info['enemy']['name'] }));
+    this.store.dispatch(setUserBuffs({ userBuffs: info['user']['buffs'] }));
+    this.store.dispatch(
+      setUserDebuffs({ userDebuffs: info['user']['debuffs'] })
+    );
+    this.store.dispatch(setEnemyBuffs({ enemyBuffs: info['enemy']['buffs'] }));
+    this.store.dispatch(
+      setEnemyDebuffs({ enemyDebuffs: info['enemy']['debuffs'] })
+    );
     if (info['user']['description']) {
       this.store.dispatch(
         addDescriptionRow({ description: info['user']['description'] })

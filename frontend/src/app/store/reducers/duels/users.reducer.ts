@@ -22,8 +22,8 @@ interface UserState {
   maxHealth: number;
   forms: string[];
   elements: string[];
-  buffs: string[];
-  debuffs: string[];
+  buffs: { name: string; duration: number }[];
+  debuffs: { name: string; duration: number }[];
 }
 
 interface EnemyState {
@@ -32,8 +32,8 @@ interface EnemyState {
   maxHealth: number;
   actionPoints: number;
   energyPoints: number;
-  buffs: string[];
-  debuffs: string[];
+  buffs: { name: string; duration: number }[];
+  debuffs: { name: string; duration: number }[];
 }
 
 export interface UsersState {
@@ -135,5 +135,41 @@ export const reducer = createReducer(
   on(Users.setEnemyMaxHealth, (state, { health }) => ({
     ...state,
     enemy: { ...state.enemy, maxHealth: health },
-  }))
+  })),
+  on(Users.setUserBuffs, (state, { userBuffs }) => {
+    let newBuffs: { name: string; duration: number }[] = [];
+    for (let i = 0; i < userBuffs.length; i++) {
+      newBuffs[i] = { name: '', duration: 0 };
+      newBuffs[i]['name'] = userBuffs[i][0];
+      newBuffs[i]['duration'] = userBuffs[i][1];
+    }
+    return { ...state, user: { ...state.user, buffs: newBuffs } };
+  }),
+  on(Users.setUserDebuffs, (state, { userDebuffs }) => {
+    let newDebuffs: { name: string; duration: number }[] = [];
+    for (let i = 0; i < userDebuffs.length; i++) {
+      newDebuffs[i] = { name: '', duration: 0 };
+      newDebuffs[i]['name'] = userDebuffs[i][0];
+      newDebuffs[i]['duration'] = userDebuffs[i][1];
+    }
+    return { ...state, user: { ...state.user, debuffs: newDebuffs } };
+  }),
+  on(Users.setEnemyBuffs, (state, { enemyBuffs }) => {
+    let newBuffs: { name: string; duration: number }[] = [];
+    for (let i = 0; i < enemyBuffs.length; i++) {
+      newBuffs[i] = { name: '', duration: 0 };
+      newBuffs[i]['name'] = enemyBuffs[i][0];
+      newBuffs[i]['duration'] = enemyBuffs[i][1];
+    }
+    return { ...state, enemy: { ...state.enemy, buffs: newBuffs } };
+  }),
+  on(Users.setEnemyDebuffs, (state, { enemyDebuffs }) => {
+    let newDebuffs: { name: string; duration: number }[] = [];
+    for (let i = 0; i < enemyDebuffs.length; i++) {
+      newDebuffs[i] = { name: '', duration: 0 };
+      newDebuffs[i]['name'] = enemyDebuffs[i][0];
+      newDebuffs[i]['duration'] = enemyDebuffs[i][1];
+    }
+    return { ...state, enemy: { ...state.enemy, debuffs: newDebuffs } };
+  })
 );

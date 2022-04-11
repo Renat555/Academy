@@ -147,11 +147,50 @@ export class BattlefieldCentreComponent implements OnInit, AfterViewInit {
       case 'deathsource':
         this.sendSpell(spell);
         break;
+      case 'fireshild':
+      case 'firecrown':
+      case 'firesource':
+      case 'firesphere':
+      case 'firepower':
+      case 'watershild':
+      case 'watercrown':
+      case 'watersphere':
+      case 'waterstamp':
+      case 'waterpower':
+      case 'earthshild':
+      case 'earthcrown':
+      case 'earthsource':
+      case 'earthsphere':
+      case 'earthstamp':
+      case 'earthpower':
+      case 'airshild':
+      case 'aircrown':
+      case 'airsource':
+      case 'airsphere':
+      case 'airstamp':
+      case 'airpower':
+      case 'lifeshild':
+      case 'lifesphere':
+      case 'lifestamp':
+      case 'lifeflow':
+      case 'lifepower':
+      case 'deathshild':
+      case 'deathsphere':
+      case 'deathstamp':
+      case 'deathkey':
+      case 'deathflow':
+        this.sendEffect(spell);
+        break;
     }
   }
 
   sendSpell(spellName: string) {
     let gameInformation = { header: 'spell', spell: spellName };
+    this.wssService.sendMessage(gameInformation);
+  }
+
+  sendEffect(effectName: string) {
+    let gameInformation = { header: 'effect', spell: effectName };
     this.wssService.sendMessage(gameInformation);
   }
 

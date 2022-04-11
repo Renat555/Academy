@@ -6,6 +6,7 @@ function computerMuve(collection, ws, wss) {
 
   collection.findOne({ id: ws["id"] }).then((result) => {
     player = result;
+    if (player["enemyType"] !== "AI") return;
     collection.findOne({ id: ws["idEnemy"] }, (err, doc) => {
       computer = doc;
       if (player == null || computer == null) {
