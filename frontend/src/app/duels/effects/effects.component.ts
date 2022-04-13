@@ -27,6 +27,14 @@ export class EffectsComponent implements OnInit {
 
   @ViewChild('hint') hint!: ElementRef;
 
+  hintText = '';
+  isHintHidden = true;
+
+  spellBook: SpellbookState = {};
+
+  userEffects: { name: string; russianName: string; duration: number }[] = [];
+  enemyEffects: { name: string; russianName: string; duration: number }[] = [];
+
   ngOnInit(): void {
     this.store.select(selectSpellbook).subscribe((state) => {
       this.spellBook = state;
@@ -36,7 +44,7 @@ export class EffectsComponent implements OnInit {
       for (let i = 0; i < effects.length; i++) {
         this.userEffects[i] = {
           name: effects[i]['name'],
-          russianName: this.spellBook[effects[i]['name']][0],
+          russianName: this.spellBook[effects[i]['name']]['russianName'],
           duration: effects[i]['duration'],
         };
       }
@@ -46,7 +54,7 @@ export class EffectsComponent implements OnInit {
       for (let i = 0; i < effects.length; i++) {
         this.enemyEffects[i] = {
           name: effects[i]['name'],
-          russianName: this.spellBook[effects[i]['name']][0],
+          russianName: this.spellBook[effects[i]['name']]['russianName'],
           duration: effects[i]['duration'],
         };
       }
@@ -72,7 +80,7 @@ export class EffectsComponent implements OnInit {
     let spellDuration = divEffect.dataset.duration;
 
     this.hintText =
-      this.spellBook[spellName!][3] + ' Осталось ходов ' + spellDuration;
+      this.spellBook[spellName!]['description'] + ' Осталось ходов ' + spellDuration;
 
     this.render.setStyle(divHint, 'top', divEffect.offsetTop + 70 + 'px');
     this.render.setStyle(divHint, 'left', coordEffect.left - 310 + 'px');
@@ -82,13 +90,7 @@ export class EffectsComponent implements OnInit {
     this.isHintHidden = true;
   }
 
-  hintText = '';
-  isHintHidden = true;
-
-  spellBook: SpellbookState = {};
-
-  userEffects: { name: string; russianName: string; duration: number }[] = [];
-  enemyEffects: { name: string; russianName: string; duration: number }[] = [];
+  
 
   hideEffects() {
     this.store.dispatch(hideEffects());

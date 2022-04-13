@@ -29,7 +29,7 @@ export interface AppState {
   duels: {
     users: UsersState;
     effectsWindow: EffectsWindowState;
-    muve: GeneralInfoState;
+    move: GeneralInfoState;
     currentSpell: CurrentSpellState;
     description: DescriptionState;
     dictionary: DictionaryState;

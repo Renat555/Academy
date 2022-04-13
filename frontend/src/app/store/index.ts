@@ -18,7 +18,7 @@ import * as ArenaToolbar from './reducers/arena/toolbar.reducer';
 const duelsReducers = combineReducers({
   users: Users.reducer,
   effectsWindow: EffectsWindow.reducer,
-  muve: GeneralInfo.reducer,
+  move: GeneralInfo.reducer,
   currentSpell: CurrentSpell.reducer,
   description: Description.reducer,
   dictionary: Dictionary.reducer,
@@ -51,7 +51,7 @@ export interface State {
   duels: {
     users: Users.UsersState;
     effectsWindow: EffectsWindow.EffectsWindowState;
-    muve: GeneralInfo.GeneralInfoState;
+    move: GeneralInfo.GeneralInfoState;
     currentSpell: CurrentSpell.CurrentSpellState;
     description: Description.DescriptionState;
     dictionary: Dictionary.DictionaryState;

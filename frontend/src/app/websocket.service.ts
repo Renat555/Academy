@@ -6,8 +6,8 @@ import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { environment } from 'src/environments/environment';
 import {
   enemyCreated,
-  enemyMuve,
-  userMuve,
+  enemyMove,
+  userMove,
 } from './store/actions/duels/generalInfo.actions';
 import { setEnemy } from './store/actions/duels/map.actions';
 import {
@@ -104,9 +104,9 @@ export class WebsocketService {
 
   loadGameInformation(info: GameInformation) {
     if (info['user']['muve'] === 0) {
-      this.store.dispatch(enemyMuve());
+      this.store.dispatch(enemyMove());
     } else {
-      this.store.dispatch(userMuve());
+      this.store.dispatch(userMove());
     }
 
     this.store.dispatch(

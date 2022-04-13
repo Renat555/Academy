@@ -1,8 +1,8 @@
 import { createAction } from '@ngrx/store';
 
-export enum muveActions {
-  userMuve = '[muve] userMuve',
-  enemyMuve = '[muve] enemyMuve',
+export enum moveActions {
+  userMove = '[muve] userMove',
+  enemyMove = '[muve] enemyMove',
 }
 
 export enum EnemyTypeActions {
@@ -15,8 +15,8 @@ export enum EnemyCreatingActions {
   enemyNotCreated = '[enemyNotCreated] enemyNotCreated',
 }
 
-export const userMuve = createAction(muveActions.userMuve);
-export const enemyMuve = createAction(muveActions.enemyMuve);
+export const userMove = createAction(moveActions.userMove);
+export const enemyMove = createAction(moveActions.enemyMove);
 
 export const humanEnemy = createAction(EnemyTypeActions.human);
 export const AIEnemy = createAction(EnemyTypeActions.AI);

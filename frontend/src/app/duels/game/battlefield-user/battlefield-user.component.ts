@@ -25,39 +25,39 @@ export class BattlefieldUserComponent implements OnInit {
       dictionary = state;
     });
 
-    this.store.select(selectUserHealth).subscribe((state) => {
-      this.health = state;
+    this.store.select(selectUserHealth).subscribe((userHealth) => {
+      this.health = userHealth;
     });
 
-    this.store.select(selectUserMaxHealth).subscribe((state) => {
-      this.maxHealth = state;
+    this.store.select(selectUserMaxHealth).subscribe((userMaxHealth) => {
+      this.maxHealth = userMaxHealth;
     });
 
-    this.store.select(selectForms).subscribe((state) => {
-      this.firstForm = state[0];
-      this.secondForm = state[1];
-      this.thirdForm = state[2];
-      this.fourthForm = state[3];
-      this.fifthForm = state[4];
+    this.store.select(selectForms).subscribe((forms) => {
+      this.firstForm = forms[0];
+      this.secondForm = forms[1];
+      this.thirdForm = forms[2];
+      this.fourthForm = forms[3];
+      this.fifthForm = forms[4];
 
-      this.firstFormInRussian = dictionary[state[0] as keyof DictionaryState];
-      this.secondFormInRussian = dictionary[state[1] as keyof DictionaryState];
-      this.thirdFormInRussian = dictionary[state[2] as keyof DictionaryState];
-      this.fourthFormInRussian = dictionary[state[3] as keyof DictionaryState];
-      this.fifthFormInRussian = dictionary[state[4] as keyof DictionaryState];
+      this.firstFormRussianName = dictionary[forms[0] as keyof DictionaryState];
+      this.secondFormRussianName = dictionary[forms[1] as keyof DictionaryState];
+      this.thirdFormRussianName = dictionary[forms[2] as keyof DictionaryState];
+      this.fourthFormRussianName = dictionary[forms[3] as keyof DictionaryState];
+      this.fifthFormRussianName = dictionary[forms[4] as keyof DictionaryState];
     });
 
-    this.store.select(selectElements).subscribe((state) => {
-      this.firstElement = state[0];
-      this.secondElement = state[1];
-      this.thirdElement = state[2];
+    this.store.select(selectElements).subscribe((elements) => {
+      this.firstElement = elements[0];
+      this.secondElement = elements[1];
+      this.thirdElement = elements[2];
 
-      this.firstElementInRussian =
-        dictionary[state[0] as keyof DictionaryState];
-      this.secondElementInRussian =
-        dictionary[state[1] as keyof DictionaryState];
-      this.thirdElementInRussian =
-        dictionary[state[2] as keyof DictionaryState];
+      this.firstElementRussianName =
+        dictionary[elements[0] as keyof DictionaryState];
+      this.secondElementRussianName =
+        dictionary[elements[1] as keyof DictionaryState];
+      this.thirdElementRussianName =
+        dictionary[elements[2] as keyof DictionaryState];
     });
   }
 
@@ -65,20 +65,20 @@ export class BattlefieldUserComponent implements OnInit {
   maxHealth = 0;
 
   firstForm = '';
-  firstFormInRussian = '';
+  firstFormRussianName = '';
   secondForm = '';
-  secondFormInRussian = '';
+  secondFormRussianName = '';
   thirdForm = '';
-  thirdFormInRussian = '';
+  thirdFormRussianName = '';
   fourthForm = '';
-  fourthFormInRussian = '';
+  fourthFormRussianName = '';
   fifthForm = '';
-  fifthFormInRussian = '';
+  fifthFormRussianName = '';
 
   firstElement = '';
-  firstElementInRussian = '';
+  firstElementRussianName = '';
   secondElement = '';
-  secondElementInRussian = '';
+  secondElementRussianName = '';
   thirdElement = '';
-  thirdElementInRussian = '';
+  thirdElementRussianName = '';
 }

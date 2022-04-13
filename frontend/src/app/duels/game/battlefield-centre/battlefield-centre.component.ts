@@ -9,6 +9,7 @@ import {
 import { Store } from '@ngrx/store';
 import { fromEvent } from 'rxjs';
 import { showEffects } from 'src/app/store/actions/duels/effectsWindow.actions';
+import { SpellbookState } from 'src/app/store/reducers/duels/spellBook.reducer';
 import {
   selectElement,
   selectForm,
@@ -36,6 +37,7 @@ export class BattlefieldCentreComponent implements OnInit, AfterViewInit {
   @ViewChild('hint') hint!: ElementRef;
   @ViewChild('userSpell') userSpell!: ElementRef;
 
+  spellBook: SpellbookState = {}
   currentSpellForm = '';
   currentSpellElement = '';
   russianNameSpell = '';
@@ -73,47 +75,40 @@ export class BattlefieldCentreComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.store.select(selectUserEnergyPoints).subscribe((state) => {
-      this.energyPoints = state;
+    this.store.select(selectUserEnergyPoints).subscribe((userEnergyPoints) => {
+      this.energyPoints = userEnergyPoints;
     });
 
-    this.store.select(selectUserActionPoints).subscribe((state) => {
-      this.actionPoints = state;
+    this.store.select(selectUserActionPoints).subscribe((userActionPoints) => {
+      this.actionPoints = userActionPoints;
     });
-
-    let spellbook: any;
 
     this.store.select(selectSpellbook).subscribe((state) => {
-      spellbook = state;
+      this.spellBook = state;
     });
 
     this.store.select(selectForm).subscribe((state) => {
       this.currentSpellForm = state;
-      if (spellbook[this.currentSpellElement + this.currentSpellForm]) {
-        this.russianNameSpell =
-          spellbook[this.currentSpellElement + this.currentSpellForm][0];
-        this.needActionPoints =
-          spellbook[this.currentSpellElement + this.currentSpellForm][1];
-        this.needEnergyPoints =
-          spellbook[this.currentSpellElement + this.currentSpellForm][2];
-        this.spellDescription =
-          spellbook[this.currentSpellElement + this.currentSpellForm][3];
-      }
+      this.createSpell();
     });
 
     this.store.select(selectElement).subscribe((state) => {
       this.currentSpellElement = state;
-      if (spellbook[this.currentSpellElement + this.currentSpellForm]) {
-        this.russianNameSpell =
-          spellbook[this.currentSpellElement + this.currentSpellForm][0];
-        this.needActionPoints =
-          spellbook[this.currentSpellElement + this.currentSpellForm][1];
-        this.needEnergyPoints =
-          spellbook[this.currentSpellElement + this.currentSpellForm][2];
-        this.spellDescription =
-          spellbook[this.currentSpellElement + this.currentSpellForm][3];
-      }
+      this.createSpell();
     });
+  }
+
+  createSpell() {
+    if (this.spellBook[this.currentSpellElement + this.currentSpellForm]) {
+      this.russianNameSpell =
+      this.spellBook[this.currentSpellElement + this.currentSpellForm]['russianName'];
+      this.needActionPoints =
+      this.spellBook[this.currentSpellElement + this.currentSpellForm]['actionPoints'];
+      this.needEnergyPoints =
+      this.spellBook[this.currentSpellElement + this.currentSpellForm]['energyPoints'];
+      this.spellDescription =
+      this.spellBook[this.currentSpellElement + this.currentSpellForm]['description'];
+    }
   }
 
   showEffects() {

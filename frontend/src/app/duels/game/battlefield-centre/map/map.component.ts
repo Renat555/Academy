@@ -315,14 +315,48 @@ export class MapComponent implements OnInit {
   stateUserSteps = '';
   stateEnemySteps = '';
 
-  moveUser(event: MouseEvent) {
+  isUserMove() {
     let move;
-
     this.store.select(selectMuve).subscribe((state) => {
       move = state;
     });
+    if (move !== 'user') return false;
+    return true;
+  }
 
-    if (move !== 'user') return;
+  userMoveAnimation() {
+    setTimeout(() => {
+      this.stateUserMoving = 'second';
+
+      let direction;
+
+      if (this.userTop1 < this.userTop2) {
+        direction = 'down';
+      } else {
+        direction = 'up';
+      }
+      this.makeUserSteps(this.userTimeVertical, direction);
+      setTimeout(() => {
+        this.stateUserMoving = 'third';
+
+        let direction;
+
+        if (this.userLeft2 < this.userLeft3) {
+          direction = 'right';
+        } else {
+          direction = 'left';
+        }
+        this.makeUserSteps(this.userTimeHorizontal, direction);
+
+        setTimeout(() => {
+          this.faceToEnemy();
+        }, this.userTimeHorizontal * 1020);
+      }, this.userTimeVertical * 1020);
+    }, 0);
+  }
+
+  moveUser(event: MouseEvent) {
+    if (!this.isUserMove()) return;
 
     let target = event.target as HTMLElement;
 
@@ -410,34 +444,7 @@ export class MapComponent implements OnInit {
 
     this.store.dispatch(setUser({ row: targetRow, col: targetCol }));
 
-    setTimeout(() => {
-      this.stateUserMoving = 'second';
-
-      let direction;
-
-      if (this.userTop1 < this.userTop2) {
-        direction = 'down';
-      } else {
-        direction = 'up';
-      }
-      this.makeUserSteps(this.userTimeVertical, direction);
-      setTimeout(() => {
-        this.stateUserMoving = 'third';
-
-        let direction;
-
-        if (this.userLeft2 < this.userLeft3) {
-          direction = 'right';
-        } else {
-          direction = 'left';
-        }
-        this.makeUserSteps(this.userTimeHorizontal, direction);
-
-        setTimeout(() => {
-          this.faceToEnemy();
-        }, this.userTimeHorizontal * 1020);
-      }, this.userTimeVertical * 1020);
-    }, 0);
+    this.userMoveAnimation();
   }
 
   makeUserSteps(time: number, direction: string) {
