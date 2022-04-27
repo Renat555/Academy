@@ -8,7 +8,7 @@ function createSpellNamesFromEffects(arrEffects) {
   return arrNames;
 }
 
-function savePlayers(user, enemy, mongoCollection, ws) {
+function saveUser(user, mongoCollection, ws) {
   return new Promise((resolve, reject) => {
     user["buffs"] = createSpellNamesFromEffects(user["buffs"]);
     user["debuffs"] = createSpellNamesFromEffects(user["debuffs"]);
@@ -29,9 +29,16 @@ function savePlayers(user, enemy, mongoCollection, ws) {
           debuffs: user["debuffs"],
           description: user["description"],
         },
+      },
+      (err, data) => {
+        resolve();
       }
     );
+  });
+}
 
+function saveEnemy(enemy, mongoCollection, ws) {
+  return new Promise((resolve, reject) => {
     enemy["buffs"] = createSpellNamesFromEffects(enemy["buffs"]);
     enemy["debuffs"] = createSpellNamesFromEffects(enemy["debuffs"]);
     mongoCollection.updateOne(
@@ -50,9 +57,19 @@ function savePlayers(user, enemy, mongoCollection, ws) {
           debuffs: enemy["debuffs"],
           description: enemy["description"],
         },
+      },
+      (err, data) => {
+        resolve();
       }
     );
-    resolve();
+  });
+}
+
+function savePlayers(user, enemy, mongoCollection, ws) {
+  return new Promise((resolve, reject) => {
+    saveUser(user, mongoCollection, ws)
+      .then((result) => saveEnemy(enemy, mongoCollection, ws))
+      .then((result) => resolve());
   });
 }
 

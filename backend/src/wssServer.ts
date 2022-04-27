@@ -28,7 +28,7 @@ mongoClient.connect(function (err, client) {
   wss.on("connection", function connection(ws) {
     ws.on("message", function (message) {
       let request = JSON.parse(message.toString());
-      //console.log(request);
+      console.log(request);
 
       switch (request["header"]) {
         case "createGame":
