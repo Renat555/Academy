@@ -13,3 +13,10 @@ export const selectElement = createSelector(
   currentSpell,
   (state: CurrentSpellState) => state.element
 );
+
+export const selectSpell = createSelector(
+  currentSpell,
+  (state: CurrentSpellState) => {
+    return state.element + state.form;
+  }
+)

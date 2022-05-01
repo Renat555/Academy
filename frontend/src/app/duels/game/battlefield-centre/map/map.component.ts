@@ -24,6 +24,11 @@ import { selectMuve } from 'src/app/store/selectors/duels/generalInfo.selectors'
 import { selectUserActionPoints } from 'src/app/store/selectors/duels/users.selectors';
 import { AppState } from 'src/app/store/state/app.state';
 import { WebsocketService } from 'src/app/websocket.service';
+import {
+  selectForm,
+  selectSpell,
+} from 'src/app/store/selectors/duels/currentSpell.selectors';
+import { fromEvent, Observable, Subscription } from 'rxjs';
 
 function isPathFree(
   map: string[][],
@@ -224,6 +229,7 @@ export class MapComponent implements OnInit {
     private wssService: WebsocketService
   ) {}
 
+  @ViewChild('battlefield') battlefield!: ElementRef;
   @ViewChild('user') user!: ElementRef;
   @ViewChild('enemy') enemy!: ElementRef;
   @ViewChild('r0c6') r0c6!: ElementRef;
@@ -276,17 +282,6 @@ export class MapComponent implements OnInit {
   @ViewChild('r6c1') r6c1!: ElementRef;
   @ViewChild('r6c0') r6c0!: ElementRef;
 
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.placeUser();
-      this.placeEnemy();
-
-      this.store.select(selectMapEnemy).subscribe((coord) => {
-        this.moveEnemy(coord);
-      });
-    }, 0);
-  }
-
   userTop = '';
   userLeft = '';
   enemyTop = '';
@@ -314,6 +309,108 @@ export class MapComponent implements OnInit {
 
   stateUserSteps = '';
   stateEnemySteps = '';
+
+  ngOnInit(): void {
+    setTimeout(() => {
+      this.store.select(selectSpell).subscribe((spell) => {
+        if (spell === 'earthshield') {
+          this.battlefield.nativeElement.removeEventListener(
+            'click',
+            this.moveUserBind
+          );
+          this.createEarthshield();
+        } else {
+          this.battlefield.nativeElement.addEventListener(
+            'click',
+            this.moveUserBind
+          );
+          this.cancelEarthshield();
+        }
+      });
+
+      this.placeUser();
+      this.placeEnemy();
+
+      this.store.select(selectMapEnemy).subscribe((coord) => {
+        this.moveEnemy(coord);
+      });
+    }, 0);
+  }
+
+  moveUserBind = this.moveUser.bind(this);
+
+  createEarthshield() {
+    let battlefield = this.battlefield.nativeElement;
+
+    battlefield.addEventListener('mouseover', this.placeEarthShieldBind);
+    battlefield.addEventListener('mouseout', this.removeEarthshieldBind);
+
+    battlefield.addEventListener('click', this.cancelEarthshieldBind);
+  }
+
+  placeEarthShieldBind = this.placeEarthShield.bind(this);
+
+  placeEarthShield(event: MouseEvent) {
+    let middleSquare = event.target as HTMLElement;
+
+    middleSquare.classList.add('earthshield');
+    middleSquare.style.opacity = '0.7';
+
+    let leftSquare = this.calculateSquare({
+      row: +middleSquare.dataset.row!,
+      col: +middleSquare.dataset.col! - 1,
+    });
+    if (leftSquare) {
+      leftSquare.classList.add('earthshield');
+      leftSquare.style.opacity = '0.7';
+    }
+
+    let rightSquare = this.calculateSquare({
+      row: +middleSquare.dataset.row!,
+      col: +middleSquare.dataset.col! + 1,
+    });
+    if (rightSquare) {
+      rightSquare.classList.add('earthshield');
+      rightSquare.style.opacity = '0.7';
+    }
+  }
+
+  removeEarthshieldBind = this.removeEarthshield.bind(this);
+
+  removeEarthshield(event: MouseEvent) {
+    let middleSquare = event.target as HTMLElement;
+    middleSquare.classList.remove('earthshield');
+    middleSquare.style.opacity = '1';
+
+    let leftSquare = this.calculateSquare({
+      row: +middleSquare.dataset.row!,
+      col: +middleSquare.dataset.col! - 1,
+    });
+    if (leftSquare) {
+      leftSquare.classList.remove('earthshield');
+      leftSquare.style.opacity = '1';
+    }
+
+    let rightSquare = this.calculateSquare({
+      row: +middleSquare.dataset.row!,
+      col: +middleSquare.dataset.col! + 1,
+    });
+    if (rightSquare) {
+      rightSquare.classList.remove('earthshield');
+      rightSquare.style.opacity = '1';
+    }
+  }
+
+  cancelEarthshieldBind = this.cancelEarthshield.bind(this);
+
+  cancelEarthshield() {
+    let battlefield = this.battlefield.nativeElement;
+
+    battlefield.removeEventListener('mouseover', this.placeEarthShieldBind);
+    battlefield.removeEventListener('mouseout', this.removeEarthshieldBind);
+
+    battlefield.addEventListener('click', this.moveUserBind);
+  }
 
   isUserMove() {
     let move;
