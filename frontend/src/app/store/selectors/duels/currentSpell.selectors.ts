@@ -20,3 +20,8 @@ export const selectSpell = createSelector(
     return state.element + state.form;
   }
 )
+
+export const selectDespell = createSelector(
+  currentSpell,
+  (state: CurrentSpellState) => state.despell
+)

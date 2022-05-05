@@ -108,6 +108,7 @@ export class EffectsComponent implements OnInit {
       for (let i = 0; i < dependenciens.length; i++) {
         if (effect === dependenciens[i]) {
           this.clearSelectedEffects();
+          console.log(effect, 'selected');
           target.classList.add('selected');
           this.store.dispatch(addDespell({ despell: effect }));
         }
@@ -116,6 +117,8 @@ export class EffectsComponent implements OnInit {
   }
 
   clearSelectedEffects() {
+    console.log('clear');
+    
     this.store.dispatch(deleteDespell());
 
     let userEffects = document.querySelectorAll('#userEffect');
@@ -125,8 +128,8 @@ export class EffectsComponent implements OnInit {
     }
 
     let enemyEffects = document.querySelectorAll('#enemyEffect');
-
-    for (let i = 0; i < userEffects.length; i++) {
+    
+    for (let i = 0; i < enemyEffects.length; i++) {
       enemyEffects[i].classList.remove('selected');
     }
   }

@@ -8,6 +8,7 @@ import processingSpell = require("./duelsEngine/game/processingSpell/processingS
 import { gameOver } from "./duelsEngine/gameOver";
 import computerMuve = require("./duelsEngine/computerMuve");
 import processingEffect = require("./duelsEngine/game/processingEffect/processingEffect");
+import processingDespell = require("./duelsEngine/game/processingDespell/processingDespell");
 const playerMovement = require("./duelsEngine/game/processingMove/moveHero");
 
 let urlMongo;
@@ -48,6 +49,7 @@ mongoClient.connect(function (err, client) {
           processingSpell(request["spell"], collection, ws, wss);
           break;
         case "despell":
+          processingDespell(request, collection, ws, wss);
           break;
         case "effect":
           processingEffect(request, collection, ws, wss);

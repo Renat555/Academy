@@ -11,6 +11,7 @@ import { fromEvent } from 'rxjs';
 import { showEffects } from 'src/app/store/actions/duels/effectsWindow.actions';
 import { SpellbookState } from 'src/app/store/reducers/duels/spellBook.reducer';
 import {
+  selectDespell,
   selectElement,
   selectForm,
 } from 'src/app/store/selectors/duels/currentSpell.selectors';
@@ -37,11 +38,12 @@ export class BattlefieldCentreComponent implements OnInit, AfterViewInit {
   @ViewChild('hint') hint!: ElementRef;
   @ViewChild('userSpell') userSpell!: ElementRef;
 
-  spellBook: SpellbookState = {}
+  spellBook: SpellbookState = {};
   currentSpellForm = '';
   currentSpellElement = '';
   russianNameSpell = '';
   spellDescription = '';
+  despell = '';
 
   energyPoints = 0;
   actionPoints = 0;
@@ -96,18 +98,30 @@ export class BattlefieldCentreComponent implements OnInit, AfterViewInit {
       this.currentSpellElement = state;
       this.createSpell();
     });
+
+    this.store.select(selectDespell).subscribe((state) => {
+      this.despell = state;
+    });
   }
 
   createSpell() {
     if (this.spellBook[this.currentSpellElement + this.currentSpellForm]) {
       this.russianNameSpell =
-      this.spellBook[this.currentSpellElement + this.currentSpellForm]['russianName'];
+        this.spellBook[this.currentSpellElement + this.currentSpellForm][
+          'russianName'
+        ];
       this.needActionPoints =
-      this.spellBook[this.currentSpellElement + this.currentSpellForm]['actionPoints'];
+        this.spellBook[this.currentSpellElement + this.currentSpellForm][
+          'actionPoints'
+        ];
       this.needEnergyPoints =
-      this.spellBook[this.currentSpellElement + this.currentSpellForm]['energyPoints'];
+        this.spellBook[this.currentSpellElement + this.currentSpellForm][
+          'energyPoints'
+        ];
       this.spellDescription =
-      this.spellBook[this.currentSpellElement + this.currentSpellForm]['description'];
+        this.spellBook[this.currentSpellElement + this.currentSpellForm][
+          'description'
+        ];
     }
   }
 
@@ -176,6 +190,17 @@ export class BattlefieldCentreComponent implements OnInit, AfterViewInit {
       case 'deathflow':
         this.sendEffect(spell);
         break;
+      case 'watersource':
+      case 'waterkey':
+      case 'earthkey':
+      case 'lifespear':
+      case 'lifekey':
+      case 'firekey':
+      case 'airkey':
+      case 'deathspear':
+      case 'deathpower':
+        this.sendDespell(spell);
+        break;
     }
   }
 
@@ -186,6 +211,17 @@ export class BattlefieldCentreComponent implements OnInit, AfterViewInit {
 
   sendEffect(effectName: string) {
     let gameInformation = { header: 'effect', spell: effectName };
+    this.wssService.sendMessage(gameInformation);
+  }
+
+  sendDespell(spellName: string) {
+    if (this.despell === '') return;
+
+    let gameInformation = {
+      header: 'despell',
+      spell: spellName,
+      despell: this.despell,
+    };
     this.wssService.sendMessage(gameInformation);
   }
 

@@ -12,6 +12,7 @@ import { Store } from '@ngrx/store';
 import {
   addElement,
   addForm,
+  deleteDespell,
   deleteElement,
   deleteForm,
 } from 'src/app/store/actions/duels/currentSpell.actions';
@@ -55,6 +56,7 @@ export class ElementOrFormNameComponent implements DoCheck {
   isSelected = false;
 
   select() {
+    this.store.dispatch(deleteDespell());
     if (this.type === 'form') {
       this.store.dispatch(deleteForm());
 
