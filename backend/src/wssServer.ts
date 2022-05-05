@@ -47,6 +47,8 @@ mongoClient.connect(function (err, client) {
         case "spell":
           processingSpell(request["spell"], collection, ws, wss);
           break;
+        case "despell":
+          break;
         case "effect":
           processingEffect(request, collection, ws, wss);
           break;

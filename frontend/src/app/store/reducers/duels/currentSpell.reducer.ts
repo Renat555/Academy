@@ -1,14 +1,17 @@
+import { state } from '@angular/animations';
 import { createReducer, on } from '@ngrx/store';
 import * as CurrentSpell from '../../actions/duels/currentSpell.actions';
 
 export interface CurrentSpellState {
   form: string;
   element: string;
+  despell: string;
 }
 
 const initialState: CurrentSpellState = {
   form: '',
   element: '',
+  despell: '',
 };
 
 export const reducer = createReducer(
@@ -28,5 +31,13 @@ export const reducer = createReducer(
   on(CurrentSpell.deleteElement, (state) => ({
     ...state,
     element: '',
+  })),
+  on(CurrentSpell.addDespell, (state, { despell }) => ({
+    ...state,
+    despell: despell,
+  })),
+  on(CurrentSpell.deleteDespell, (state) => ({
+    ...state,
+    despell: '',
   }))
 );

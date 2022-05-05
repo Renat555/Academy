@@ -10,6 +10,8 @@
     *ngFor="let effect of userEffects"
     (mouseenter)="showHint($event)"
     (mouseleave)="hideHint()"
+    (click)="selectEffect($event, 'user')" 
+    id="userEffect"
     attr.data-spell="{{ effect.name }}"
     attr.data-duration="{{ effect.duration }}"
   >
@@ -21,6 +23,8 @@
     *ngFor="let effect of enemyEffects"
     (mouseenter)="showHint($event)"
     (mouseleave)="hideHint()"
+    (click)="selectEffect($event, 'enemy')" 
+    id="enemyEffect"
     attr.data-spell="{{ effect.name }}"
     attr.data-duration="{{ effect.duration }}"
   >

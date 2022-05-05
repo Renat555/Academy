@@ -1,8 +1,14 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { from, Observable } from 'rxjs';
-import { catchError, switchAll } from 'rxjs/operators';
+import { from, merge, observable, Observable } from 'rxjs';
+import {
+  catchError,
+  map,
+  mergeMap,
+  switchAll,
+  switchMap,
+} from 'rxjs/operators';
 import { HttpService } from './http.service';
 import {
   addLogin,

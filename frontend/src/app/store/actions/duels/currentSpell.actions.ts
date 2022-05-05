@@ -5,6 +5,8 @@ export enum currentSpellActions {
   addElement = '[currentSpell] addElement',
   deleteForm = '[currentSpell] deleteForm',
   deleteElement = '[currentSpell] deleteElement',
+  addDespell = '[currentSpell] addDespell',
+  deleteDespell = '[currentSpell] deleteDespell',
 }
 
 export const addForm = createAction(
@@ -17,6 +19,13 @@ export const addElement = createAction(
   props<{ element: string }>()
 );
 
+export const addDespell = createAction(
+  currentSpellActions.addDespell,
+  props<{ despell: string }>()
+);
+
 export const deleteForm = createAction(currentSpellActions.deleteForm);
 
 export const deleteElement = createAction(currentSpellActions.deleteElement);
+
+export const deleteDespell = createAction(currentSpellActions.deleteDespell);
