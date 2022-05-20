@@ -9,7 +9,7 @@ import {
   enemyMove,
   userMove,
 } from './store/actions/duels/generalInfo.actions';
-import { setEnemy } from './store/actions/duels/map.actions';
+import { setEnemy, spellApproval } from './store/actions/duels/map.actions';
 import {
   addEnemyName,
   changeEnemyActionPoints,
@@ -31,6 +31,7 @@ import {
   addDescriptionBlock,
   addDescriptionRow,
 } from './store/actions/duels/description.actions';
+import { ConditionalExpr } from '@angular/compiler';
 
 interface GameInformation {
   header: string;
@@ -138,9 +139,25 @@ export class WebsocketService {
     this.store.dispatch(
       setEnemyDebuffs({ enemyDebuffs: info['enemy']['debuffs'] })
     );
+
+    this.setBattlefieldSpells(info);
+
     if (info['user']['description']) {
       this.store.dispatch(
         addDescriptionRow({ description: info['user']['description'] })
+      );
+    }
+  }
+
+  setBattlefieldSpells(info: GameInformation) {
+    let battlefieldSpells = info['user']['battlefield'];
+
+    for (let i = 0; i < battlefieldSpells.length; i++) {
+      this.store.dispatch(
+        spellApproval({
+          spell: battlefieldSpells[i][0],
+          duration: battlefieldSpells[i][1],
+        })
       );
     }
   }

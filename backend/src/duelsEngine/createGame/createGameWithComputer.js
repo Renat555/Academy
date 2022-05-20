@@ -30,7 +30,7 @@ function createEnemy(user, mongoCollection, ws) {
     health: 200,
     muve: enemyMuve,
     elements: ["fire", "earth", "water"],
-    forms: ["spear", "shild", "crown", "source", "sphere"],
+    forms: ["spear", "shield", "crown", "source", "sphere"],
     buffs: [],
     debuffs: [],
   };

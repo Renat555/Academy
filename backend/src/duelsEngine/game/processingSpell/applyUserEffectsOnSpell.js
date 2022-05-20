@@ -27,7 +27,7 @@ function applyUserEffectsOnSpell(spell, user, enemy) {
     if (!isHaveDependences(user["debuffs"][i], spell)) continue;
 
     switch (user["debuffs"][i]["spellName"]) {
-      case "airshild":
+      case "airshield":
         user["debuffs"][i].decreaseSpellHitProbability(spell);
         break;
     }

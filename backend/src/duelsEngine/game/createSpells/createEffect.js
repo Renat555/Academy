@@ -4,9 +4,9 @@ function createEffect(spellName, duration) {
   let spell;
 
   switch (spellName) {
-    case "fireshild":
-      const Fireshild = spellClasses.Fireshild;
-      spell = new Fireshild(duration);
+    case "fireshield":
+      const Fireshield = spellClasses.Fireshield;
+      spell = new Fireshield(duration);
       break;
     case "firecrown":
       const Firecrown = spellClasses.Firecrown;
@@ -24,9 +24,9 @@ function createEffect(spellName, duration) {
       const Firepower = spellClasses.Firepower;
       spell = new Firepower(duration);
       break;
-    case "watershild":
-      const Watershild = spellClasses.Watershild;
-      spell = new Watershild(duration);
+    case "watershield":
+      const Watershield = spellClasses.Watershield;
+      spell = new Watershield(duration);
       break;
     case "watercrown":
       const Watercrown = spellClasses.Watercrown;
@@ -44,9 +44,9 @@ function createEffect(spellName, duration) {
       const Waterpower = spellClasses.Waterpower;
       spell = new Waterpower(duration);
       break;
-    case "earthshild":
-      const Earthshild = spellClasses.Earthshild;
-      spell = new Earthshild(duration);
+    case "earthshield":
+      const Earthshield = spellClasses.Earthshield;
+      spell = new Earthshield(duration);
       break;
     case "earthcrown":
       const Earthcrown = spellClasses.Earthcrown;
@@ -68,9 +68,9 @@ function createEffect(spellName, duration) {
       const Earthpower = spellClasses.Earthpower;
       spell = new Earthpower(duration);
       break;
-    case "airshild":
-      const Airshild = spellClasses.Airshild;
-      spell = new Airshild(duration);
+    case "airshield":
+      const Airshield = spellClasses.Airshield;
+      spell = new Airshield(duration);
       break;
     case "aircrown":
       const Aircrown = spellClasses.Aircrown;
@@ -92,9 +92,9 @@ function createEffect(spellName, duration) {
       const Airpower = spellClasses.Airpower;
       spell = new Airpower(duration);
       break;
-    case "lifeshild":
-      const Lifeshild = spellClasses.Lifeshild;
-      spell = new Lifeshild(duration);
+    case "lifeshield":
+      const Lifeshield = spellClasses.Lifeshield;
+      spell = new Lifeshield(duration);
       break;
     case "lifesphere":
       const Lifesphere = spellClasses.Lifesphere;
@@ -112,9 +112,9 @@ function createEffect(spellName, duration) {
       const Lifepower = spellClasses.Lifepower;
       spell = new Lifepower(duration);
       break;
-    case "deathshild":
-      const Deathshild = spellClasses.Deathshild;
-      spell = new Deathshild(duration);
+    case "deathshield":
+      const Deathshield = spellClasses.Deathshield;
+      spell = new Deathshield(duration);
       break;
     case "deathsphere":
       const Deathsphere = spellClasses.Deathsphere;

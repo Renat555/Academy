@@ -5,13 +5,13 @@ function applyEnemyEffectsOnSpell(spell, user, enemy) {
     if (!isHaveDependences(enemy["buffs"][i], spell)) continue;
 
     switch (enemy["buffs"][i]["spellName"]) {
-      case "watershild":
+      case "watershield":
         enemy["buffs"][i].decreaseSpellDamage(spell);
         break;
       case "waterstamp":
         enemy["buffs"][i].decreaseSpellDamage(spell);
         break;
-      case "earthshild":
+      case "earthshield":
         enemy["buffs"][i].decreaseSpellDamage(spell);
         break;
       case "earthstamp":
@@ -20,7 +20,7 @@ function applyEnemyEffectsOnSpell(spell, user, enemy) {
       case "airpower":
         enemy["buffs"][i].decreaseSpellHitProbability(spell);
         break;
-      case "lifeshild":
+      case "lifeshield":
         enemy["buffs"][i].decreaseSpellHitProbability(spell);
         break;
       case "lifepower":

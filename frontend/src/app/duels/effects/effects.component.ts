@@ -117,8 +117,6 @@ export class EffectsComponent implements OnInit {
   }
 
   clearSelectedEffects() {
-    console.log('clear');
-    
     this.store.dispatch(deleteDespell());
 
     let userEffects = document.querySelectorAll('#userEffect');
@@ -128,7 +126,7 @@ export class EffectsComponent implements OnInit {
     }
 
     let enemyEffects = document.querySelectorAll('#enemyEffect');
-    
+
     for (let i = 0; i < enemyEffects.length; i++) {
       enemyEffects[i].classList.remove('selected');
     }

@@ -11,6 +11,7 @@ import { fromEvent } from 'rxjs';
 import { showEffects } from 'src/app/store/actions/duels/effectsWindow.actions';
 import { SpellbookState } from 'src/app/store/reducers/duels/spellBook.reducer';
 import {
+  selectBattlefieldSpell,
   selectDespell,
   selectElement,
   selectForm,
@@ -156,34 +157,32 @@ export class BattlefieldCentreComponent implements OnInit, AfterViewInit {
       case 'deathsource':
         this.sendSpell(spell);
         break;
-      case 'fireshild':
+      case 'fireshield':
       case 'firecrown':
       case 'firesource':
       case 'firesphere':
       case 'firepower':
-      case 'watershild':
+      case 'watershield':
       case 'watercrown':
-      case 'watersphere':
       case 'waterstamp':
       case 'waterpower':
-      case 'earthshild':
       case 'earthcrown':
       case 'earthsource':
       case 'earthsphere':
       case 'earthstamp':
       case 'earthpower':
-      case 'airshild':
+      case 'airshield':
       case 'aircrown':
       case 'airsource':
       case 'airsphere':
       case 'airstamp':
       case 'airpower':
-      case 'lifeshild':
+      case 'lifeshield':
       case 'lifesphere':
       case 'lifestamp':
       case 'lifeflow':
       case 'lifepower':
-      case 'deathshild':
+      case 'deathshield':
       case 'deathsphere':
       case 'deathstamp':
       case 'deathkey':
@@ -200,6 +199,10 @@ export class BattlefieldCentreComponent implements OnInit, AfterViewInit {
       case 'deathspear':
       case 'deathpower':
         this.sendDespell(spell);
+        break;
+      case 'earthshield':
+      case 'watersphere':
+        this.sendBattleFieldSpell(spell);
         break;
     }
   }
@@ -222,6 +225,29 @@ export class BattlefieldCentreComponent implements OnInit, AfterViewInit {
       spell: spellName,
       despell: this.despell,
     };
+    this.wssService.sendMessage(gameInformation);
+  }
+
+  sendBattleFieldSpell(spellName: string) {
+    let coord: number[][] = [];
+    let spell: (number | string | number[])[] = [
+      spellName,
+      this.spellBook[spellName]['duration'],
+    ];
+
+    this.store.select(selectBattlefieldSpell).subscribe((state) => {
+      coord = state.coordinates;
+    });
+
+    let gameInformation = {
+      header: 'battlefieldSpell',
+      spell: spell,
+    };
+
+    for (let i = 0; i < coord.length; i++) {
+      gameInformation.spell.push(coord[i]);
+    }
+
     this.wssService.sendMessage(gameInformation);
   }
 

@@ -2,16 +2,26 @@ import { state } from '@angular/animations';
 import { createReducer, on } from '@ngrx/store';
 import * as CurrentSpell from '../../actions/duels/currentSpell.actions';
 
+interface BattlefieldSpell {
+  name: string;
+  coordinates: number[][];
+}
+
 export interface CurrentSpellState {
   form: string;
   element: string;
   despell: string;
+  battlefieldSpell: BattlefieldSpell;
 }
 
 const initialState: CurrentSpellState = {
   form: '',
   element: '',
   despell: '',
+  battlefieldSpell: {
+    name: '',
+    coordinates: [],
+  },
 };
 
 export const reducer = createReducer(
@@ -39,5 +49,22 @@ export const reducer = createReducer(
   on(CurrentSpell.deleteDespell, (state) => ({
     ...state,
     despell: '',
+  })),
+  on(
+    CurrentSpell.addBattlefieldSpell,
+    (state, { battlefieldSpell, coordinates }) => ({
+      ...state,
+      battlefieldSpell: {
+        name: battlefieldSpell,
+        coordinates: coordinates,
+      },
+    })
+  ),
+  on(CurrentSpell.deleteBattlefieldSpell, (state) => ({
+    ...state,
+    battlefieldSpell: {
+      name: '',
+      coordinates: [],
+    },
   }))
 );

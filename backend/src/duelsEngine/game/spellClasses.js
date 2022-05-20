@@ -159,7 +159,7 @@ module.exports.Firespear = class Firespear {
   }
 };
 
-module.exports.Fireshild = class Fireshild {
+module.exports.Fireshield = class Fireshield {
   constructor(duration = 4) {
     this.duration = duration;
   }
@@ -1019,7 +1019,7 @@ module.exports.Waterspear = class Waterspear {
   }
 };
 
-module.exports.Watershild = class Watershild {
+module.exports.Watershield = class Watershield {
   constructor(duration = 6) {
     this.duration = duration;
   }
@@ -1843,7 +1843,7 @@ module.exports.Earthspear = class Earthspear {
   }
 };
 
-module.exports.Earthshild = class Earthshild {
+module.exports.Earthshield = class Earthshield {
   constructor(duration = 5) {
     this.duration = duration;
   }
@@ -2684,7 +2684,7 @@ module.exports.Airspear = class Airspear {
   }
 };
 
-module.exports.Airshild = class Airshild {
+module.exports.Airshield = class Airshield {
   constructor(duration = 4) {
     this.duration = duration;
   }
@@ -3619,7 +3619,7 @@ module.exports.Lifespear = class Lifespear {
   }
 };
 
-module.exports.Lifeshild = class Lifeshild {
+module.exports.Lifeshield = class Lifeshield {
   constructor(duration = 999) {
     this.duration = duration;
   }
@@ -4382,7 +4382,7 @@ module.exports.Deathspear = class Deathspear {
   }
 };
 
-module.exports.Deathshild = class Deathshild {
+module.exports.Deathshield = class Deathshield {
   constructor(duration = 4) {
     this.duration = duration;
   }

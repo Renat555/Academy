@@ -7,6 +7,8 @@ export enum currentSpellActions {
   deleteElement = '[currentSpell] deleteElement',
   addDespell = '[currentSpell] addDespell',
   deleteDespell = '[currentSpell] deleteDespell',
+  addBattlefieldSpell = '[currentSpell] addBattlefieldSpell',
+  deleteBattlefieldSpell = '[currentSpell] deleteBattlefieldSpell',
 }
 
 export const addForm = createAction(
@@ -24,8 +26,17 @@ export const addDespell = createAction(
   props<{ despell: string }>()
 );
 
+export const addBattlefieldSpell = createAction(
+  currentSpellActions.addBattlefieldSpell,
+  props<{ battlefieldSpell: string; coordinates: number[][] }>()
+);
+
 export const deleteForm = createAction(currentSpellActions.deleteForm);
 
 export const deleteElement = createAction(currentSpellActions.deleteElement);
 
 export const deleteDespell = createAction(currentSpellActions.deleteDespell);
+
+export const deleteBattlefieldSpell = createAction(
+  currentSpellActions.deleteBattlefieldSpell
+);

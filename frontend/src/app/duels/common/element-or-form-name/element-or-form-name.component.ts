@@ -16,6 +16,7 @@ import {
   deleteElement,
   deleteForm,
 } from 'src/app/store/actions/duels/currentSpell.actions';
+import { deletePreparedSpells } from 'src/app/store/actions/duels/map.actions';
 import {
   selectElement,
   selectForm,
@@ -56,7 +57,8 @@ export class ElementOrFormNameComponent implements DoCheck {
   isSelected = false;
 
   select() {
-    this.store.dispatch(deleteDespell());
+    this.deletePreviousSpell();
+
     if (this.type === 'form') {
       this.store.dispatch(deleteForm());
 
@@ -72,5 +74,10 @@ export class ElementOrFormNameComponent implements DoCheck {
         this.isSelected = true;
       }
     }
+  }
+
+  deletePreviousSpell() {
+    this.store.dispatch(deleteDespell());
+    this.store.dispatch(deletePreparedSpells());
   }
 }

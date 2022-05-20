@@ -19,9 +19,14 @@ export const selectSpell = createSelector(
   (state: CurrentSpellState) => {
     return state.element + state.form;
   }
-)
+);
 
 export const selectDespell = createSelector(
   currentSpell,
   (state: CurrentSpellState) => state.despell
-)
+);
+
+export const selectBattlefieldSpell = createSelector(
+  currentSpell,
+  (state: CurrentSpellState) => state.battlefieldSpell
+);

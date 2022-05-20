@@ -13,7 +13,11 @@ import {
   ViewChild,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { setUser } from 'src/app/store/actions/duels/map.actions';
+import {
+  deletePreparedSpells,
+  setUser,
+  spellPreparing,
+} from 'src/app/store/actions/duels/map.actions';
 import { changeUserActionPoints } from 'src/app/store/actions/duels/users.actions';
 import {
   selectAllMap,
@@ -29,9 +33,14 @@ import {
   selectSpell,
 } from 'src/app/store/selectors/duels/currentSpell.selectors';
 import { fromEvent, Observable, Subscription } from 'rxjs';
+import { addBattlefieldSpell } from 'src/app/store/actions/duels/currentSpell.actions';
+import { ThisReceiver } from '@angular/compiler';
+import { pendingTrue } from 'src/app/store/actions/pending.actions';
+import { selectSpellbook } from 'src/app/store/selectors/duels/spellbook.selectors';
+import { SpellbookState } from 'src/app/store/reducers/duels/spellBook.reducer';
 
 function isPathFree(
-  map: string[][],
+  map: any,
   userRow: number,
   userCol: number,
   targetRow: number,
@@ -310,8 +319,22 @@ export class MapComponent implements OnInit {
   stateUserSteps = '';
   stateEnemySteps = '';
 
+  isHintHidden = true;
+  hintTop = '0px';
+  hintLeft = '0px';
+  battlefieldDescription = '';
+
+  spellBook: SpellbookState = {};
+
+  map: (string | number)[][][] = [];
+
   ngOnInit(): void {
     setTimeout(() => {
+      this.store.select(selectAllMap).subscribe((state) => {
+        this.map = state;
+        this.setBattlefieldSpells();
+      });
+
       this.store.select(selectSpell).subscribe((spell) => {
         if (spell === 'earthshield') {
           this.battlefield.nativeElement.removeEventListener(
@@ -319,6 +342,12 @@ export class MapComponent implements OnInit {
             this.moveUserBind
           );
           this.createEarthshield();
+        } else if (spell === 'watersphere') {
+          this.battlefield.nativeElement.removeEventListener(
+            'click',
+            this.moveUserBind
+          );
+          this.createWatersphere();
         } else {
           this.battlefield.nativeElement.addEventListener(
             'click',
@@ -331,84 +360,225 @@ export class MapComponent implements OnInit {
       this.placeUser();
       this.placeEnemy();
 
+      this.battlefield.nativeElement.addEventListener(
+        'mouseover',
+        (e: MouseEvent) => this.showHint(e)
+      );
+
       this.store.select(selectMapEnemy).subscribe((coord) => {
-        this.moveEnemy(coord);
+        this.moveEnemy;
+      });
+
+      this.store.select(selectSpellbook).subscribe((state) => {
+        this.spellBook = state;
       });
     }, 0);
+  }
+
+  setBattlefieldSpells() {
+    for (let i = 0; i < this.map.length; i++) {
+      for (let j = 0; j < this.map[i].length; j++) {
+        let square = this.calculateSquare({ row: i, col: j });
+        if (this.map[i][j][4] === 'prepared') {
+          square.classList.add(this.map[i][j][2]);
+          square.style.opacity = '0.7';
+        } else if (this.map[i][j][4] === 'approved') {
+          square.classList.add(this.map[i][j][2]);
+          square.style.opacity = '1';
+        } else {
+          square.className = 'battleSquare';
+          square.style.opacity = '1';
+        }
+      }
+    }
   }
 
   moveUserBind = this.moveUser.bind(this);
 
   createEarthshield() {
     let battlefield = this.battlefield.nativeElement;
-
     battlefield.addEventListener('mouseover', this.placeEarthShieldBind);
-    battlefield.addEventListener('mouseout', this.removeEarthshieldBind);
-
     battlefield.addEventListener('click', this.cancelEarthshieldBind);
   }
 
   placeEarthShieldBind = this.placeEarthShield.bind(this);
 
   placeEarthShield(event: MouseEvent) {
+    let target = event.target as HTMLElement;
+
+    if (!target.classList.contains('battleSquare')) return;
+
     let middleSquare = event.target as HTMLElement;
 
-    middleSquare.classList.add('earthshield');
-    middleSquare.style.opacity = '0.7';
+    if (
+      !this.isBlockFreeForMove(
+        +middleSquare.dataset.row!,
+        +middleSquare.dataset.col!
+      )
+    )
+      return;
+
+    if (
+      !this.isBlockFreeForSpell(
+        +middleSquare.dataset.row!,
+        +middleSquare.dataset.col!
+      )
+    )
+      return;
+
+    this.store.dispatch(deletePreparedSpells());
+
+    let coord = [];
+
+    coord.push([+middleSquare.dataset.row!, +middleSquare.dataset.col!]);
 
     let leftSquare = this.calculateSquare({
       row: +middleSquare.dataset.row!,
       col: +middleSquare.dataset.col! - 1,
     });
-    if (leftSquare) {
-      leftSquare.classList.add('earthshield');
-      leftSquare.style.opacity = '0.7';
+    if (
+      leftSquare &&
+      this.isBlockFreeForMove(
+        +middleSquare.dataset.row!,
+        +middleSquare.dataset.col! - 1
+      ) &&
+      this.isBlockFreeForSpell(
+        +middleSquare.dataset.row!,
+        +middleSquare.dataset.col! - 1
+      )
+    ) {
+      coord.push([+middleSquare.dataset.row!, +middleSquare.dataset.col! - 1]);
     }
 
     let rightSquare = this.calculateSquare({
       row: +middleSquare.dataset.row!,
       col: +middleSquare.dataset.col! + 1,
     });
-    if (rightSquare) {
-      rightSquare.classList.add('earthshield');
-      rightSquare.style.opacity = '0.7';
-    }
-  }
-
-  removeEarthshieldBind = this.removeEarthshield.bind(this);
-
-  removeEarthshield(event: MouseEvent) {
-    let middleSquare = event.target as HTMLElement;
-    middleSquare.classList.remove('earthshield');
-    middleSquare.style.opacity = '1';
-
-    let leftSquare = this.calculateSquare({
-      row: +middleSquare.dataset.row!,
-      col: +middleSquare.dataset.col! - 1,
-    });
-    if (leftSquare) {
-      leftSquare.classList.remove('earthshield');
-      leftSquare.style.opacity = '1';
+    if (
+      rightSquare &&
+      this.isBlockFreeForMove(
+        +middleSquare.dataset.row!,
+        +middleSquare.dataset.col! + 1
+      ) &&
+      this.isBlockFreeForSpell(
+        +middleSquare.dataset.row!,
+        +middleSquare.dataset.col! + 1
+      )
+    ) {
+      coord.push([+middleSquare.dataset.row!, +middleSquare.dataset.col! + 1]);
     }
 
-    let rightSquare = this.calculateSquare({
-      row: +middleSquare.dataset.row!,
-      col: +middleSquare.dataset.col! + 1,
-    });
-    if (rightSquare) {
-      rightSquare.classList.remove('earthshield');
-      rightSquare.style.opacity = '1';
-    }
+    this.store.dispatch(
+      spellPreparing({ spell: 'earthshield', coordinates: coord })
+    );
+
+    this.store.dispatch(
+      addBattlefieldSpell({
+        battlefieldSpell: 'earthshield',
+        coordinates: coord,
+      })
+    );
   }
 
   cancelEarthshieldBind = this.cancelEarthshield.bind(this);
 
   cancelEarthshield() {
     let battlefield = this.battlefield.nativeElement;
-
     battlefield.removeEventListener('mouseover', this.placeEarthShieldBind);
-    battlefield.removeEventListener('mouseout', this.removeEarthshieldBind);
+    battlefield.addEventListener('click', this.moveUserBind);
+  }
 
+  createWatersphere() {
+    let battlefield = this.battlefield.nativeElement;
+    battlefield.addEventListener('mouseover', this.placeWatersphereBind);
+    battlefield.addEventListener('click', this.cancelWatersphereBind);
+  }
+
+  placeWatersphereBind = this.placeWatersphere.bind(this);
+
+  placeWatersphere(event: MouseEvent) {
+    let target = event.target as HTMLElement;
+
+    if (!target.classList.contains('battleSquare')) return;
+
+    let middleSquare = event.target as HTMLElement;
+
+    if (
+      !this.isBlockFreeForSpell(
+        +middleSquare.dataset.row!,
+        +middleSquare.dataset.col!
+      )
+    )
+      return;
+
+    this.store.dispatch(deletePreparedSpells());
+
+    let coord = [];
+
+    coord.push([+middleSquare.dataset.row!, +middleSquare.dataset.col!]);
+
+    let underSquare = this.calculateSquare({
+      row: +middleSquare.dataset.row! - 1,
+      col: +middleSquare.dataset.col!,
+    });
+    if (
+      underSquare &&
+      this.isBlockFreeForSpell(
+        +middleSquare.dataset.row! - 1,
+        +middleSquare.dataset.col!
+      )
+    ) {
+      coord.push([+middleSquare.dataset.row! - 1, +middleSquare.dataset.col!]);
+    }
+
+    let rightSquare = this.calculateSquare({
+      row: +middleSquare.dataset.row!,
+      col: +middleSquare.dataset.col! + 1,
+    });
+    if (
+      rightSquare &&
+      this.isBlockFreeForSpell(
+        +middleSquare.dataset.row!,
+        +middleSquare.dataset.col! + 1
+      )
+    ) {
+      coord.push([+middleSquare.dataset.row!, +middleSquare.dataset.col! + 1]);
+    }
+
+    let underRightSquare = this.calculateSquare({
+      row: +middleSquare.dataset.row! - 1,
+      col: +middleSquare.dataset.col! + 1,
+    });
+    if (
+      underRightSquare &&
+      this.isBlockFreeForSpell(
+        +middleSquare.dataset.row! - 1,
+        +middleSquare.dataset.col! + 1
+      )
+    ) {
+      coord.push([
+        +middleSquare.dataset.row! - 1,
+        +middleSquare.dataset.col! + 1,
+      ]);
+    }
+
+    this.store.dispatch(
+      spellPreparing({ spell: 'watersphere', coordinates: coord })
+    );
+
+    this.store.dispatch(
+      addBattlefieldSpell({
+        battlefieldSpell: 'watersphere',
+        coordinates: coord,
+      })
+    );
+  }
+
+  cancelWatersphereBind = this.cancelWatersphere.bind(this);
+
+  cancelWatersphere() {
+    let battlefield = this.battlefield.nativeElement;
+    battlefield.removeEventListener('mouseover', this.placeWatersphereBind);
     battlefield.addEventListener('click', this.moveUserBind);
   }
 
@@ -465,14 +635,6 @@ export class MapComponent implements OnInit {
     let targetRow = +row;
     let targetCol = +col;
 
-    let map;
-
-    this.store.select(selectAllMap).subscribe((state) => {
-      map = state;
-    });
-
-    if (!map) return;
-
     let user = { row: 0, col: 0 };
 
     this.store.select(selectMapUser).subscribe((state) => {
@@ -483,7 +645,7 @@ export class MapComponent implements OnInit {
     let userCol = user.col;
 
     let pathData = this.getPathData(
-      map,
+      this.map,
       userRow,
       userCol,
       targetRow,
@@ -505,7 +667,7 @@ export class MapComponent implements OnInit {
 
     if (pathData.length > actionPoints) return;
 
-    if (!isPathFree(map, userRow, userCol, targetRow, targetCol)) return;
+    if (!isPathFree(this.map, userRow, userCol, targetRow, targetCol)) return;
 
     let trajectory = this.getTrajectory(userRow, userCol, targetRow, targetCol);
 
@@ -523,18 +685,18 @@ export class MapComponent implements OnInit {
 
     let userCoord = this.user.nativeElement.getBoundingClientRect();
 
-    this.userLeft1 = userCoord.left;
-    this.userTop1 = userCoord.top;
+    this.userLeft1 = userCoord.left + window.pageXOffset;
+    this.userTop1 = userCoord.top + window.pageYOffset;
 
     this.stateUserMoving = 'first';
 
-    this.userLeft2 = verticalSquareCoord.left + 5;
-    this.userTop2 = verticalSquareCoord.top + 5;
+    this.userLeft2 = verticalSquareCoord.left + 5 + window.pageXOffset;
+    this.userTop2 = verticalSquareCoord.top + 5 + window.pageYOffset;
 
     let targetCoord = target.getBoundingClientRect();
 
-    this.userLeft3 = targetCoord.left + 5;
-    this.userTop3 = targetCoord.top + 5;
+    this.userLeft3 = targetCoord.left + 5 + window.pageXOffset;
+    this.userTop3 = targetCoord.top;
 
     this.userTimeVertical = calcTimeMoving(this.userTop1, this.userTop2);
     this.userTimeHorizontal = calcTimeMoving(this.userLeft2, this.userLeft3);
@@ -591,24 +753,21 @@ export class MapComponent implements OnInit {
   }
 
   moveEnemy(coord: { row: number; col: number }) {
-    let targetRow = coord['row'];
-    let targetCol = coord['col'];
-
     let target = this.calculateSquare(coord);
 
     let enemyCoord = this.enemy.nativeElement.getBoundingClientRect();
 
-    this.enemyLeft1 = enemyCoord.left;
-    this.enemyTop1 = enemyCoord.top;
+    this.enemyLeft1 = enemyCoord.left + window.pageXOffset;
+    this.enemyTop1 = enemyCoord.top + window.pageYOffset;
 
     this.stateEnemyMoving = 'first';
 
     let targetCoord = target.getBoundingClientRect();
 
-    this.enemyLeft2 = this.enemyLeft1;
-    this.enemyTop2 = targetCoord.top;
+    this.enemyLeft2 = this.enemyLeft1 + window.pageXOffset;
+    this.enemyTop2 = targetCoord.top + window.pageYOffset;
 
-    this.enemyLeft3 = targetCoord.left + 5;
+    this.enemyLeft3 = targetCoord.left + window.pageXOffset + 5;
     this.enemyTop3 = this.enemyTop2;
 
     this.enemyTimeVertical = calcTimeMoving(this.enemyTop1, this.enemyTop2);
@@ -691,7 +850,7 @@ export class MapComponent implements OnInit {
   }
 
   getPathData(
-    map: string | number[][],
+    map: (string | number)[][][],
     userRow: number,
     userCol: number,
     targetRow: number,
@@ -771,7 +930,7 @@ export class MapComponent implements OnInit {
   placeUser() {
     let square = this.calculateSquare({ row: 0, col: 3 });
     let coord = square.getBoundingClientRect();
-    this.userTop = coord.top + 5 + 'px';
+    this.userTop = coord.top + window.pageYOffset + 5 + 'px';
     this.userLeft = coord.left + 5 + 'px';
     this.stateUserSteps = 'userBackOne';
   }
@@ -779,7 +938,7 @@ export class MapComponent implements OnInit {
   placeEnemy() {
     let square = this.calculateSquare({ row: 6, col: 3 });
     let coord = square.getBoundingClientRect();
-    this.enemyTop = coord.top + 5 + 'px';
+    this.enemyTop = coord.top + window.pageYOffset + 5 + 'px';
     this.enemyLeft = coord.left + 5 + 'px';
     this.stateEnemySteps = 'enemyFaceOne';
   }
@@ -809,6 +968,37 @@ export class MapComponent implements OnInit {
       this.stateUserSteps = 'userLeftOne';
       this.stateEnemySteps = 'enemyRightOne';
     }
+  }
+
+  showHint(event: any) {
+    let target = event.target;
+
+    if (!target.classList.contains('battleSquare')) return;
+
+    let row = +target.dataset.row;
+    let col = +target.dataset.col;
+
+    if (this.map[row][col][2] === '' || this.map[row][col][4] === 'prepared') {
+      this.isHintHidden = true;
+    } else {
+      this.isHintHidden = false;
+
+      this.battlefieldDescription =
+        this.spellBook[this.map[row][col][2]]['description'] +
+        'Осталось ходов ' +
+        this.map[row][col][3];
+    }
+
+    let coordSquare = target.getBoundingClientRect();
+
+    this.hintLeft =
+      coordSquare.left +
+      coordSquare.width / 2 -
+      250 +
+      window.pageXOffset +
+      'px';
+    this.hintTop =
+      coordSquare.top + coordSquare.height + window.pageYOffset + 'px';
   }
 
   calculateSquare(coord: { row: number; col: number }) {
@@ -967,5 +1157,15 @@ export class MapComponent implements OnInit {
     }
 
     return square;
+  }
+
+  isBlockFreeForMove(row: number, col: number) {
+    if (this.map[row][col][0] === 'block') return false;
+    return true;
+  }
+
+  isBlockFreeForSpell(row: number, col: number) {
+    if (this.map[row][col][2] === '') return true;
+    return false;
   }
 }

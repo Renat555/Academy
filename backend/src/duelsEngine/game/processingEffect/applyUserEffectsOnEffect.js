@@ -33,7 +33,7 @@ function applyUserEffectsOnEffect(spell, player) {
       case "airstamp":
         player["debuffs"][i].decreaseSpellHitProbability(spell);
         break;
-      case "deathshild":
+      case "deathshield":
         player["debuffs"][i].decreaseSpellHitProbability(spell);
         break;
       case "deathstamp":

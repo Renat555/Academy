@@ -18,7 +18,7 @@ function activationEffectsAtEndMuve(user, enemy) {
 
 function activationEffect(effect, user, enemy) {
   switch (effect["spellName"]) {
-    case "fireshild":
+    case "fireshield":
       effect.decreaseDuration(1, user);
       break;
     case "firecrown":
@@ -28,7 +28,7 @@ function activationEffect(effect, user, enemy) {
       effect.decreasePlayerHealth(user, enemy);
       effect.decreaseDuration(1, user);
       break;
-    case "watershild":
+    case "watershield":
       effect.decreaseDuration(1, user);
       break;
     case "watercrown":
@@ -40,7 +40,7 @@ function activationEffect(effect, user, enemy) {
     case "waterstamp":
       effect.decreaseDuration(1, user);
       break;
-    case "earthshild":
+    case "earthshield":
       effect.decreaseDuration(1, user);
       break;
     case "earthcrown":
@@ -58,7 +58,7 @@ function activationEffect(effect, user, enemy) {
     case "earthpower":
       effect.decreaseDuration(1, user);
       break;
-    case "airshild":
+    case "airshield":
       effect.decreaseDuration(1, user);
       break;
     case "aircrown":
@@ -84,7 +84,7 @@ function activationEffect(effect, user, enemy) {
       effect.increasePlayerHealth(user, enemy);
       effect.decreaseDuration(1, user);
       break;
-    case "deathshild":
+    case "deathshield":
       effect.decreaseDuration(1, user);
       break;
     case "deathsphere":

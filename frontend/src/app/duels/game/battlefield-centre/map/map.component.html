@@ -1,3 +1,11 @@
+<div
+    class="hint"
+    #hint
+    [hidden]="isHintHidden"
+    [ngStyle]="{ top: hintTop, left: hintLeft }"
+  >
+    <app-message [text]="battlefieldDescription"></app-message>
+  </div>
 <div class="battlefield" #battlefield>
   <div
     class="user"

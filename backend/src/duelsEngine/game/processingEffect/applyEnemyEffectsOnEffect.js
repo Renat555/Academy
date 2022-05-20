@@ -5,7 +5,7 @@ function applyEnemyEffectsOnEffect(spell, player) {
     if (!isHaveDependences(player["buffs"][i], spell)) continue;
 
     switch (player["buffs"][i]["spellName"]) {
-      case "lifeshild":
+      case "lifeshield":
         player["buffs"][i].decreaseSpellHitProbability(spell);
         break;
       case "lifestamp":

@@ -5,7 +5,7 @@ function applyEffect(effect, player) {
     if (!isHaveDependences(player["buffs"][i], effect)) continue;
 
     switch (player["buffs"][i]["spellName"]) {
-      case "fireshild":
+      case "fireshield":
         player["buffs"][i].decreaseSpellDamage(effect);
         break;
       case "watercrown":
