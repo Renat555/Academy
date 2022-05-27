@@ -4,11 +4,13 @@ import {
   EventEmitter,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   Output,
   SimpleChanges,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import {
   addElement,
   addForm,
@@ -28,20 +30,25 @@ import { AppState } from 'src/app/store/state/app.state';
   templateUrl: './element-or-form-name.component.html',
   styleUrls: ['./element-or-form-name.component.less'],
 })
-export class ElementOrFormNameComponent implements DoCheck {
+export class ElementOrFormNameComponent implements DoCheck, OnDestroy {
   constructor(private store: Store<AppState>) {}
+
+  formSubscription = new Subscription();
+  elementSubscription = new Subscription();
 
   ngDoCheck(): void {
     let form = '';
     let element = '';
 
-    this.store.select(selectForm).subscribe((state) => {
+    this.formSubscription = this.store.select(selectForm).subscribe((state) => {
       form = state;
     });
 
-    this.store.select(selectElement).subscribe((state) => {
-      element = state;
-    });
+    this.elementSubscription = this.store
+      .select(selectElement)
+      .subscribe((state) => {
+        element = state;
+      });
 
     if (form === this.name || element === this.name) {
       this.isSelected = true;
@@ -79,5 +86,10 @@ export class ElementOrFormNameComponent implements DoCheck {
   deletePreviousSpell() {
     this.store.dispatch(deleteDespell());
     this.store.dispatch(deletePreparedSpells());
+  }
+
+  ngOnDestroy(): void {
+    this.formSubscription.unsubscribe();
+    this.elementSubscription.unsubscribe();
   }
 }

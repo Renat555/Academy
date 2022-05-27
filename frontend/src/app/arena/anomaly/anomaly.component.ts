@@ -2,10 +2,12 @@ import {
   Component,
   Input,
   OnChanges,
+  OnDestroy,
   OnInit,
   SimpleChanges,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { selectSoundSwitch } from 'src/app/store/selectors/sound.selector';
 import { AppState } from 'src/app/store/state/app.state';
 
@@ -14,7 +16,7 @@ import { AppState } from 'src/app/store/state/app.state';
   templateUrl: './anomaly.component.html',
   styleUrls: ['./anomaly.component.less'],
 })
-export class AnomalyComponent implements OnInit, OnChanges {
+export class AnomalyComponent implements OnInit, OnChanges, OnDestroy {
   constructor(private store: Store<AppState>) {}
 
   isExplosion = false;
@@ -25,10 +27,14 @@ export class AnomalyComponent implements OnInit, OnChanges {
 
   @Input() health!: number;
 
+  soundSwitchSubscription = new Subscription();
+
   ngOnInit(): void {
-    this.store.select(selectSoundSwitch).subscribe((state) => {
-      this.isAudioOn = state;
-    });
+    this.soundSwitchSubscription = this.store
+      .select(selectSoundSwitch)
+      .subscribe((state) => {
+        this.isAudioOn = state;
+      });
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -54,5 +60,9 @@ export class AnomalyComponent implements OnInit, OnChanges {
     if (!this.isAudioOn) return;
     let sound = new Audio('./assets/audio/explosion.mp3');
     sound.play();
+  }
+
+  ngOnDestroy(): void {
+    this.soundSwitchSubscription.unsubscribe();
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { HttpService } from 'src/app/http.service';
 import { soundOff, soundOn } from 'src/app/store/actions/sound.action';
 import { selectSoundSwitch } from 'src/app/store/selectors/sound.selector';
@@ -18,10 +19,14 @@ export class ColorsComponent implements OnInit, OnDestroy {
     private httpService: HttpService
   ) {}
 
+  soundSwitchSubscription = new Subscription();
+
   ngOnInit(): void {
-    this.store.select(selectSoundSwitch).subscribe((state) => {
-      this.isAudioOn = state;
-    });
+    this.soundSwitchSubscription = this.store
+      .select(selectSoundSwitch)
+      .subscribe((state) => {
+        this.isAudioOn = state;
+      });
 
     this.colorIndex = this.randomIndex();
   }
@@ -37,6 +42,8 @@ export class ColorsComponent implements OnInit, OnDestroy {
         wrong: this.wrongAnswers,
       })
       .subscribe(() => {});
+
+    this.soundSwitchSubscription.unsubscribe();
   }
 
   randomIndex() {

@@ -9,7 +9,6 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  OnChanges,
   OnDestroy,
   OnInit,
   ViewChild,
@@ -19,7 +18,6 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/state/app.state';
 import { soundOff, soundOn } from 'src/app/store/actions/sound.action';
-import { fromEvent } from 'rxjs';
 import { firstHealthPotionRefill } from 'src/app/store/actions/arena/toolbar.actions';
 import {
   selectEnemyHealth,
@@ -30,6 +28,7 @@ import {
   decreaseUserHealth,
   resetHealth,
 } from 'src/app/store/actions/arena/health.actions';
+import { Subscription } from 'rxjs';
 
 function calcDirection(
   userTop: number,
@@ -201,20 +200,30 @@ interface Coordinate {
 export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
   constructor(private store: Store<AppState>, private router: Router) {}
 
+  soundSwitchSubscription = new Subscription();
+  userHealthSubscription = new Subscription();
+  enemyHealthSubscription = new Subscription();
+
   ngOnInit() {
-    this.store.select(selectSoundSwitch).subscribe((state) => {
-      this.isAudioOn = state;
-    });
+    this.soundSwitchSubscription = this.store
+      .select(selectSoundSwitch)
+      .subscribe((state) => {
+        this.isAudioOn = state;
+      });
 
-    this.store.select(selectUserHealth).subscribe((health) => {
-      this.userHealth = health;
-      this.userHealthPercent = this.userHealth + '%';
-    });
+    this.userHealthSubscription = this.store
+      .select(selectUserHealth)
+      .subscribe((health) => {
+        this.userHealth = health;
+        this.userHealthPercent = this.userHealth + '%';
+      });
 
-    this.store.select(selectEnemyHealth).subscribe((health) => {
-      this.enemyHealth = health;
-      this.enemyHealthPercent = this.enemyHealth + '%';
-    });
+    this.enemyHealthSubscription = this.store
+      .select(selectEnemyHealth)
+      .subscribe((health) => {
+        this.enemyHealth = health;
+        this.enemyHealthPercent = this.enemyHealth + '%';
+      });
   }
 
   ngAfterViewInit() {
@@ -239,6 +248,10 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
     clearInterval(this.enemySpellsTimerId);
     clearInterval(this.enemyDamageTrackingId);
     clearInterval(this.userDamageTrackingId);
+
+    this.soundSwitchSubscription.unsubscribe();
+    this.userHealthSubscription.unsubscribe();
+    this.enemyHealthSubscription.unsubscribe();
   }
 
   setUser() {

@@ -1,6 +1,13 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import {
   AIEnemy,
   humanEnemy,
@@ -25,30 +32,45 @@ import { AppState } from 'src/app/store/state/app.state';
   templateUrl: './create-hero.component.html',
   styleUrls: ['./create-hero.component.less'],
 })
-export class CreateHeroComponent implements OnInit {
+export class CreateHeroComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private store: Store<AppState>) {}
 
-  ngOnInit(): void {
-    this.store.select(selectElements).subscribe((res) => {
-      for (let i = 0; i < res.length; i++) {
-        this.selectElement(res[i]);
-      }
-    });
+  forms: string[] = [];
+  elements: string[] = [];
 
-    this.store.select(selectForms).subscribe((res) => {
+  elementsSubscription = new Subscription();
+  formsSubscription = new Subscription();
+  userNameSubscription = new Subscription();
+
+  ngOnInit(): void {
+    this.elementsSubscription = this.store
+      .select(selectElements)
+      .subscribe((res) => {
+        this.elements = res;
+
+        for (let i = 0; i < res.length; i++) {
+          this.selectElement(res[i]);
+        }
+      });
+
+    this.formsSubscription = this.store.select(selectForms).subscribe((res) => {
+      this.forms = res;
+
       for (let i = 0; i < res.length; i++) {
         this.selectForm(res[i]);
       }
     });
 
-    this.store.select(selectUserName).subscribe((name) => {
-      if (name === '') {
-        this.isUserAuth = false;
-      } else {
-        this.userName = name;
-        this.isUserAuth = true;
-      }
-    });
+    this.userNameSubscription = this.store
+      .select(selectUserName)
+      .subscribe((name) => {
+        if (name === '') {
+          this.isUserAuth = false;
+        } else {
+          this.userName = name;
+          this.isUserAuth = true;
+        }
+      });
   }
 
   isElementOneSelected = false;
@@ -80,15 +102,9 @@ export class CreateHeroComponent implements OnInit {
     if (target) {
       let element = (target as HTMLElement).dataset.element;
 
-      let elements: string[] = [];
-
-      this.store.select(selectElements).subscribe((res) => {
-        elements = res;
-      });
-
       if (element) {
-        if (elements.indexOf(element) === -1) {
-          if (elements.length > 2) return;
+        if (this.elements.indexOf(element) === -1) {
+          if (this.elements.length > 2) return;
 
           this.store.dispatch(addElement({ element }));
           this.selectElement(element);
@@ -106,15 +122,9 @@ export class CreateHeroComponent implements OnInit {
     if (target) {
       let form = (target as HTMLElement).dataset.form;
 
-      let forms: string[] = [];
-
-      this.store.select(selectForms).subscribe((res) => {
-        forms = res;
-      });
-
       if (form) {
-        if (forms.indexOf(form) === -1) {
-          if (forms.length > 4) return;
+        if (this.forms.indexOf(form) === -1) {
+          if (this.forms.length > 4) return;
 
           this.store.dispatch(addForm({ form }));
           this.selectForm(form);
@@ -215,21 +225,10 @@ export class CreateHeroComponent implements OnInit {
   }
 
   createUser() {
-    let elements = [];
-    let forms = [];
-
-    this.store.select(selectElements).subscribe((res) => {
-      elements = res;
-    });
-
-    this.store.select(selectForms).subscribe((res) => {
-      forms = res;
-    });
-
-    if (elements.length < 3) {
+    if (this.elements.length < 3) {
       this.textHint = 'Выберите три стихии.';
       this.isHintShown = true;
-    } else if (forms.length < 5) {
+    } else if (this.forms.length < 5) {
       this.textHint = 'Выберите пять форм';
       this.isHintShown = true;
     } else {
@@ -246,5 +245,11 @@ export class CreateHeroComponent implements OnInit {
   createGameWithHuman() {
     this.store.dispatch(humanEnemy());
     this.createUser();
+  }
+
+  ngOnDestroy(): void {
+    this.elementsSubscription.unsubscribe();
+    this.formsSubscription.unsubscribe();
+    this.userNameSubscription.unsubscribe();
   }
 }

@@ -1,11 +1,13 @@
 import {
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
   Renderer2,
   ViewChild,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import {
   addDespell,
   deleteDespell,
@@ -25,7 +27,7 @@ import { AppState } from 'src/app/store/state/app.state';
   templateUrl: './effects.component.html',
   styleUrls: ['./effects.component.less'],
 })
-export class EffectsComponent implements OnInit {
+export class EffectsComponent implements OnInit, OnDestroy {
   constructor(private store: Store<AppState>, private render: Renderer2) {}
 
   @ViewChild('hint') hint!: ElementRef;
@@ -40,34 +42,47 @@ export class EffectsComponent implements OnInit {
   userEffects: { name: string; russianName: string; duration: number }[] = [];
   enemyEffects: { name: string; russianName: string; duration: number }[] = [];
 
+  spellBookSubscription = new Subscription();
+  currentSpellSubscription = new Subscription();
+  userEffectsSubscription = new Subscription();
+  enemyEffectsSubscription = new Subscription();
+
   ngOnInit(): void {
-    this.store.select(selectSpellbook).subscribe((state) => {
-      this.spellBook = state;
-    });
+    this.spellBookSubscription = this.store
+      .select(selectSpellbook)
+      .subscribe((state) => {
+        this.spellBook = state;
+      });
 
-    this.store.select(selectSpell).subscribe((state) => {
-      this.currentSpell = state;
-    });
+    this.currentSpellSubscription = this.store
+      .select(selectSpell)
+      .subscribe((state) => {
+        this.currentSpell = state;
+      });
 
-    this.store.select(selectUserEffects).subscribe((effects) => {
-      for (let i = 0; i < effects.length; i++) {
-        this.userEffects[i] = {
-          name: effects[i]['name'],
-          russianName: this.spellBook[effects[i]['name']]['russianName'],
-          duration: effects[i]['duration'],
-        };
-      }
-    });
+    this.userEffectsSubscription = this.store
+      .select(selectUserEffects)
+      .subscribe((effects) => {
+        for (let i = 0; i < effects.length; i++) {
+          this.userEffects[i] = {
+            name: effects[i]['name'],
+            russianName: this.spellBook[effects[i]['name']]['russianName'],
+            duration: effects[i]['duration'],
+          };
+        }
+      });
 
-    this.store.select(selectEnemyEffects).subscribe((effects) => {
-      for (let i = 0; i < effects.length; i++) {
-        this.enemyEffects[i] = {
-          name: effects[i]['name'],
-          russianName: this.spellBook[effects[i]['name']]['russianName'],
-          duration: effects[i]['duration'],
-        };
-      }
-    });
+    this.enemyEffectsSubscription = this.store
+      .select(selectEnemyEffects)
+      .subscribe((effects) => {
+        for (let i = 0; i < effects.length; i++) {
+          this.enemyEffects[i] = {
+            name: effects[i]['name'],
+            russianName: this.spellBook[effects[i]['name']]['russianName'],
+            duration: effects[i]['duration'],
+          };
+        }
+      });
   }
 
   selectEffect(event: MouseEvent, player: string) {
@@ -165,5 +180,12 @@ export class EffectsComponent implements OnInit {
 
   hideEffects() {
     this.store.dispatch(hideEffects());
+  }
+
+  ngOnDestroy(): void {
+    this.spellBookSubscription.unsubscribe();
+    this.currentSpellSubscription.unsubscribe();
+    this.userEffectsSubscription.unsubscribe();
+    this.enemyEffectsSubscription.unsubscribe();
   }
 }

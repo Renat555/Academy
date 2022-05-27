@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { soundOff, soundOn } from 'src/app/store/actions/sound.action';
 import { selectSoundSwitch } from 'src/app/store/selectors/sound.selector';
 import { AppState } from 'src/app/store/state/app.state';
@@ -10,13 +11,17 @@ import { AppState } from 'src/app/store/state/app.state';
   templateUrl: './intuition-menu.component.html',
   styleUrls: ['./intuition-menu.component.less'],
 })
-export class IntuitionMenuComponent implements OnInit {
+export class IntuitionMenuComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private store: Store<AppState>) {}
 
+  soundSwitchSubscription = new Subscription();
+
   ngOnInit(): void {
-    this.store.select(selectSoundSwitch).subscribe((state) => {
-      this.isAudioOn = state;
-    });
+    this.soundSwitchSubscription = this.store
+      .select(selectSoundSwitch)
+      .subscribe((state) => {
+        this.isAudioOn = state;
+      });
   }
 
   isAudioOn: boolean = true;
@@ -67,5 +72,9 @@ export class IntuitionMenuComponent implements OnInit {
     if (!this.isAudioOn) return;
     let sound = new Audio('./assets/audio/click.mp3');
     sound.play();
+  }
+
+  ngOnDestroy(): void {
+    this.soundSwitchSubscription.unsubscribe();
   }
 }

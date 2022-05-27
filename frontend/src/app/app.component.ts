@@ -1,14 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { from, merge, observable, Observable } from 'rxjs';
-import {
-  catchError,
-  map,
-  mergeMap,
-  switchAll,
-  switchMap,
-} from 'rxjs/operators';
+import { Subscription } from 'rxjs';
 import { HttpService } from './http.service';
 import {
   addLogin,
@@ -31,23 +24,27 @@ export class AppComponent implements OnInit, OnDestroy {
     private wssService: WebsocketService
   ) {}
 
+  isAuthSubscription = new Subscription();
+
   ngOnInit() {
-    this.httpService.getIsAuth().subscribe((data: any) => {
-      if (data.message === 'Authentication failed') {
-        this.store.dispatch(userIsNotAuth());
-        localStorage.removeItem('token');
-        this.router.navigate(['/']);
-      } else {
-        let login = localStorage.getItem('login');
-        if (login) {
-          this.store.dispatch(addLogin({ login: login }));
+    this.isAuthSubscription = this.httpService
+      .getIsAuth()
+      .subscribe((data: any) => {
+        if (data.message === 'Authentication failed') {
+          this.store.dispatch(userIsNotAuth());
+          localStorage.removeItem('token');
+          this.router.navigate(['/']);
+        } else {
+          let login = localStorage.getItem('login');
+          if (login) {
+            this.store.dispatch(addLogin({ login: login }));
+          }
+          this.store.dispatch(userIsAuth());
         }
-        this.store.dispatch(userIsAuth());
-      }
-    });
+      });
   }
 
   ngOnDestroy() {
-    this.wssService.close();
+    this.isAuthSubscription.unsubscribe();
   }
 }

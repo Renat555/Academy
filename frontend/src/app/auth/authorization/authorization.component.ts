@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { HttpService } from 'src/app/http.service';
 import { addUserName } from 'src/app/store/actions/duels/users.actions';
 import { soundOff, soundOn } from 'src/app/store/actions/sound.action';
@@ -14,17 +15,21 @@ import { AppState } from 'src/app/store/state/app.state';
   templateUrl: './authorization.component.html',
   styleUrls: ['./authorization.component.less'],
 })
-export class AuthorizationComponent implements OnInit {
+export class AuthorizationComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private store: Store<AppState>,
     private httpService: HttpService
   ) {}
 
+  soundSwitchSubscription = new Subscription();
+
   ngOnInit(): void {
-    this.store.select(selectSoundSwitch).subscribe((state) => {
-      this.isAudioOn = state;
-    });
+    this.soundSwitchSubscription = this.store
+      .select(selectSoundSwitch)
+      .subscribe((state) => {
+        this.isAudioOn = state;
+      });
   }
 
   model = {
@@ -94,5 +99,9 @@ export class AuthorizationComponent implements OnInit {
     if (!this.isAudioOn) return;
     let sound = new Audio('./../assets/audio/click.mp3');
     sound.play();
+  }
+
+  ngOnDestroy(): void {
+    this.soundSwitchSubscription.unsubscribe();
   }
 }

@@ -3,11 +3,12 @@ import {
   Component,
   DoCheck,
   ElementRef,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
 import { showEffects } from 'src/app/store/actions/duels/effectsWindow.actions';
 import { SpellbookState } from 'src/app/store/reducers/duels/spellBook.reducer';
 import {
@@ -30,7 +31,9 @@ import { WebsocketService } from 'src/app/websocket.service';
   templateUrl: './battlefield-centre.component.html',
   styleUrls: ['./battlefield-centre.component.less'],
 })
-export class BattlefieldCentreComponent implements OnInit, AfterViewInit {
+export class BattlefieldCentreComponent
+  implements OnInit, AfterViewInit, OnDestroy
+{
   constructor(
     private store: Store<AppState>,
     private wssService: WebsocketService
@@ -56,6 +59,16 @@ export class BattlefieldCentreComponent implements OnInit, AfterViewInit {
   hintTop = '';
   hintWidth = '';
 
+  mouseEnterSubscription = new Subscription();
+  mouseLeaveSubscription = new Subscription();
+  userEnergyPointsSubscription = new Subscription();
+  userActionPointsSubscription = new Subscription();
+  spellBookSubscription = new Subscription();
+  formSubscription = new Subscription();
+  elementSubscription = new Subscription();
+  despellSubscription = new Subscription();
+  moveSubscription = new Subscription();
+
   ngAfterViewInit(): void {
     let userSpell = this.userSpell.nativeElement;
 
@@ -63,7 +76,7 @@ export class BattlefieldCentreComponent implements OnInit, AfterViewInit {
 
     let mouseLeave = fromEvent(userSpell, 'mouseleave');
 
-    mouseEnter.subscribe((event) => {
+    this.mouseEnterSubscription = mouseEnter.subscribe((event) => {
       let spellCoord = userSpell.getBoundingClientRect();
 
       this.hintWidth = spellCoord.width + 'px';
@@ -72,37 +85,47 @@ export class BattlefieldCentreComponent implements OnInit, AfterViewInit {
       this.isHintHidden = false;
     });
 
-    mouseLeave.subscribe((event) => {
+    this.mouseLeaveSubscription = mouseLeave.subscribe((event) => {
       this.isHintHidden = true;
     });
   }
 
   ngOnInit(): void {
-    this.store.select(selectUserEnergyPoints).subscribe((userEnergyPoints) => {
-      this.energyPoints = userEnergyPoints;
-    });
+    this.userEnergyPointsSubscription = this.store
+      .select(selectUserEnergyPoints)
+      .subscribe((userEnergyPoints) => {
+        this.energyPoints = userEnergyPoints;
+      });
 
-    this.store.select(selectUserActionPoints).subscribe((userActionPoints) => {
-      this.actionPoints = userActionPoints;
-    });
+    this.userActionPointsSubscription = this.store
+      .select(selectUserActionPoints)
+      .subscribe((userActionPoints) => {
+        this.actionPoints = userActionPoints;
+      });
 
-    this.store.select(selectSpellbook).subscribe((state) => {
-      this.spellBook = state;
-    });
+    this.spellBookSubscription = this.store
+      .select(selectSpellbook)
+      .subscribe((state) => {
+        this.spellBook = state;
+      });
 
-    this.store.select(selectForm).subscribe((state) => {
+    this.formSubscription = this.store.select(selectForm).subscribe((state) => {
       this.currentSpellForm = state;
       this.createSpell();
     });
 
-    this.store.select(selectElement).subscribe((state) => {
-      this.currentSpellElement = state;
-      this.createSpell();
-    });
+    this.elementSubscription = this.store
+      .select(selectElement)
+      .subscribe((state) => {
+        this.currentSpellElement = state;
+        this.createSpell();
+      });
 
-    this.store.select(selectDespell).subscribe((state) => {
-      this.despell = state;
-    });
+    this.despellSubscription = this.store
+      .select(selectDespell)
+      .subscribe((state) => {
+        this.despell = state;
+      });
   }
 
   createSpell() {
@@ -253,7 +276,7 @@ export class BattlefieldCentreComponent implements OnInit, AfterViewInit {
 
   isUserMove() {
     let gameMove;
-    this.store.select(selectMuve).subscribe((move) => {
+    this.moveSubscription = this.store.select(selectMuve).subscribe((move) => {
       gameMove = move;
     });
     if (gameMove === 'user') return true;
@@ -265,5 +288,16 @@ export class BattlefieldCentreComponent implements OnInit, AfterViewInit {
 
     let gameInformation = { header: 'endMove' };
     this.wssService.sendMessage(gameInformation);
+  }
+
+  ngOnDestroy() {
+    this.mouseEnterSubscription.unsubscribe();
+    this.mouseLeaveSubscription.unsubscribe();
+    this.userEnergyPointsSubscription.unsubscribe();
+    this.userActionPointsSubscription.unsubscribe();
+    this.spellBookSubscription.unsubscribe();
+    this.formSubscription.unsubscribe();
+    this.elementSubscription.unsubscribe();
+    this.despellSubscription.unsubscribe();
   }
 }

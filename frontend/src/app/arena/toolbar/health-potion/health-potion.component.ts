@@ -3,11 +3,12 @@ import {
   Component,
   ElementRef,
   HostListener,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { fromEvent } from 'rxjs';
+import { fromEvent, Subscription } from 'rxjs';
 import { increaseUserHealth } from 'src/app/store/actions/arena/health.actions';
 import { firstHealthPotionConsume } from 'src/app/store/actions/arena/toolbar.actions';
 import {
@@ -23,8 +24,13 @@ import { AppState } from 'src/app/store/state/app.state';
   templateUrl: './health-potion.component.html',
   styleUrls: ['./health-potion.component.less'],
 })
-export class HealthPotionComponent implements OnInit {
+export class HealthPotionComponent implements OnInit, OnDestroy {
   constructor(private store: Store<AppState>) {}
+
+  soundSwitchSubscription = new Subscription();
+  firstPotionSubscription = new Subscription();
+  userHealthSubscription = new Subscription();
+  enemyHealthSubscription = new Subscription();
 
   @HostListener('document:keydown.1')
   keydown() {
@@ -41,24 +47,32 @@ export class HealthPotionComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.store.select(selectSoundSwitch).subscribe((soundState) => {
-      this.isAudioOn = soundState;
-    });
+    this.soundSwitchSubscription = this.store
+      .select(selectSoundSwitch)
+      .subscribe((soundState) => {
+        this.isAudioOn = soundState;
+      });
 
-    this.store.select(selectFirstPotion).subscribe((state) => {
-      if (state) {
-        this.isFull = true;
-        this.isEmpty = false;
-      }
-    });
+    this.firstPotionSubscription = this.store
+      .select(selectFirstPotion)
+      .subscribe((state) => {
+        if (state) {
+          this.isFull = true;
+          this.isEmpty = false;
+        }
+      });
 
-    this.store.select(selectUserHealth).subscribe((health) => {
-      this.userHealth = health;
-    });
+    this.userHealthSubscription = this.store
+      .select(selectUserHealth)
+      .subscribe((health) => {
+        this.userHealth = health;
+      });
 
-    this.store.select(selectEnemyHealth).subscribe((health) => {
-      this.enemyHealth = health;
-    });
+    this.enemyHealthSubscription = this.store
+      .select(selectEnemyHealth)
+      .subscribe((health) => {
+        this.enemyHealth = health;
+      });
   }
 
   consumePotion() {
@@ -83,5 +97,12 @@ export class HealthPotionComponent implements OnInit {
     if (!this.isAudioOn) return;
     let sound = new Audio('./assets/audio/potion.mp3');
     sound.play();
+  }
+
+  ngOnDestroy(): void {
+    this.soundSwitchSubscription.unsubscribe();
+    this.firstPotionSubscription.unsubscribe();
+    this.userHealthSubscription.unsubscribe();
+    this.enemyHealthSubscription.unsubscribe();
   }
 }

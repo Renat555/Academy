@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
@@ -11,23 +11,31 @@ import {
   addUserName,
   deleteUserName,
 } from 'src/app/store/actions/duels/users.actions';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-auth-mini',
   templateUrl: './auth-mini.component.html',
   styleUrls: ['./auth-mini.component.less'],
 })
-export class AuthMiniComponent implements OnInit {
+export class AuthMiniComponent implements OnInit, OnDestroy {
   constructor(private router: Router, private store: Store<AppState>) {}
 
-  ngOnInit(): void {
-    this.store.select(selectUserName).subscribe((state) => {
-      this.userName = state;
-    });
+  userNameSubscription = new Subscription();
+  userIsAuthSubscription = new Subscription();
 
-    this.store.select(selectUserIsAuth).subscribe((state) => {
-      this.isAuthorized = state;
-    });
+  ngOnInit(): void {
+    this.userNameSubscription = this.store
+      .select(selectUserName)
+      .subscribe((state) => {
+        this.userName = state;
+      });
+
+    this.userIsAuthSubscription = this.store
+      .select(selectUserIsAuth)
+      .subscribe((state) => {
+        this.isAuthorized = state;
+      });
   }
 
   userName = '';
@@ -49,5 +57,10 @@ export class AuthMiniComponent implements OnInit {
 
   goToProfile() {
     this.router.navigate(['profile/generalStat']);
+  }
+
+  ngOnDestroy(): void {
+    this.userNameSubscription.unsubscribe();
+    this.userIsAuthSubscription.unsubscribe();
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
@@ -11,43 +11,57 @@ import {
   selectUserId,
   selectUserName,
 } from 'src/app/store/selectors/duels/users.selectors';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-wait-screen',
   templateUrl: './wait-screen.component.html',
   styleUrls: ['./wait-screen.component.less'],
 })
-export class WaitScreenComponent implements OnInit {
+export class WaitScreenComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private wssService: WebsocketService,
     private router: Router
   ) {}
 
+  text = '';
+
+  enemyTypeSubscription = new Subscription();
+  userNameSubscription = new Subscription();
+  userIdSubscription = new Subscription();
+  isEnemyCreatedSubscription = new Subscription();
+
   ngOnInit(): void {
     let enemyType;
 
-    this.store.select(selectEnemyType).subscribe((type) => {
-      enemyType = type;
+    this.enemyTypeSubscription = this.store
+      .select(selectEnemyType)
+      .subscribe((type) => {
+        enemyType = type;
 
-      if (type === 'human') {
-        this.text = 'Поиск противника...';
-      } else {
-        this.text = 'Создание игры...';
-      }
-    });
+        if (type === 'human') {
+          this.text = 'Поиск противника...';
+        } else {
+          this.text = 'Создание игры...';
+        }
+      });
 
     let name;
 
-    this.store.select(selectUserName).subscribe((userName) => {
-      name = userName;
-    });
+    this.userNameSubscription = this.store
+      .select(selectUserName)
+      .subscribe((userName) => {
+        name = userName;
+      });
 
     let id;
 
-    this.store.select(selectUserId).subscribe((userId) => {
-      id = userId;
-    });
+    this.userIdSubscription = this.store
+      .select(selectUserId)
+      .subscribe((userId) => {
+        id = userId;
+      });
 
     let gameInformation = {
       header: 'createGame',
@@ -75,10 +89,17 @@ export class WaitScreenComponent implements OnInit {
 
     this.wssService.sendMessage(gameInformation);
 
-    this.store.select(selectIsEnemyCreated).subscribe((state) => {
-      if (state) this.router.navigate(['/duels/game']);
-    });
+    this.isEnemyCreatedSubscription = this.store
+      .select(selectIsEnemyCreated)
+      .subscribe((state) => {
+        if (state) this.router.navigate(['/duels/game']);
+      });
   }
 
-  text = '';
+  ngOnDestroy(): void {
+    this.enemyTypeSubscription.unsubscribe();
+    this.userNameSubscription.unsubscribe();
+    this.userIdSubscription.unsubscribe();
+    this.isEnemyCreatedSubscription.unsubscribe();
+  }
 }

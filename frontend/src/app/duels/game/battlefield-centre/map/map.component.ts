@@ -9,6 +9,7 @@ import {
   AfterContentChecked,
   Component,
   ElementRef,
+  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -67,7 +68,7 @@ function isPathFree(
   }
 }
 
-function calcTimeMoving(firstPoint: number, secondPoint: number): number {
+function calcTimeMoving(firstPoint: number, secondPoint: number) {
   let pathLength = Math.abs(firstPoint - secondPoint);
 
   let time = Math.floor((pathLength / 200) * 100) / 100;
@@ -232,7 +233,7 @@ function calcTimeMoving(firstPoint: number, secondPoint: number): number {
     ]),
   ],
 })
-export class MapComponent implements OnInit {
+export class MapComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private wssService: WebsocketService
@@ -327,35 +328,49 @@ export class MapComponent implements OnInit {
   spellBook: SpellbookState = {};
 
   map: (string | number)[][][] = [];
+  userMapCoord = { row: 0, col: 0 };
+  enemyMapCoord = { row: 0, col: 0 };
+
+  mapSubscription = new Subscription();
+  currentSpellSubscription = new Subscription();
+  enemyMapSubscription = new Subscription();
+  spellBookSubscription = new Subscription();
+  moveSubscription = new Subscription();
+  mapUserSubscription = new Subscription();
+  mapEnemySubscription = new Subscription();
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.store.select(selectAllMap).subscribe((state) => {
-        this.map = state;
-        this.setBattlefieldSpells();
-      });
+      this.mapSubscription = this.store
+        .select(selectAllMap)
+        .subscribe((state) => {
+          this.map = state;
+          this.setBattlefieldSpells();
+        });
 
-      this.store.select(selectSpell).subscribe((spell) => {
-        if (spell === 'earthshield') {
-          this.battlefield.nativeElement.removeEventListener(
-            'click',
-            this.moveUserBind
-          );
-          this.createEarthshield();
-        } else if (spell === 'watersphere') {
-          this.battlefield.nativeElement.removeEventListener(
-            'click',
-            this.moveUserBind
-          );
-          this.createWatersphere();
-        } else {
-          this.battlefield.nativeElement.addEventListener(
-            'click',
-            this.moveUserBind
-          );
-          this.cancelEarthshield();
-        }
-      });
+      this.currentSpellSubscription = this.store
+        .select(selectSpell)
+        .subscribe((spell) => {
+          if (spell === 'earthshield') {
+            this.battlefield.nativeElement.removeEventListener(
+              'click',
+              this.moveUserBind
+            );
+            this.createEarthshield();
+          } else if (spell === 'watersphere') {
+            this.battlefield.nativeElement.removeEventListener(
+              'click',
+              this.moveUserBind
+            );
+            this.createWatersphere();
+          } else {
+            this.battlefield.nativeElement.addEventListener(
+              'click',
+              this.moveUserBind
+            );
+            this.cancelEarthshield();
+          }
+        });
 
       this.placeUser();
       this.placeEnemy();
@@ -365,13 +380,24 @@ export class MapComponent implements OnInit {
         (e: MouseEvent) => this.showHint(e)
       );
 
-      this.store.select(selectMapEnemy).subscribe((coord) => {
-        this.moveEnemy;
-      });
+      this.enemyMapSubscription = this.store
+        .select(selectMapEnemy)
+        .subscribe((coord) => {
+          this.enemyMapCoord = coord;
+          this.moveEnemy;
+        });
 
-      this.store.select(selectSpellbook).subscribe((state) => {
-        this.spellBook = state;
-      });
+      this.mapUserSubscription = this.store
+        .select(selectMapUser)
+        .subscribe((state) => {
+          this.userMapCoord = state;
+        });
+
+      this.spellBookSubscription = this.store
+        .select(selectSpellbook)
+        .subscribe((state) => {
+          this.spellBook = state;
+        });
     }, 0);
   }
 
@@ -584,7 +610,7 @@ export class MapComponent implements OnInit {
 
   isUserMove() {
     let move;
-    this.store.select(selectMuve).subscribe((state) => {
+    this.moveSubscription = this.store.select(selectMuve).subscribe((state) => {
       move = state;
     });
     if (move !== 'user') return false;
@@ -635,14 +661,8 @@ export class MapComponent implements OnInit {
     let targetRow = +row;
     let targetCol = +col;
 
-    let user = { row: 0, col: 0 };
-
-    this.store.select(selectMapUser).subscribe((state) => {
-      user = state;
-    });
-
-    let userRow = user.row;
-    let userCol = user.col;
+    let userRow = this.userMapCoord.row;
+    let userCol = this.userMapCoord.col;
 
     let pathData = this.getPathData(
       this.map,
@@ -944,27 +964,16 @@ export class MapComponent implements OnInit {
   }
 
   faceToEnemy() {
-    let userCoord = { row: -1, col: -1 };
-    let enemyCoord = { row: -1, col: -1 };
-
-    this.store.select(selectMapUser).subscribe((state) => {
-      userCoord = state;
-    });
-
-    this.store.select(selectMapEnemy).subscribe((state) => {
-      enemyCoord = state;
-    });
-
-    if (userCoord.row < enemyCoord.row) {
+    if (this.userMapCoord.row < this.enemyMapCoord.row) {
       this.stateUserSteps = 'userBackOne';
       this.stateEnemySteps = 'enemyFaceOne';
-    } else if (userCoord.row > enemyCoord.row) {
+    } else if (this.userMapCoord.row > this.enemyMapCoord.row) {
       this.stateUserSteps = 'userFaceOne';
       this.stateEnemySteps = 'enemyBackOne';
-    } else if (userCoord.col < enemyCoord.col) {
+    } else if (this.userMapCoord.col < this.enemyMapCoord.col) {
       this.stateUserSteps = 'userRightOne';
       this.stateEnemySteps = 'enemyLeftOne';
-    } else if (userCoord.col > enemyCoord.col) {
+    } else if (this.userMapCoord.col > this.enemyMapCoord.col) {
       this.stateUserSteps = 'userLeftOne';
       this.stateEnemySteps = 'enemyRightOne';
     }
@@ -1167,5 +1176,13 @@ export class MapComponent implements OnInit {
   isBlockFreeForSpell(row: number, col: number) {
     if (this.map[row][col][2] === '') return true;
     return false;
+  }
+
+  ngOnDestroy(): void {
+    this.currentSpellSubscription.unsubscribe();
+    this.mapSubscription.unsubscribe();
+    this.enemyMapSubscription.unsubscribe();
+    this.spellBookSubscription.unsubscribe();
+    this.moveSubscription.unsubscribe();
   }
 }

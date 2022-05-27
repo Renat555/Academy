@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
+import { Subscription } from 'rxjs';
 import { soundOff, soundOn } from 'src/app/store/actions/sound.action';
 import { selectSoundSwitch } from 'src/app/store/selectors/sound.selector';
 import { AppState } from 'src/app/store/state/app.state';
@@ -11,17 +12,21 @@ import { AppState } from 'src/app/store/state/app.state';
   templateUrl: './user-defined-range.component.html',
   styleUrls: ['./user-defined-range.component.less'],
 })
-export class UserDefinedRangeComponent implements OnInit {
+export class UserDefinedRangeComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private store: Store<AppState>,
     private fb: FormBuilder
   ) {}
 
+  soundSwitchSubscription = new Subscription();
+
   ngOnInit(): void {
-    this.store.select(selectSoundSwitch).subscribe((state) => {
-      this.isAudioOn = state;
-    });
+    this.soundSwitchSubscription = this.store
+      .select(selectSoundSwitch)
+      .subscribe((state) => {
+        this.isAudioOn = state;
+      });
   }
 
   randomIndex() {
@@ -38,7 +43,6 @@ export class UserDefinedRangeComponent implements OnInit {
 
   result = 0;
 
-  // this value is necessary in order for the next result to be determined at the time of displaying the current result
   nextResult = 0;
 
   isYes = false;
@@ -142,5 +146,9 @@ export class UserDefinedRangeComponent implements OnInit {
     if (!this.isAudioOn) return;
     let sound = new Audio('./../assets/audio/click.mp3');
     sound.play();
+  }
+
+  ngOnDestroy(): void {
+    this.soundSwitchSubscription.unsubscribe();
   }
 }
