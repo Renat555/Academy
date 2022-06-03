@@ -24,7 +24,7 @@ import {
   selectUserEnergyPoints,
 } from 'src/app/store/selectors/duels/users.selectors';
 import { AppState } from 'src/app/store/state/app.state';
-import { WebsocketService } from 'src/app/websocket.service';
+import { WebsocketService } from 'src/app/services/websocket.service';
 
 @Component({
   selector: 'app-battlefield-centre',

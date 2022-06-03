@@ -13,11 +13,10 @@ import {
   OnInit,
   ViewChild,
 } from '@angular/core';
-import { selectSoundSwitch } from '../../store/selectors/sound.selector';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../store/state/app.state';
-import { soundOff, soundOn } from 'src/app/store/actions/sound.action';
+import { soundToggle } from 'src/app/store/actions/sound.action';
 import { firstHealthPotionRefill } from 'src/app/store/actions/arena/toolbar.actions';
 import {
   selectEnemyHealth,
@@ -29,6 +28,8 @@ import {
   resetHealth,
 } from 'src/app/store/actions/arena/health.actions';
 import { Subscription } from 'rxjs';
+import { GeneralAudioService } from 'src/app/services/audio/general-audio.service';
+import { ArenaAudioService } from 'src/app/services/audio/arena-audio.service';
 
 function calcDirection(
   userTop: number,
@@ -198,19 +199,17 @@ interface Coordinate {
   ],
 })
 export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
-  constructor(private store: Store<AppState>, private router: Router) {}
+  constructor(
+    private store: Store<AppState>,
+    private router: Router,
+    private audio: GeneralAudioService,
+    private arenaAudio: ArenaAudioService
+  ) {}
 
-  soundSwitchSubscription = new Subscription();
   userHealthSubscription = new Subscription();
   enemyHealthSubscription = new Subscription();
 
   ngOnInit() {
-    this.soundSwitchSubscription = this.store
-      .select(selectSoundSwitch)
-      .subscribe((state) => {
-        this.isAudioOn = state;
-      });
-
     this.userHealthSubscription = this.store
       .select(selectUserHealth)
       .subscribe((health) => {
@@ -249,7 +248,6 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
     clearInterval(this.enemyDamageTrackingId);
     clearInterval(this.userDamageTrackingId);
 
-    this.soundSwitchSubscription.unsubscribe();
     this.userHealthSubscription.unsubscribe();
     this.enemyHealthSubscription.unsubscribe();
   }
@@ -556,7 +554,7 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
 
     this.degree = calcDegree(this.top3, this.left3, this.top4, this.left4);
 
-    this.fireSound();
+    this.arenaAudio.fire();
 
     setTimeout(() => {
       this.stateSpell = 'second';
@@ -575,18 +573,8 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
     this.isFireVisible = true;
   }
 
-  fireSound() {
-    if (!this.isAudioOn) return;
-    let sound = new Audio('./assets/audio/fire.mp3');
-    sound.play();
-  }
-
   toggleSound() {
-    if (this.isAudioOn) {
-      this.store.dispatch(soundOff());
-    } else {
-      this.store.dispatch(soundOn());
-    }
+    this.store.dispatch(soundToggle());
   }
 
   makeSteps(time: number, direction: string) {
@@ -672,6 +660,7 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
   }
 
   goToHall() {
+    this.audio.click();
     this.router.navigate(['']);
   }
 
@@ -681,7 +670,6 @@ export class BattleComponent implements OnDestroy, AfterViewInit, OnInit {
     clearInterval(this.userDamageTrackingId);
 
     this.store.dispatch(resetHealth());
-
     this.store.dispatch(firstHealthPotionRefill());
 
     setTimeout(() => {

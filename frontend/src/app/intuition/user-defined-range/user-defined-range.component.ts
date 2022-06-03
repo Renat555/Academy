@@ -1,10 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl } from '@angular/forms';
+import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
-import { soundOff, soundOn } from 'src/app/store/actions/sound.action';
-import { selectSoundSwitch } from 'src/app/store/selectors/sound.selector';
+import { GeneralAudioService } from 'src/app/services/audio/general-audio.service';
+import { soundToggle } from 'src/app/store/actions/sound.action';
 import { AppState } from 'src/app/store/state/app.state';
 
 @Component({
@@ -12,22 +11,12 @@ import { AppState } from 'src/app/store/state/app.state';
   templateUrl: './user-defined-range.component.html',
   styleUrls: ['./user-defined-range.component.less'],
 })
-export class UserDefinedRangeComponent implements OnInit, OnDestroy {
+export class UserDefinedRangeComponent {
   constructor(
     private router: Router,
     private store: Store<AppState>,
-    private fb: FormBuilder
+    private audioService: GeneralAudioService
   ) {}
-
-  soundSwitchSubscription = new Subscription();
-
-  ngOnInit(): void {
-    this.soundSwitchSubscription = this.store
-      .select(selectSoundSwitch)
-      .subscribe((state) => {
-        this.isAudioOn = state;
-      });
-  }
 
   randomIndex() {
     return Math.floor(Math.random() * (5 - 1) + 1);
@@ -80,7 +69,7 @@ export class UserDefinedRangeComponent implements OnInit, OnDestroy {
   }
 
   showAnswer() {
-    this.clickSound();
+    this.audioService.click();
 
     let min = +this.firstNumber.value;
     let max = +this.secondNumber.value;
@@ -131,24 +120,11 @@ export class UserDefinedRangeComponent implements OnInit, OnDestroy {
   }
 
   goToMenu() {
+    this.audioService.click();
     this.router.navigate(['intuition/menu']);
   }
 
   toggleSound() {
-    if (this.isAudioOn) {
-      this.store.dispatch(soundOff());
-    } else {
-      this.store.dispatch(soundOn());
-    }
-  }
-
-  clickSound() {
-    if (!this.isAudioOn) return;
-    let sound = new Audio('./../assets/audio/click.mp3');
-    sound.play();
-  }
-
-  ngOnDestroy(): void {
-    this.soundSwitchSubscription.unsubscribe();
+    this.store.dispatch(soundToggle());
   }
 }

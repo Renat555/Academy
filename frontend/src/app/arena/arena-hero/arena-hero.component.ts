@@ -15,6 +15,7 @@ import {
 } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { ArenaAudioService } from 'src/app/services/audio/arena-audio.service';
 import { increaseUserHealth } from 'src/app/store/actions/arena/health.actions';
 import { selectFirstPotion } from 'src/app/store/selectors/arena/toolbar.selectors';
 import { selectSoundSwitch } from 'src/app/store/selectors/sound.selector';
@@ -62,7 +63,10 @@ import { AppState } from 'src/app/store/state/app.state';
   ],
 })
 export class ArenaHeroComponent implements OnInit, OnChanges, OnDestroy {
-  constructor(private store: Store<AppState>) {}
+  constructor(
+    private store: Store<AppState>,
+    private arenaAudio: ArenaAudioService
+  ) {}
 
   isAudioOn = true;
 
@@ -72,16 +76,9 @@ export class ArenaHeroComponent implements OnInit, OnChanges, OnDestroy {
   @Input() stateSteps!: string;
   @Input() discharge!: boolean;
 
-  soundSwitchSubscription = new Subscription();
   firstPotionSubscription = new Subscription();
 
   ngOnInit(): void {
-    this.soundSwitchSubscription = this.store
-      .select(selectSoundSwitch)
-      .subscribe((state) => {
-        this.isAudioOn = state;
-      });
-
     this.firstPotionSubscription = this.store
       .select(selectFirstPotion)
       .subscribe((potionState) => {
@@ -97,11 +94,11 @@ export class ArenaHeroComponent implements OnInit, OnChanges, OnDestroy {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes.stateSteps) {
-      this.stepSound();
+      this.arenaAudio.step();
     }
 
     if (changes.discharge && this.discharge) {
-      this.dischargeSound();
+      this.arenaAudio.discharge();
       this.isDischarge = true;
       setTimeout(() => {
         this.isDischarge = false;
@@ -109,20 +106,7 @@ export class ArenaHeroComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
-  stepSound() {
-    if (!this.isAudioOn) return;
-    let sound = new Audio('./assets/audio/step.mp3');
-    sound.play();
-  }
-
-  dischargeSound() {
-    if (!this.isAudioOn) return;
-    let sound = new Audio('./assets/audio/discharge.mp3');
-    sound.play();
-  }
-
   ngOnDestroy(): void {
-    this.soundSwitchSubscription.unsubscribe();
     this.firstPotionSubscription.unsubscribe();
   }
 }

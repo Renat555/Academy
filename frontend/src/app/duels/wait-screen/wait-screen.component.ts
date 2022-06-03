@@ -6,7 +6,7 @@ import {
   selectIsEnemyCreated,
 } from 'src/app/store/selectors/duels/generalInfo.selectors';
 import { AppState } from 'src/app/store/state/app.state';
-import { WebsocketService } from 'src/app/websocket.service';
+import { WebsocketService } from 'src/app/services/websocket.service';
 import {
   selectUserId,
   selectUserName,

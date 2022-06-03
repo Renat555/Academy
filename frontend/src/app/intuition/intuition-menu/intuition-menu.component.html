@@ -1,9 +1,7 @@
 <div class="exit" (click)="goToHall()"></div>
-<div
-  class="sound"
-  (click)="toggleSound()"
-  [ngClass]="{ soundon: isAudioOn, soundoff: !isAudioOn }"
-></div>
+<div class="sound">
+  <app-audio (toggle)="toggleSound()"></app-audio>
+</div>
 <div class="background">
   <div class="box1 box" (click)="goToFigures()">ФИГУРЫ</div>
   <div class="box2 box" (click)="goToBlackWhite()">ЧЕРНОЕ И БЕЛОЕ</div>

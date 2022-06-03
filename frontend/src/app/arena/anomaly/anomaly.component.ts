@@ -1,23 +1,13 @@
-import {
-  Component,
-  Input,
-  OnChanges,
-  OnDestroy,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
-import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
-import { selectSoundSwitch } from 'src/app/store/selectors/sound.selector';
-import { AppState } from 'src/app/store/state/app.state';
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+import { ArenaAudioService } from 'src/app/services/audio/arena-audio.service';
 
 @Component({
   selector: 'app-anomaly',
   templateUrl: './anomaly.component.html',
   styleUrls: ['./anomaly.component.less'],
 })
-export class AnomalyComponent implements OnInit, OnChanges, OnDestroy {
-  constructor(private store: Store<AppState>) {}
+export class AnomalyComponent implements OnChanges {
+  constructor(private arenaAudio: ArenaAudioService) {}
 
   isExplosion = false;
   isIntact = true;
@@ -27,20 +17,10 @@ export class AnomalyComponent implements OnInit, OnChanges, OnDestroy {
 
   @Input() health!: number;
 
-  soundSwitchSubscription = new Subscription();
-
-  ngOnInit(): void {
-    this.soundSwitchSubscription = this.store
-      .select(selectSoundSwitch)
-      .subscribe((state) => {
-        this.isAudioOn = state;
-      });
-  }
-
   ngOnChanges(changes: SimpleChanges): void {
     if (this.health <= 0) {
       this.isExplosion = true;
-      this.explosionSound();
+      this.arenaAudio.explosion();
 
       setTimeout(() => {
         this.isExplosion = false;
@@ -54,15 +34,5 @@ export class AnomalyComponent implements OnInit, OnChanges, OnDestroy {
       this.isBroken = false;
       this.isIntact = true;
     }
-  }
-
-  explosionSound() {
-    if (!this.isAudioOn) return;
-    let sound = new Audio('./assets/audio/explosion.mp3');
-    sound.play();
-  }
-
-  ngOnDestroy(): void {
-    this.soundSwitchSubscription.unsubscribe();
   }
 }

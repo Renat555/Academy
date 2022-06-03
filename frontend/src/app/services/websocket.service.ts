@@ -1,15 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { EMPTY, observable, Observable } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
 import { webSocket, WebSocketSubject } from 'rxjs/webSocket';
 import { environment } from 'src/environments/environment';
 import {
   enemyCreated,
   enemyMove,
   userMove,
-} from './store/actions/duels/generalInfo.actions';
-import { setEnemy, spellApproval } from './store/actions/duels/map.actions';
+} from '../store/actions/duels/generalInfo.actions';
+import { setEnemy, spellApproval } from '../store/actions/duels/map.actions';
 import {
   addEnemyName,
   changeEnemyActionPoints,
@@ -24,14 +22,13 @@ import {
   setUserDebuffs,
   setUserHealth,
   setUserMaxHealth,
-} from './store/actions/duels/users.actions';
-import { selectMapEnemy } from './store/selectors/duels/map.selectors';
-import { AppState } from './store/state/app.state';
+} from '../store/actions/duels/users.actions';
+import { selectMapEnemy } from '../store/selectors/duels/map.selectors';
+import { AppState } from '../store/state/app.state';
 import {
   addDescriptionBlock,
   addDescriptionRow,
-} from './store/actions/duels/description.actions';
-import { ConditionalExpr } from '@angular/compiler';
+} from '../store/actions/duels/description.actions';
 
 interface GameInformation {
   header: string;

@@ -2,14 +2,14 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { HttpService } from './http.service';
+import { HttpService } from './services/http.service';
 import {
   addLogin,
   userIsAuth,
   userIsNotAuth,
 } from './store/actions/user.actions';
 import { AppState } from './store/state/app.state';
-import { WebsocketService } from './websocket.service';
+import { WebsocketService } from './services/websocket.service';
 
 @Component({
   selector: 'app-root',

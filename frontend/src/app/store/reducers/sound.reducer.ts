@@ -16,5 +16,12 @@ export const reducer = createReducer(
   })),
   on(SoundActions.soundOn, (state) => ({
     enabled: true,
-  }))
+  })),
+  on(SoundActions.soundToggle, (state) => {
+    if (state.enabled) {
+      return { enabled: false };
+    } else {
+      return { enabled: true };
+    }
+  })
 );

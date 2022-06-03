@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
-import { HttpService } from 'src/app/http.service';
-import { soundOff, soundOn } from 'src/app/store/actions/sound.action';
-import { selectSoundSwitch } from 'src/app/store/selectors/sound.selector';
+import { GeneralAudioService } from 'src/app/services/audio/general-audio.service';
+import { HttpService } from 'src/app/services/http.service';
+import { soundToggle } from 'src/app/store/actions/sound.action';
 import { AppState } from 'src/app/store/state/app.state';
 
 @Component({
@@ -16,34 +15,12 @@ export class CardSuitsComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private store: Store<AppState>,
-    private httpService: HttpService
+    private httpService: HttpService,
+    private audioService: GeneralAudioService
   ) {}
 
-  soundSwitchSubscription = new Subscription();
-
   ngOnInit(): void {
-    this.soundSwitchSubscription = this.store
-      .select(selectSoundSwitch)
-      .subscribe((state) => {
-        this.isAudioOn = state;
-      });
-
     this.suitIndex = this.randomIndex();
-  }
-
-  ngOnDestroy(): void {
-    let login = localStorage.getItem('login') || '';
-
-    this.httpService
-      .postIntuitionResult({
-        mode: 'card-suits',
-        login: login,
-        right: this.rightAnswers,
-        wrong: this.wrongAnswers,
-      })
-      .subscribe(() => {});
-
-    this.soundSwitchSubscription.unsubscribe();
   }
 
   randomIndex() {
@@ -67,7 +44,7 @@ export class CardSuitsComponent implements OnInit, OnDestroy {
   percentHint = 'Среднестатистический показатель \xa025%';
 
   showPicture(event: MouseEvent) {
-    this.clickSound();
+    this.audioService.click();
 
     clearTimeout(this.showCardSuitId);
     this.hidePictures();
@@ -118,20 +95,24 @@ export class CardSuitsComponent implements OnInit, OnDestroy {
   }
 
   goToMenu() {
+    this.audioService.click();
     this.router.navigate(['intuition/menu']);
   }
 
   toggleSound() {
-    if (this.isAudioOn) {
-      this.store.dispatch(soundOff());
-    } else {
-      this.store.dispatch(soundOn());
-    }
+    this.store.dispatch(soundToggle());
   }
 
-  clickSound() {
-    if (!this.isAudioOn) return;
-    let sound = new Audio('./../assets/audio/click.mp3');
-    sound.play();
+  ngOnDestroy(): void {
+    let login = localStorage.getItem('login') || '';
+
+    this.httpService
+      .postIntuitionResult({
+        mode: 'card-suits',
+        login: login,
+        right: this.rightAnswers,
+        wrong: this.wrongAnswers,
+      })
+      .subscribe(() => {});
   }
 }

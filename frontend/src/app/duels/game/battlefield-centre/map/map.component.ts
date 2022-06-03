@@ -28,7 +28,7 @@ import {
 import { selectMuve } from 'src/app/store/selectors/duels/generalInfo.selectors';
 import { selectUserActionPoints } from 'src/app/store/selectors/duels/users.selectors';
 import { AppState } from 'src/app/store/state/app.state';
-import { WebsocketService } from 'src/app/websocket.service';
+import { WebsocketService } from 'src/app/services/websocket.service';
 import {
   selectForm,
   selectSpell,

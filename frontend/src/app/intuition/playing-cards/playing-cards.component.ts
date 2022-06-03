@@ -1,10 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
-import { HttpService } from 'src/app/http.service';
-import { soundOff, soundOn } from 'src/app/store/actions/sound.action';
-import { selectSoundSwitch } from 'src/app/store/selectors/sound.selector';
+import { GeneralAudioService } from 'src/app/services/audio/general-audio.service';
+import { HttpService } from 'src/app/services/http.service';
+import { soundToggle } from 'src/app/store/actions/sound.action';
 import { AppState } from '../../store/state/app.state';
 
 @Component({
@@ -16,18 +15,11 @@ export class PlayingCardsComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private store: Store<AppState>,
-    private httpService: HttpService
+    private httpService: HttpService,
+    private audioService: GeneralAudioService
   ) {}
 
-  soundSwitchSubscription = new Subscription();
-
   ngOnInit() {
-    this.soundSwitchSubscription = this.store
-      .select(selectSoundSwitch)
-      .subscribe((state) => {
-        this.isAudioOn = state;
-      });
-
     this.cardIndex = this.randomIndex();
   }
 
@@ -42,8 +34,6 @@ export class PlayingCardsComponent implements OnInit, OnDestroy {
         wrong: this.wrongAnswers,
       })
       .subscribe(() => {});
-
-    this.soundSwitchSubscription.unsubscribe();
   }
 
   randomIndex() {
@@ -183,7 +173,7 @@ export class PlayingCardsComponent implements OnInit, OnDestroy {
   }
 
   showPicture(event: MouseEvent) {
-    this.clickSound();
+    this.audioService.click();
 
     clearTimeout(this.showCardId);
     this.hidePictures();
@@ -305,6 +295,7 @@ export class PlayingCardsComponent implements OnInit, OnDestroy {
   }
 
   goToMenu() {
+    this.audioService.click();
     this.router.navigate(['intuition/menu']);
   }
 
@@ -365,16 +356,6 @@ export class PlayingCardsComponent implements OnInit, OnDestroy {
   }
 
   toggleSound() {
-    if (this.isAudioOn) {
-      this.store.dispatch(soundOff());
-    } else {
-      this.store.dispatch(soundOn());
-    }
-  }
-
-  clickSound() {
-    if (!this.isAudioOn) return;
-    let sound = new Audio('./../assets/audio/click.mp3');
-    sound.play();
+    this.store.dispatch(soundToggle());
   }
 }

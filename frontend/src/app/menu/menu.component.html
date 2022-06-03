@@ -1,8 +1,6 @@
-<div
-  class="sound"
-  (click)="toggleSound()"
-  [ngClass]="{ soundon: isAudioOn, soundoff: !isAudioOn }"
-></div>
+<div class="sound">
+  <app-audio (toggle)="toggleSound()"></app-audio>
+</div>
 <div class="background" #background>
   <div class="auth"><app-auth-mini></app-auth-mini></div>
   <div class="box1 box" (click)="goToIntuition()">РАБОТА С ИНТУИЦИЕЙ</div>

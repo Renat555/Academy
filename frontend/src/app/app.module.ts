@@ -53,6 +53,7 @@ import { HealthPotionComponent } from './arena/toolbar/health-potion/health-poti
 import { EffectsModule } from '@ngrx/effects';
 import { IntStatEffects } from './effects/intStat.effects';
 import { DuelsHealthComponent } from './duels/common/duels-health/duels-health.component';
+import { AudioComponent } from './common/audio/audio.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +99,7 @@ import { DuelsHealthComponent } from './duels/common/duels-health/duels-health.c
     ToolbarComponent,
     HealthPotionComponent,
     DuelsHealthComponent,
+    AudioComponent,
   ],
   imports: [
     ReactiveFormsModule,

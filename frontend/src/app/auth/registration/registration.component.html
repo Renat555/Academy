@@ -1,8 +1,6 @@
-<div
-  class="sound"
-  (click)="toggleSound()"
-  [ngClass]="{ soundon: isAudioOn, soundoff: !isAudioOn }"
-></div>
+<div class="sound">
+  <app-audio (toggle)="toggleSound()"></app-audio>
+</div>
 <div class="exit" (click)="goToMenu()"></div>
 <div class="background">
   <form id="login" #regForm="ngForm" (ngSubmit)="submit(regForm)" novalidate>

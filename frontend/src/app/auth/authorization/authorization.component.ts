@@ -1,13 +1,12 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
-import { HttpService } from 'src/app/http.service';
+import { GeneralAudioService } from 'src/app/services/audio/general-audio.service';
+import { HttpService } from 'src/app/services/http.service';
 import { addUserName } from 'src/app/store/actions/duels/users.actions';
-import { soundOff, soundOn } from 'src/app/store/actions/sound.action';
+import { soundToggle } from 'src/app/store/actions/sound.action';
 import { addLogin, userIsAuth } from 'src/app/store/actions/user.actions';
-import { selectSoundSwitch } from 'src/app/store/selectors/sound.selector';
 import { AppState } from 'src/app/store/state/app.state';
 
 @Component({
@@ -15,22 +14,13 @@ import { AppState } from 'src/app/store/state/app.state';
   templateUrl: './authorization.component.html',
   styleUrls: ['./authorization.component.less'],
 })
-export class AuthorizationComponent implements OnInit, OnDestroy {
+export class AuthorizationComponent {
   constructor(
     private router: Router,
     private store: Store<AppState>,
-    private httpService: HttpService
+    private httpService: HttpService,
+    private audio: GeneralAudioService
   ) {}
-
-  soundSwitchSubscription = new Subscription();
-
-  ngOnInit(): void {
-    this.soundSwitchSubscription = this.store
-      .select(selectSoundSwitch)
-      .subscribe((state) => {
-        this.isAudioOn = state;
-      });
-  }
 
   model = {
     login: '',
@@ -80,6 +70,7 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
   }
 
   goToMenu() {
+    this.audio.click();
     this.router.navigate(['']);
   }
 
@@ -88,20 +79,6 @@ export class AuthorizationComponent implements OnInit, OnDestroy {
   }
 
   toggleSound() {
-    if (this.isAudioOn) {
-      this.store.dispatch(soundOff());
-    } else {
-      this.store.dispatch(soundOn());
-    }
-  }
-
-  clickSound() {
-    if (!this.isAudioOn) return;
-    let sound = new Audio('./../assets/audio/click.mp3');
-    sound.play();
-  }
-
-  ngOnDestroy(): void {
-    this.soundSwitchSubscription.unsubscribe();
+    this.store.dispatch(soundToggle());
   }
 }

@@ -1,9 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
-import { soundOff, soundOn } from '../store/actions/sound.action';
-import { selectSoundSwitch } from '../store/selectors/sound.selector';
+import { GeneralAudioService } from '../services/audio/general-audio.service';
+import { soundToggle } from '../store/actions/sound.action';
 import { AppState } from '../store/state/app.state';
 
 @Component({
@@ -11,51 +10,29 @@ import { AppState } from '../store/state/app.state';
   templateUrl: './menu.component.html',
   styleUrls: ['./menu.component.less'],
 })
-export class MenuComponent implements OnInit, OnDestroy {
-  constructor(private router: Router, private store: Store<AppState>) {}
-
-  soundSwitchSubscription = new Subscription();
-
-  ngOnInit() {
-    this.soundSwitchSubscription = this.store
-      .select(selectSoundSwitch)
-      .subscribe((state) => {
-        this.isAudioOn = state;
-      });
-  }
-
-  isAudioOn: boolean = true;
+export class MenuComponent {
+  constructor(
+    private router: Router,
+    private audioService: GeneralAudioService,
+    private store: Store<AppState>
+  ) {}
 
   goToIntuition() {
-    this.clickSound();
+    this.audioService.click();
     this.router.navigate(['intuition/menu']);
   }
 
   goToArena() {
-    this.clickSound();
+    this.audioService.click();
     this.router.navigate(['arena/game']);
   }
 
   goToDuels() {
-    this.clickSound();
+    this.audioService.click();
     this.router.navigate(['duels/createHero']);
   }
 
-  clickSound() {
-    if (!this.isAudioOn) return;
-    let sound = new Audio('./assets/audio/click.mp3');
-    sound.play();
-  }
-
   toggleSound() {
-    if (this.isAudioOn) {
-      this.store.dispatch(soundOff());
-    } else {
-      this.store.dispatch(soundOn());
-    }
-  }
-
-  ngOnDestroy(): void {
-    this.soundSwitchSubscription.unsubscribe();
+    this.store.dispatch(soundToggle());
   }
 }

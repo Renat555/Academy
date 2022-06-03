@@ -2,12 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { HttpService } from 'src/app/http.service';
-import {
-  addResults,
-  getResults,
-} from 'src/app/store/actions/intuition/results.actions';
-import { soundOff, soundOn } from 'src/app/store/actions/sound.action';
+import { GeneralAudioService } from 'src/app/services/audio/general-audio.service';
+import { getResults } from 'src/app/store/actions/intuition/results.actions';
+import { soundToggle } from 'src/app/store/actions/sound.action';
 import {
   selectBlackWhite,
   selectCardSuits,
@@ -15,7 +12,6 @@ import {
   selectFigures,
   selectPlayingCards,
 } from 'src/app/store/selectors/intuition/results.selectors';
-import { selectSoundSwitch } from 'src/app/store/selectors/sound.selector';
 import { AppState } from 'src/app/store/state/app.state';
 
 @Component({
@@ -27,10 +23,9 @@ export class GeneralStatComponent implements OnInit, OnDestroy {
   constructor(
     private store: Store<AppState>,
     private router: Router,
-    private httpService: HttpService
+    private audioService: GeneralAudioService
   ) {}
 
-  soundSwitchSubscription = new Subscription();
   figuresSubscription = new Subscription();
   cardSuitsSubscription = new Subscription();
   colorsSubscription = new Subscription();
@@ -38,12 +33,6 @@ export class GeneralStatComponent implements OnInit, OnDestroy {
   playingCardsSubscription = new Subscription();
 
   ngOnInit(): void {
-    this.soundSwitchSubscription = this.store
-      .select(selectSoundSwitch)
-      .subscribe((state) => {
-        this.isAudioOn = state;
-      });
-
     this.store.dispatch(getResults());
 
     this.figuresStat();
@@ -216,25 +205,15 @@ export class GeneralStatComponent implements OnInit, OnDestroy {
   }
 
   goToMenu() {
+    this.audioService.click();
     this.router.navigate(['/menu']);
   }
 
   toggleSound() {
-    if (this.isAudioOn) {
-      this.store.dispatch(soundOff());
-    } else {
-      this.store.dispatch(soundOn());
-    }
-  }
-
-  clickSound() {
-    if (!this.isAudioOn) return;
-    let sound = new Audio('./../assets/audio/click.mp3');
-    sound.play();
+    this.store.dispatch(soundToggle());
   }
 
   ngOnDestroy(): void {
-    this.soundSwitchSubscription.unsubscribe();
     this.figuresSubscription.unsubscribe();
     this.cardSuitsSubscription.unsubscribe();
     this.colorsSubscription.unsubscribe();
