@@ -7,11 +7,11 @@ import { soundToggle } from 'src/app/store/actions/sound.action';
 import { AppState } from 'src/app/store/state/app.state';
 
 @Component({
-  selector: 'app-intuition-black-white',
-  templateUrl: './intuition-black-white.component.html',
-  styleUrls: ['./intuition-black-white.component.less'],
+  selector: 'app-black-white',
+  templateUrl: './black-white.component.html',
+  styleUrls: ['./black-white.component.less'],
 })
-export class IntuitionBlackWhiteComponent implements OnInit, OnDestroy {
+export class BlackWhiteComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private store: Store<AppState>,

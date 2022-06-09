@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { IntuitionFiguresComponent } from './intuition-figures.component';
+import { FiguresComponent } from './figures.component';
 
 describe('IntuitionComponent', () => {
-  let component: IntuitionFiguresComponent;
-  let fixture: ComponentFixture<IntuitionFiguresComponent>;
+  let component: FiguresComponent;
+  let fixture: ComponentFixture<FiguresComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [IntuitionFiguresComponent],
+      declarations: [FiguresComponent],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(IntuitionFiguresComponent);
+    fixture = TestBed.createComponent(FiguresComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

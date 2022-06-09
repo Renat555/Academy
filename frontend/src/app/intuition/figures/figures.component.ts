@@ -8,11 +8,11 @@ import { selectSoundSwitch } from 'src/app/store/selectors/sound.selector';
 import { AppState } from '../../store/state/app.state';
 
 @Component({
-  selector: 'app-intuition-figures',
-  templateUrl: './intuition-figures.component.html',
-  styleUrls: ['./intuition-figures.component.less'],
+  selector: 'app-figures',
+  templateUrl: './figures.component.html',
+  styleUrls: ['./figures.component.less'],
 })
-export class IntuitionFiguresComponent implements OnInit, OnDestroy {
+export class FiguresComponent implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private store: Store<AppState>,

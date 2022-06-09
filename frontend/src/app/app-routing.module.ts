@@ -6,8 +6,8 @@ import { GameComponent } from './duels/game/game.component';
 import { MenuComponent } from './menu/menu.component';
 import { IntuitionMenuComponent } from './intuition/intuition-menu/intuition-menu.component';
 import { IntuitionComponent } from './intuition/intuition.component';
-import { IntuitionFiguresComponent } from './intuition/intuition-figures/intuition-figures.component';
-import { IntuitionBlackWhiteComponent } from './intuition/intuition-black-white/intuition-black-white.component';
+import { FiguresComponent } from './intuition/figures/figures.component';
+import { BlackWhiteComponent } from './intuition/black-white/black-white.component';
 import { ColorsComponent } from './intuition/colors/colors.component';
 import { DuelsComponent } from './duels/duels.component';
 import { CreateHeroComponent } from './duels/create-hero/create-hero.component';
@@ -39,11 +39,11 @@ const routes: Routes = [
       },
       {
         path: 'figures',
-        component: IntuitionFiguresComponent,
+        component: FiguresComponent,
       },
       {
         path: 'blackWhite',
-        component: IntuitionBlackWhiteComponent,
+        component: BlackWhiteComponent,
       },
       {
         path: 'colors',
