@@ -29,6 +29,7 @@ import {
   addDescriptionBlock,
   addDescriptionRow,
 } from '../store/actions/duels/description.actions';
+import { DuelsAudioService } from './audio/duels-audio.service';
 
 interface GameInformation {
   header: string;
@@ -62,7 +63,10 @@ interface Player {
   providedIn: 'root',
 })
 export class WebsocketService {
-  constructor(private store: Store<AppState>) {
+  constructor(
+    private store: Store<AppState>,
+    private duelsAudio: DuelsAudioService
+  ) {
     this.socket = webSocket(environment.apiWss);
 
     this.socket.subscribe((gameInformation) => {
@@ -96,6 +100,11 @@ export class WebsocketService {
             description: 'Следующий ход \u269C \u269C \u269C \u269C \u269C',
           })
         );
+      } else if (
+        gameInformation['header'] === 'processingSpell' &&
+        gameInformation['user']['muve'] === 0
+      ) {
+        this.duelsAudio.fire();
       }
     });
   }

@@ -1,19 +1,25 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
-import { GeneraStatComponent } from './general-stat.component';
+import { GeneralStatComponent } from './general-stat.component';
 
-describe('GeneraStatComponent', () => {
-  let component: GeneraStatComponent;
-  let fixture: ComponentFixture<GeneraStatComponent>;
+describe('GeneralStatComponent', () => {
+  let component: GeneralStatComponent;
+  let fixture: ComponentFixture<GeneralStatComponent>;
+
+  const initialState = {};
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [GeneraStatComponent],
+      declarations: [GeneralStatComponent],
+      providers: [provideMockStore({ initialState })],
+      imports: [RouterTestingModule],
     }).compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(GeneraStatComponent);
+    fixture = TestBed.createComponent(GeneralStatComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

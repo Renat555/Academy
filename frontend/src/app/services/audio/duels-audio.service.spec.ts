@@ -1,17 +1,17 @@
 import { TestBed } from '@angular/core/testing';
 import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
-import { GeneralAudioService } from './general-audio.service';
+import { DuelsAudioService } from './duels-audio.service';
 
-describe('GeneralAudioService', () => {
-  let service: GeneralAudioService;
+describe('DuelsAudioService', () => {
+  let service: DuelsAudioService;
   const initialState = { enabled: false };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [provideMockStore({ initialState })],
     });
-    service = TestBed.inject(GeneralAudioService);
+    service = TestBed.inject(DuelsAudioService);
   });
 
   it('should be created', () => {

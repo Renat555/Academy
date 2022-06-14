@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
 import { EffectsComponent } from './effects.component';
 
@@ -6,11 +7,13 @@ describe('EffectsComponent', () => {
   let component: EffectsComponent;
   let fixture: ComponentFixture<EffectsComponent>;
 
+  const initialState = {};
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EffectsComponent ]
-    })
-    .compileComponents();
+      declarations: [EffectsComponent],
+      providers: [provideMockStore({ initialState })],
+    }).compileComponents();
   });
 
   beforeEach(() => {

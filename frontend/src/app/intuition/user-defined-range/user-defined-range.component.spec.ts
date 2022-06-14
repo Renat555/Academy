@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
 import { UserDefinedRangeComponent } from './user-defined-range.component';
 
@@ -6,11 +8,14 @@ describe('UserDefinedRangeComponent', () => {
   let component: UserDefinedRangeComponent;
   let fixture: ComponentFixture<UserDefinedRangeComponent>;
 
+  const initialState = {};
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ UserDefinedRangeComponent ]
-    })
-    .compileComponents();
+      declarations: [UserDefinedRangeComponent],
+      providers: [provideMockStore({ initialState })],
+      imports: [RouterTestingModule],
+    }).compileComponents();
   });
 
   beforeEach(() => {

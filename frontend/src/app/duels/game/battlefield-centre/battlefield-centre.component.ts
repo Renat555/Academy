@@ -1,7 +1,6 @@
 import {
   AfterViewInit,
   Component,
-  DoCheck,
   ElementRef,
   OnDestroy,
   OnInit,
@@ -25,6 +24,7 @@ import {
 } from 'src/app/store/selectors/duels/users.selectors';
 import { AppState } from 'src/app/store/state/app.state';
 import { WebsocketService } from 'src/app/services/websocket.service';
+import { DuelsAudioService } from 'src/app/services/audio/duels-audio.service';
 
 @Component({
   selector: 'app-battlefield-centre',
@@ -36,7 +36,8 @@ export class BattlefieldCentreComponent
 {
   constructor(
     private store: Store<AppState>,
-    private wssService: WebsocketService
+    private wssService: WebsocketService,
+    private duelsAudio: DuelsAudioService
   ) {}
 
   @ViewChild('hint') hint!: ElementRef;
@@ -162,6 +163,8 @@ export class BattlefieldCentreComponent
     )
       return;
 
+    this.spellSound(this.currentSpellElement);
+
     let spell = this.currentSpellElement + this.currentSpellForm;
 
     switch (spell) {
@@ -272,6 +275,29 @@ export class BattlefieldCentreComponent
     }
 
     this.wssService.sendMessage(gameInformation);
+  }
+
+  spellSound(element: string) {
+    switch (element) {
+      case 'fire':
+        this.duelsAudio.fire();
+        break;
+      case 'water':
+        this.duelsAudio.water();
+        break;
+      case 'earth':
+        this.duelsAudio.earth();
+        break;
+      case 'air':
+        this.duelsAudio.air();
+        break;
+      case 'life':
+        this.duelsAudio.life();
+        break;
+      case 'death':
+        this.duelsAudio.death();
+        break;
+    }
   }
 
   isUserMove() {

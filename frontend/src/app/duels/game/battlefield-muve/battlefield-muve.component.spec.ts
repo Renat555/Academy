@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
 
 import { BattlefieldMuveComponent } from './battlefield-muve.component';
 
@@ -6,11 +7,13 @@ describe('BattlefieldMuveComponent', () => {
   let component: BattlefieldMuveComponent;
   let fixture: ComponentFixture<BattlefieldMuveComponent>;
 
+  const initialState = { enabled: true };
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BattlefieldMuveComponent ]
-    })
-    .compileComponents();
+      declarations: [BattlefieldMuveComponent],
+      providers: [provideMockStore({ initialState })],
+    }).compileComponents();
   });
 
   beforeEach(() => {
