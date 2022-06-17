@@ -173,9 +173,29 @@ export const reducer = createReducer(
     for (let i = 0; i < map.length; i++) {
       for (let j = 0; j < map[i].length; j++) {
         if (map[i][j][4] === 'prepared') {
-          map[i][j][0] = '';
           map[i][j][2] = '';
           map[i][j][4] = '';
+          if (map[i][j][1] === '') {
+            map[i][j][0] = '';
+          }
+        }
+      }
+    }
+
+    return { map: [...map] };
+  }),
+  on(Map.deleteAppovalSpells, (state) => {
+    let map = deepCopy(state.map);
+
+    for (let i = 0; i < map.length; i++) {
+      for (let j = 0; j < map[i].length; j++) {
+        if (map[i][j][4] === 'approved') {
+          map[i][j][2] = '';
+          map[i][j][3] = 0;
+          map[i][j][4] = '';
+          if (map[i][j][1] === '') {
+            map[i][j][0] = '';
+          }
         }
       }
     }

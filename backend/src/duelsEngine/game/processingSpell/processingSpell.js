@@ -21,7 +21,7 @@ function processingSpell(spellName, collection, ws, wss) {
       applySpell(spell, user, enemy);
     }
     savePlayers(user, enemy, collection, ws).then((result) => {
-      let response = { header: "processingSpell" };
+      let response = { header: "processingSpell", spell: spellName };
       sendGameInformation(response, collection, ws, wss);
     });
   });

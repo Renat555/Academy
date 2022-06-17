@@ -13,27 +13,27 @@ function coordTransform(coordinates) {
 
   for (let i = 0; i < coordinates.length; i++) {
     switch (coordinates[i][0]) {
-      case "0":
-        coordinatesForEnemy[i][0] = "6";
+      case 0:
+        coordinatesForEnemy[i][0] = 6;
         break;
-      case "1":
-        coordinatesForEnemy[i][0] = "5";
+      case 1:
+        coordinatesForEnemy[i][0] = 5;
         break;
-      case "2":
-        coordinatesForEnemy[i][0] = "4";
+      case 2:
+        coordinatesForEnemy[i][0] = 4;
         break;
-      case "4":
-        coordinatesForEnemy[i][0] = "2";
+      case 4:
+        coordinatesForEnemy[i][0] = 2;
         break;
-      case "5":
-        coordinatesForEnemy[i][0] = "1";
+      case 5:
+        coordinatesForEnemy[i][0] = 1;
         break;
-      case "6":
-        coordinatesForEnemy[i][0] = "0";
+      case 6:
+        coordinatesForEnemy[i][0] = 0;
         break;
     }
   }
-
+  
   return coordinatesForEnemy;
 }
 

@@ -16,7 +16,7 @@ function processingDespell(request, collection, ws, wss) {
     applyEnemyEffectsOnDespell(enemy, despell);
     applyDespell(despell, user, enemy);
     savePlayers(user, enemy, collection, ws).then((result) => {
-      let response = { header: "processingSpell" };
+      let response = { header: "processingSpell", spell: request["spell"] };
       sendGameInformation(response, collection, ws, wss);
     });
   });

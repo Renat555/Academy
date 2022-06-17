@@ -167,7 +167,7 @@ module.exports.Fireshield = class Fireshield {
   actionPoints = 1;
   energyPoints = 1;
   hitProbability = 1;
-  spellName = "fireshild";
+  spellName = "fireshield";
   russianName = "Метеор";
   dependences = ["firesource", "firesphere", "watersphere", "deathflow"];
   activationProbability = 1;
@@ -608,7 +608,7 @@ module.exports.Firesphere = class Firesphere {
         this.currentDamage +
         " урона. " +
         this.descriptionForEnemy;
-      user.decreaseHealth(this.currentDamage);
+      enemy.decreaseHealth(this.currentDamage);
       user.addDescription(this.descriptionForUser);
       enemy.addDescription(this.descriptionForEnemy);
     }
@@ -648,11 +648,11 @@ module.exports.Firestamp = class Firestamp {
     "firesource",
     "firesphere",
     "earthsphere",
-    "airshild",
+    "airshield",
     "aircrown",
     "airsphere",
     "airstamp",
-    "deathshild",
+    "deathshield",
     "deathsphere",
     "deathstamp",
     "deathflow",
@@ -1027,7 +1027,7 @@ module.exports.Watershield = class Watershield {
   actionPoints = 1;
   energyPoints = 1;
   hitProbability = 1;
-  spellName = "watershild";
+  spellName = "watershield";
   russianName = "Ледяная стена";
   descriptionForUser = "";
   descriptionForEnemy = "";
@@ -1684,7 +1684,7 @@ module.exports.Waterpower = class Waterpower {
   russianName = "Власть воды";
   descriptionForUser = "";
   descriptionForEnemy = "";
-  dependences = ["watershild", "watercrown", "watersphere", "waterstamp"];
+  dependences = ["watershield", "watercrown", "watersphere", "waterstamp"];
   pointsIncreaseDuration = 2;
 
   decreaseHitProbability(percent) {
@@ -1850,7 +1850,7 @@ module.exports.Earthshield = class Earthshield {
 
   actionPoints = 1;
   energyPoints = 1;
-  spellName = "earthshild";
+  spellName = "earthshield";
   russianName = "Скала";
   descriptionForUser = "";
   descriptionForEnemy = "";
@@ -2160,11 +2160,11 @@ module.exports.Earthsphere = class Earthsphere {
     "firesource",
     "firesphere",
     "earthsphere",
-    "airshild",
+    "airshield",
     "aircrown",
     "airsphere",
     "airstamp",
-    "deathshild",
+    "deathshield",
     "deathsphere",
     "deathstamp",
     "deathflow",
@@ -2524,7 +2524,7 @@ module.exports.Earthpower = class Earthpower {
   russianName = "Власть земли";
   descriptionForUser = "";
   descriptionForEnemy = "";
-  dependences = ["earthshild", "earthcrown", "earthsource", "earthstamp"];
+  dependences = ["earthshield", "earthcrown", "earthsource", "earthstamp"];
   activationProbability = 0.5;
   pointsIncreaseDuration = 4;
 
@@ -2692,7 +2692,7 @@ module.exports.Airshield = class Airshield {
   actionPoints = 1;
   energyPoints = 1;
   hitProbability = 1;
-  spellName = "airshild";
+  spellName = "airshield";
   russianName = "Вихрь";
   dependences = [
     "firespear",
@@ -2813,22 +2813,22 @@ module.exports.Aircrown = class Aircrown {
   descriptionForUser = "";
   descriptionForEnemy = "";
   dependences = [
-    "fireshild",
+    "fireshield",
     "firecrown",
     "firepower",
-    "watershild",
+    "watershield",
     "watercrown",
     "watersphere",
     "waterstamp",
     "waterpower",
-    "earthshild",
+    "earthshield",
     "earthcrown",
     "earthsource",
     "earthstamp",
     "earthpower",
     "airsource",
     "airpower",
-    "lifeshild",
+    "lifeshield",
     "lifesphere",
     "lifestamp",
     "lifeflow",
@@ -2953,11 +2953,11 @@ module.exports.Airsource = class Airsource {
     "firesource",
     "firesphere",
     "earthsphere",
-    "airshild",
+    "airshield",
     "aircrown",
     "airsphere",
     "airstamp",
-    "deathshild",
+    "deathshield",
     "deathsphere",
     "deathstamp",
     "deathflow",
@@ -3076,11 +3076,11 @@ module.exports.Airsphere = class Airsphere {
     "firesource",
     "firesphere",
     "earthsphere",
-    "airshild",
+    "airshield",
     "aircrown",
     "airsphere",
     "airstamp",
-    "deathshild",
+    "deathshield",
     "deathsphere",
     "deathstamp",
     "deathflow",
@@ -3194,22 +3194,22 @@ module.exports.Airstamp = class Airstamp {
   descriptionForUser = "";
   descriptionForEnemy = "";
   dependences = [
-    "fireshild",
+    "fireshield",
     "firecrown",
     "firepower",
-    "watershild",
+    "watershield",
     "watercrown",
     "watersphere",
     "waterstamp",
     "waterpower",
-    "earthshild",
+    "earthshield",
     "earthcrown",
     "earthsource",
     "earthstamp",
     "earthpower",
     "airsource",
     "airpower",
-    "lifeshild",
+    "lifeshield",
     "lifesphere",
     "lifestamp",
     "lifeflow",
@@ -3627,7 +3627,7 @@ module.exports.Lifeshield = class Lifeshield {
   actionPoints = 1;
   energyPoints = 1;
   hitProbability = 1;
-  spellName = "lifeshild";
+  spellName = "lifeshield";
   russianName = "Щит жизни";
   descriptionForUser = "";
   descriptionForEnemy = "";
@@ -3953,7 +3953,7 @@ module.exports.Lifestamp = class Lifestamp {
   hitProbability = 1;
   spellName = "lifestamp";
   russianName = "Печать жизни";
-  dependences = ["deathshild", "deathsphere", "deathstamp", "deathflow"];
+  dependences = ["deathshield", "deathsphere", "deathstamp", "deathflow"];
   activationProbability = 1;
   percentDecreaseHitProbability = 1;
   descriptionForUser = "";
@@ -4390,25 +4390,25 @@ module.exports.Deathshield = class Deathshield {
   actionPoints = 1;
   energyPoints = 1;
   hitProbability = 1;
-  spellName = "deathshild";
+  spellName = "deathshield";
   russianName = "Пелена смерти";
   dependences = [
-    "fireshild",
+    "fireshield",
     "firecrown",
     "firepower",
-    "watershild",
+    "watershield",
     "watercrown",
     "watersphere",
     "waterstamp",
     "waterpower",
-    "earthshild",
+    "earthshield",
     "earthcrown",
     "earthsource",
     "earthstamp",
     "earthpower",
     "airsource",
     "airpower",
-    "lifeshild",
+    "lifeshield",
     "lifesphere",
     "lifestamp",
     "lifeflow",
@@ -4753,22 +4753,22 @@ module.exports.Deathstamp = class Deathstamp {
   descriptionForUser = "";
   descriptionForEnemy = "";
   dependences = [
-    "fireshild",
+    "fireshield",
     "firecrown",
     "firepower",
-    "watershild",
+    "watershield",
     "watercrown",
     "watersphere",
     "waterstamp",
     "waterpower",
-    "earthshild",
+    "earthshield",
     "earthcrown",
     "earthsource",
     "earthstamp",
     "earthpower",
     "airsource",
     "airpower",
-    "lifeshild",
+    "lifeshield",
     "lifesphere",
     "lifestamp",
     "lifeflow",

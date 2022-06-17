@@ -14,7 +14,7 @@ function processingEffect(request, collection, ws, wss) {
     applyEnemyEffectsOnEffect(spell, enemy);
     applyEffect(spell, user, enemy);
     savePlayers(user, enemy, collection, ws).then((result) => {
-      let response = { header: "processingSpell" };
+      let response = { header: "processingSpell", spell: request["spell"] };
       sendGameInformation(response, collection, ws, wss);
     });
   });

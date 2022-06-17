@@ -12,8 +12,8 @@ function extractCoord(spell) {
 function isCoordOverlay(playerCoord, spellCoord) {
   for (let i = 0; i < spellCoord.length; i++) {
     if (
-      playerCoord.row == spellCoord[i][0] &&
-      playerCoord.col == spellCoord[i][1]
+      playerCoord[0] == spellCoord[i][0] &&
+      playerCoord[1] == spellCoord[i][1]
     ) {
       return true;
     }
@@ -26,7 +26,7 @@ function createEffectsFromBattlefield(player) {
   let playerBattlefieldEffects = [];
   let spell;
 
-  let playerCoord = player.position.user;
+  let playerCoord = player.position.user[0];
 
   for (let i = 0; i < player.battlefield.length; i++) {
     switch (player.battlefield[i][0]) {

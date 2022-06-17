@@ -7,7 +7,12 @@ import {
   enemyMove,
   userMove,
 } from '../store/actions/duels/generalInfo.actions';
-import { setEnemy, spellApproval } from '../store/actions/duels/map.actions';
+import {
+  deleteAppovalSpells,
+  setEnemy,
+  spellApproval,
+  spellPreparing,
+} from '../store/actions/duels/map.actions';
 import {
   addEnemyName,
   changeEnemyActionPoints,
@@ -104,7 +109,7 @@ export class WebsocketService {
         gameInformation['header'] === 'processingSpell' &&
         gameInformation['user']['muve'] === 0
       ) {
-        this.duelsAudio.fire();
+        this.duelsAudio.spellSound(gameInformation['spell']);
       }
     });
   }
@@ -158,7 +163,15 @@ export class WebsocketService {
   setBattlefieldSpells(info: GameInformation) {
     let battlefieldSpells = info['user']['battlefield'];
 
+    this.store.dispatch(deleteAppovalSpells());
+
     for (let i = 0; i < battlefieldSpells.length; i++) {
+      this.store.dispatch(
+        spellPreparing({
+          spell: battlefieldSpells[i][0],
+          coordinates: battlefieldSpells[i][2],
+        })
+      );
       this.store.dispatch(
         spellApproval({
           spell: battlefieldSpells[i][0],

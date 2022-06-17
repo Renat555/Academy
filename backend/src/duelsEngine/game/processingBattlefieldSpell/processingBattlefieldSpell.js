@@ -11,7 +11,7 @@ function processingBattlefieldSpell(request, collection, ws, wss) {
     let spellCoordinates = request["spell"].slice(2);
     applyBattlefieldSpell(spell, spellCoordinates, user, enemy);
     savePlayers(user, enemy, collection, ws).then((result) => {
-      let response = { header: "processingBattlefieldSpell" };
+      let response = { header: "processingBattlefieldSpell", spell: request["spell"][0] };
       sendGameInformation(response, collection, ws, wss);
     });
   });

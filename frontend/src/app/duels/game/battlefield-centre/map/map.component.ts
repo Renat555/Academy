@@ -369,6 +369,7 @@ export class MapComponent implements OnInit, OnDestroy {
               this.moveUserBind
             );
             this.cancelEarthshield();
+            this.cancelWatersphere();
           }
         });
 
@@ -384,7 +385,7 @@ export class MapComponent implements OnInit, OnDestroy {
         .select(selectMapEnemy)
         .subscribe((coord) => {
           this.enemyMapCoord = coord;
-          this.moveEnemy;
+          this.moveEnemy(coord);
         });
 
       this.mapUserSubscription = this.store
@@ -405,6 +406,7 @@ export class MapComponent implements OnInit, OnDestroy {
     for (let i = 0; i < this.map.length; i++) {
       for (let j = 0; j < this.map[i].length; j++) {
         let square = this.calculateSquare({ row: i, col: j });
+
         if (this.map[i][j][4] === 'prepared') {
           square.classList.add(this.map[i][j][2]);
           square.style.opacity = '0.7';

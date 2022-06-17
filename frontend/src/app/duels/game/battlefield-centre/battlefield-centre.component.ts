@@ -163,9 +163,9 @@ export class BattlefieldCentreComponent
     )
       return;
 
-    this.spellSound(this.currentSpellElement);
-
     let spell = this.currentSpellElement + this.currentSpellForm;
+
+    this.duelsAudio.spellSound(spell);
 
     switch (spell) {
       case 'firespear':
@@ -275,29 +275,6 @@ export class BattlefieldCentreComponent
     }
 
     this.wssService.sendMessage(gameInformation);
-  }
-
-  spellSound(element: string) {
-    switch (element) {
-      case 'fire':
-        this.duelsAudio.fire();
-        break;
-      case 'water':
-        this.duelsAudio.water();
-        break;
-      case 'earth':
-        this.duelsAudio.earth();
-        break;
-      case 'air':
-        this.duelsAudio.air();
-        break;
-      case 'life':
-        this.duelsAudio.life();
-        break;
-      case 'death':
-        this.duelsAudio.death();
-        break;
-    }
   }
 
   isUserMove() {

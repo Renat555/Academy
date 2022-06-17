@@ -22,8 +22,8 @@ function createEnemy(user, mongoCollection, ws) {
     actionPoints: 5,
     energyPoints: 5,
     position: {
-      user: [],
-      enemy: [],
+      user: [[0, 3]],
+      enemy: [[6, 3]],
     },
     battlefield: [],
     maxHealth: 200,

@@ -9,6 +9,7 @@ export enum battlefieldActions {
   spellPreparing = '[battlefield] spellPreparing',
   spellApproval = '[battlefield] spellApproval',
   deletePreparedSpells = '[battlefield] deletePreparedSpells',
+  deleteAppovalSpells = '[battlefield] deleteAppovalSpells',
 }
 
 export const setUser = createAction(
@@ -33,4 +34,8 @@ export const spellApproval = createAction(
 
 export const deletePreparedSpells = createAction(
   battlefieldActions.deletePreparedSpells
+);
+
+export const deleteAppovalSpells = createAction(
+  battlefieldActions.deleteAppovalSpells
 );
